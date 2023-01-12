@@ -1,0 +1,28 @@
+version: "3"
+services:
+  nginx:
+    ports:
+      - 80:80
+  app-server:
+    build:
+      context: .
+      args:
+        NODE_DEV: development
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    environment: 
+      - NODE_DEV=development
+      - DB_IP=postgres
+      - DB_USER=admin
+      - DB_PASSWORD=admin
+      - DB_NAME=nest 
+      - SESSION_SECRET=secret
+    command:  
+      - sh
+      - -c 
+      - |
+        npx prisma migrate dev
+        npm run dev 
+    
+  
