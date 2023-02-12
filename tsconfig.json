@@ -1,26 +1,27 @@
 {
   "compilerOptions": {
-    "experimentalDecorators": true,
-    "forceConsistentCasingInFileNames": true,
+    "declaration": false, // 生成声明文件
+    "noImplicitAny": false, // 不允许隐式的any类型
+    "removeComments": false, // 删除注释
+    "emitDecoratorMetadata": true /* 为装饰器的发射类型元数据启用实验性支持。 */,
+    "outDir": "./dist",
+    "experimentalDecorators": true, //支持ES7的装饰器特性
+    "forceConsistentCasingInFileNames": true, // 禁止对同一个文件的不一致的引用
     "target": "esnext",
-    "useDefineForClassFields": true,
-    "module": "esnext",
+    "module": "commonjs",
     "moduleResolution": "node",
-    "strict": true,
-    "jsx": "preserve",
-    "sourceMap": true,
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "lib": ["esnext", "dom"],
+    "useDefineForClassFields": true, // 将 class 声明中的字段语义从 this.a = '' 变更到 Object.defineProperty(...)
+    "strict": true, //严格模式？
+    "resolveJsonModule": true, // 支持 ts文件中引入json文件
+    "esModuleInterop": true, //支持使用import 引入 commonjs 包。
+    "lib": ["es2017"],
     "baseUrl": ".", // 用于设置解析非相对模块名称的基本目录，相对模块不会受到baseUrl的影响
     "paths": {
-      // 用于设置模块名到基于baseUrl的路径映射
-      "@/*": ["src/*"]
-    }
+      "@/*": ["src/*"] // 用于设置模块名到基于baseUrl的路径映射
+    },
+    "allowJs": false /* 允许编译 javascript 文件。 */,
+    "sourceMap": false //生成 *.js.map ?
   },
-  "noImplicitAny": true, //不允许使用any
-  // "strictNullChecks": true, //不允许使用null
-  "noImplicitThis": true, //不允许往this上面挂属性
   "include": ["src/**/*.ts", "src/**/*.d.ts", "types/**/*.d.ts", "types/**/*.ts"],
   "exclude": ["node_modules", "dist", "**/*.js"]
 }
