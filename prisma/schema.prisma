@@ -1,7 +1,6 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -17,7 +16,7 @@ model User {
   updatedAt DateTime @updatedAt
 
   email String @unique
-  hash  String
+  hash  String 
 
   firstName String?
   lastName  String?
@@ -36,8 +35,8 @@ model Bookmark {
   discription String?
   link        String
 
+  User   User @relation(fields: [userId], references: [id])
   userId Int
-  users   User @relation(fields: [userId], references: [id])
 
   @@map("bookmarks")
 }

@@ -1,4 +1,4 @@
-import { Body, ForbiddenException, Injectable } from "@nestjs/common"
+import { ForbiddenException, Injectable } from "@nestjs/common"
 import { PrismaService } from "../prisma/prisma.service"
 import { AuthDto } from "./dto"
 import * as argon from "argon2"
@@ -8,30 +8,23 @@ import { User, Prisma } from "@prisma/client"
 
 @Injectable()
 export class AuthService {
-  constructor(private prisma: PrismaService, private jwt: JwtService, private config: ConfigService) {
-    this.prisma = prisma
-    this.config = config
-    this.jwt = jwt
-  }
+  constructor(private prisma: PrismaService, private jwt: JwtService, private config: ConfigService) {}
 
   /**
    * 注册
    * @param param0
    * @returns
    */
-  async signup(@Body() { password, email }: AuthDto): Promise<User> {
+  async signup({ password, email }: AuthDto): Promise<User> {
     try {
-      const hash: string = await argon.hash(<string>password)
-      const user: User = <User>await this.prisma.user.create({
+      const hash: string = await argon.hash(password)
+      const user: User = await this.prisma.user.create({
         data: {
-          email: <string>email,
+          email: email,
           hash: hash
         }
       })
-      return Object.assign({
-        hash: "****",
-        user
-      })
+      return user
     } catch (error: unknown) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         if (error.code == "P2002") {
@@ -47,24 +40,24 @@ export class AuthService {
    * @param param0
    * @returns
    */
-  async signin(@Body() { password, email }: AuthDto): Promise<object> {
+  async signin({ password, email }: AuthDto): Promise<object> {
     //用户是否存在
     const user: User | null = await this.prisma.user.findFirst({
       where: {
         email: email
       }
     })
-    if (!user) throw new ForbiddenException("Credentials incorrect")
+    if (!user) throw new ForbiddenException("用户名不存在或密码错误！")
     //密码是否正确
-    const pwMatches = await argon.verify(user.hash, <string>password)
-    if (!pwMatches) throw new ForbiddenException("Credentials incorrect")
+    const pwMatches = await argon.verify(user.hash, password)
+    if (!pwMatches) throw new ForbiddenException("用户名不存在或密码错误！")
     //生成token
     const payload: object = {
       sub: user.id,
       email: user.email
     }
     const token = await this.jwt.signAsync(payload, {
-      secret: this.config.get("SESSION_SECRET")
+      secret: this.config.get("JWT_SECRET")
     })
     return {
       access_token: token

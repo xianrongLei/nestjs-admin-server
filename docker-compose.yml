@@ -9,9 +9,7 @@ services:
   app-server:
     build: .
     depends_on:
-      - postgres
-    environment:
-      - APP_PORT=3000
+      - postgres                          
   postgres: 
     image: postgres:13
     ports:

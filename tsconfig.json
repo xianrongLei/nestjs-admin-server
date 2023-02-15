@@ -23,5 +23,5 @@
     "sourceMap": false //生成 *.js.map ?
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "types/**/*.d.ts", "types/**/*.ts"],
-  "exclude": ["node_modules", "dist", "**/*.js"]
+  "exclude": ["node_modules", "test", "dist", "**/*.js"]
 }
