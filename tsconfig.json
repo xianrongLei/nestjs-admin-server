@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
     "declaration": false, // 生成声明文件
     "noImplicitAny": false, // 不允许隐式的any类型
     "removeComments": false, // 删除注释
@@ -15,13 +17,14 @@
     "resolveJsonModule": true, // 支持 ts文件中引入json文件
     "esModuleInterop": true, //支持使用import 引入 commonjs 包。
     "lib": ["es2017"],
-    "baseUrl": ".", // 用于设置解析非相对模块名称的基本目录，相对模块不会受到baseUrl的影响
+    "baseUrl": "./", // 用于设置解析非相对模块名称的基本目录，相对模块不会受到baseUrl的影响
     "paths": {
       "@/*": ["src/*"] // 用于设置模块名到基于baseUrl的路径映射
     },
-    "allowJs": false /* 允许编译 javascript 文件。 */,
-    "sourceMap": false //生成 *.js.map ?
+    "allowJs": false, // 生成 js 文件?
+    "sourceMap": false, //生成 *.js.map ?
+    "types": ["jest"]
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "types/**/*.d.ts", "types/**/*.ts"],
-  "exclude": ["node_modules", "test", "dist", "**/*.js"]
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "types/**/*.d.ts", "types/**/*.ts", "test"],
+  "exclude": ["node_modules", "dist", "**/*.js"]
 }

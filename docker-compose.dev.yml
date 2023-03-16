@@ -11,19 +11,15 @@ services:
     volumes:
       - ./:/app
       - /app/node_modules
-    environment: 
+    environment:
       - NODE_DEV=development
-      - APP_PORT=3000                            
       - DB_IP=postgres
       - DB_USER=admin
       - DB_PASSWORD=admin
-      - DB_NAME=nest 
-      - JWT_SECRET=secret
-    command:  
+      - DB_NAME=nest
+    command:
       - sh
-      - -c 
+      - -c
       - |
         npx prisma migrate dev
-        npm run dev 
-    
-  
+        npm run dev

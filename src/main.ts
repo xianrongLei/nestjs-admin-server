@@ -3,7 +3,7 @@ import { AppModule } from "./app.module"
 import { SwaggerModule, DocumentBuilder } from "@nestjs/swagger"
 import { ValidationPipe } from "@nestjs/common"
 import { ConfigService } from "@nestjs/config"
-
+import { App, Swagger } from "./common/configs/config.interface"
 async function bootstrap(): Promise<any> {
   //创建服务
   const app = await NestFactory.create(AppModule, { cors: true })
@@ -14,7 +14,12 @@ async function bootstrap(): Promise<any> {
     credentials: true
   })
   //挂载swagger
-  const swaggerConfig = new DocumentBuilder().setTitle("标题").setDescription("说明").setVersion("版本1.0").build()
+  const swaggerConfig = new DocumentBuilder()
+    .addBearerAuth()
+    .setTitle(<string>appConfig.get<Swagger>("swagger")?.title)
+    .setDescription(<string>appConfig.get<Swagger>("swagger")?.description)
+    .setVersion(<string>appConfig.get<Swagger>("swagger")?.version)
+    .build()
   const document = SwaggerModule.createDocument(app, swaggerConfig)
   SwaggerModule.setup("api", app, document)
   //全局验证管道
@@ -23,9 +28,10 @@ async function bootstrap(): Promise<any> {
       whitelist: true
     })
   )
+
   // 开启服务
-  await app.listen(<number | string>appConfig.get("APP_PORT"))
-  console.log("服务已启动，端口:" + appConfig.get("APP_PORT"))
+  await app.listen(<number>appConfig.get<App>("app")?.port)
+  console.log("服务已启动, 端口:" + appConfig.get<App>("app")?.port)
 }
 
 void bootstrap()

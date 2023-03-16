@@ -1,13 +1,21 @@
-import { Body, Controller, HttpCode, HttpStatus, Post } from "@nestjs/common"
+import { Body, Controller, Get, HttpCode, HttpStatus, Post, Req } from "@nestjs/common"
 import { AuthService } from "./auth.service"
 import { AuthDto } from "./dto"
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger"
+import { CaptchaDto } from "./dto/captcha.dto"
 
 @ApiBearerAuth()
 @ApiTags("auth")
 @Controller("auth")
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly authService: AuthService) {
+    this.authService = authService
+  }
+  @Get("captcha")
+  @HttpCode(HttpStatus.OK)
+  captcha(@Req() req: { query: CaptchaDto }) {
+    return this.authService.captcha(req.query)
+  }
 
   @Post("signup")
   @HttpCode(HttpStatus.OK)

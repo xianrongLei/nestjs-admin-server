@@ -1,6 +1,6 @@
-import { ForbiddenException, Injectable } from "@nestjs/common"
-import { Prisma, User } from "@prisma/client"
-import { PrismaService } from "src/prisma/prisma.service"
+import { Injectable } from "@nestjs/common"
+import { User } from ".prisma/client"
+import { PrismaService } from "@/prisma/prisma.service"
 
 @Injectable()
 export class UsersService {
@@ -14,20 +14,12 @@ export class UsersService {
    * @returns
    */
   async findOne(id: string): Promise<User> {
-    try {
-      const user: User | null = await this.prisma.user.findUniqueOrThrow({
-        where: {
-          id: Number(id)
-        }
-      })
-      return Object.assign(user, { hash: "******" })
-    } catch (error: unknown) {
-      if (error instanceof Prisma.NotFoundError) {
-        throw new ForbiddenException("用户不存在！")
-      } else {
-        throw error
+    const user: User = <User>await this.prisma.user.findUnique({
+      where: {
+        id: Number(id)
       }
-    }
+    })
+    return Object.assign(user, { hash: "******" })
   }
 
   async editUser(user: User): Promise<User> {

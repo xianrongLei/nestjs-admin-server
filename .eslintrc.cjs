@@ -2,7 +2,8 @@ module.exports = {
   // 环境
   env: {
     es2021: true,
-    node: true
+    node: true,
+    jest: true
   },
   // 插件从右到左覆盖处理
   extends: ["eslint:recommended", "prettier"],
