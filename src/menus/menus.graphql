@@ -1,0 +1,24 @@
+type Menu {
+  # Example field (placeholder)
+  exampleField: Int
+}
+
+input CreateMenuInput {
+  # Example field (placeholder)
+  exampleField: Int
+}
+
+input UpdateMenuInput {
+  id: Int
+}
+
+type Query {
+  menus: [Menu]!
+  menu(id: Int!): Menu
+}
+
+type Mutation {
+  createMenu(createMenuInput: CreateMenuInput!): Menu!
+  updateMenu(updateMenuInput: UpdateMenuInput!): Menu!
+  removeMenu(id: Int!): Menu
+}

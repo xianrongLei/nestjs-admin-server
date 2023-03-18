@@ -1,0 +1,24 @@
+type Post {
+  # Example field (placeholder)
+  exampleField: Int
+}
+
+input CreatePostInput {
+  # Example field (placeholder)
+  exampleField: Int
+}
+
+input UpdatePostInput {
+  id: Int
+}
+
+type Query {
+  posts: [Post]!
+  post(id: Int!): Post
+}
+
+type Mutation {
+  createPost(createPostInput: CreatePostInput!): Post!
+  updatePost(updatePostInput: UpdatePostInput!): Post!
+  removePost(id: Int!): Post
+}

@@ -1,8 +1,7 @@
 import { Injectable } from "@nestjs/common"
 import { ConfigService } from "@nestjs/config"
-// import { PrismaClient } from '../../node_modules/.prisma/client'
-import { PrismaClient } from ".prisma/client"
-// import { PrismaClient } from "@prisma/client"
+// import { PrismaClient } from ".prisma/client"
+import { PrismaClient } from "@prisma/client"
 
 @Injectable()
 export class PrismaService extends PrismaClient {
@@ -11,7 +10,7 @@ export class PrismaService extends PrismaClient {
       datasources: {
         db: {
           // url: "file:./dev_qa.db"
-          url: configService.get("DATABASE_URL")
+          url: configService.get("databaseURL")
         }
       }
     })

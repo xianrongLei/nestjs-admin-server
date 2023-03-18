@@ -12,15 +12,17 @@ services:
       - ./:/app
       - /app/node_modules
     environment:
-      - NODE_DEV=development
+      - NODE_DEV=production 
       - DB_IP=postgres
       - DB_USER=admin
       - DB_PASSWORD=admin
-      - DB_NAME=nest 
+      - DB_NAME=admin 
     command:
       - sh
       - -c
       - |
-        npx prisma migrate deploy
+        npm run prisma:generate
+        npm run prisma:push
+        npm run prisma:deploy
         npm run build 
         npm run prod

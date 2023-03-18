@@ -1,4 +1,3 @@
-import { Jwt } from "@/common/configs/config.interface"
 import { Module } from "@nestjs/common"
 import { ConfigModule, ConfigService } from "@nestjs/config"
 import { JwtModule } from "@nestjs/jwt"
@@ -11,9 +10,9 @@ import { JwtStrategy } from "./strategy"
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: async (configService: ConfigService) => ({
-        secretOrPrivateKey: configService.get<Jwt>("jwt")?.secret,
-        signOptions: configService.get<Jwt>("jwt")?.signOptions
+      useFactory: (configService: ConfigService) => ({
+        secret: configService.get("jwt.secret"),
+        signOptions: configService.get("jwt.signOptions")
       })
     })
   ],

@@ -1,0 +1,24 @@
+type Organ {
+  # Example field (placeholder)
+  exampleField: Int
+}
+
+input CreateOrganInput {
+  # Example field (placeholder)
+  exampleField: Int
+}
+
+input UpdateOrganInput {
+  id: Int
+}
+
+type Query {
+  organs: [Organ]!
+  organ(id: Int!): Organ
+}
+
+type Mutation {
+  createOrgan(createOrganInput: CreateOrganInput!): Organ!
+  updateOrgan(updateOrganInput: UpdateOrganInput!): Organ!
+  removeOrgan(id: Int!): Organ
+}

@@ -1,28 +1,26 @@
 import { Injectable } from "@nestjs/common"
-import { User } from ".prisma/client"
-import { PrismaService } from "@/prisma/prisma.service"
+import { CreateUserInput } from "./dto/create-user.input"
+import { UpdateUserInput } from "./dto/update-user.input"
 
 @Injectable()
 export class UsersService {
-  constructor(private prisma: PrismaService) {
-    this.prisma = prisma
+  create(createUserInput: CreateUserInput) {
+    return "This action adds a new user"
   }
 
-  /**
-   * 查询单个用户信息
-   * @param id
-   * @returns
-   */
-  async findOne(id: string): Promise<User> {
-    const user: User = <User>await this.prisma.user.findUnique({
-      where: {
-        id: Number(id)
-      }
-    })
-    return Object.assign(user, { hash: "******" })
+  findAll() {
+    return `This action returns all users`
   }
 
-  async editUser(user: User): Promise<User> {
-    return user
+  findOne(id: number) {
+    return `This action returns a #${id} user`
+  }
+
+  update(id: number, updateUserInput: UpdateUserInput) {
+    return `This action updates a #${id} user`
+  }
+
+  remove(id: number) {
+    return `This action removes a #${id} user`
   }
 }

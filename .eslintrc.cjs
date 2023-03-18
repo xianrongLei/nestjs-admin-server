@@ -10,6 +10,7 @@ module.exports = {
   // 解析器配置
   parser: "@typescript-eslint/parser",
   parserOptions: {
+    project: 'tsconfig.json',
     ecmaVersion: "latest",
     sourceType: "module",
     parser: "@typescript-eslint/parser",

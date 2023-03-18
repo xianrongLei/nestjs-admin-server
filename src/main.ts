@@ -16,12 +16,12 @@ async function bootstrap(): Promise<any> {
   //挂载swagger
   const swaggerConfig = new DocumentBuilder()
     .addBearerAuth()
-    .setTitle(<string>appConfig.get<Swagger>("swagger")?.title)
-    .setDescription(<string>appConfig.get<Swagger>("swagger")?.description)
-    .setVersion(<string>appConfig.get<Swagger>("swagger")?.version)
+    .setTitle(<string>appConfig.get("swagger.title"))
+    .setDescription(<string>appConfig.get("swagger.description"))
+    .setVersion(<string>appConfig.get("swagger.version"))
     .build()
   const document = SwaggerModule.createDocument(app, swaggerConfig)
-  SwaggerModule.setup("api", app, document)
+  SwaggerModule.setup(<string>appConfig.get("swagger.path"), app, document)
   //全局验证管道
   app.useGlobalPipes(
     new ValidationPipe({

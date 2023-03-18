@@ -3,7 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
-  output = "../node_modules/.prisma/client"
+  // output   = "../node_modules/.prisma/client"
 }
 
 datasource db {
@@ -15,29 +15,56 @@ model User {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  creator   Int?
+  updater   Int?
 
-  username String @unique
-  password  String 
-
-  firstName String?
-  lastName  String?
-
-  bookmarks Bookmark[]
+  username String  @unique
+  password String
+  email    String?
+  nickname String?
+  phone    String?
+  age      Int?
+  sex      Int     @default(1)
+  orgId    Int     @default(0)
+  roles    Role[]
+  posts    Post[]
 
   @@map("users")
 }
 
-model Bookmark {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model Organ {
+  id          Int     @id @default(autoincrement())
+  name        String
+  description String?
+  parentId    Int     @default(0)
+  sort        Int     @default(0)
+}
 
-  title       String
-  discription String?
-  link        String
+model Menus {
+  id          Int     @id @default(autoincrement())
+  name        String
+  description String?
+  icon        String?
+  parentId    Int     @default(0)
+  sort        Int     @default(0)
+}
 
-  User   User @relation(fields: [userId], references: [id])
-  userId Int
+model Role {
+  id          Int     @id @default(autoincrement())
+  name        String
+  description String?
+  User        User?   @relation(fields: [userId], references: [id])
+  userId      Int?
+  parentId    Int     @default(0)
+  sort        Int     @default(0)
+}
 
-  @@map("bookmarks")
+model Post {
+  id          Int     @id @default(autoincrement())
+  name        String
+  description String?
+  User        User?   @relation(fields: [userId], references: [id])
+  userId      Int?
+  parentId    Int     @default(0)
+  sort        Int     @default(0)
 }
