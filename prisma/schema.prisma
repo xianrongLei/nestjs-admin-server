@@ -1,9 +1,6 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
-  // output   = "../node_modules/.prisma/client"
+  output   = "../node_modules/.prisma/client"
 }
 
 datasource db {
@@ -17,19 +14,32 @@ model User {
   updatedAt DateTime @updatedAt
   creator   Int?
   updater   Int?
-
-  username String  @unique
-  password String
-  email    String?
-  nickname String?
-  phone    String?
-  age      Int?
-  sex      Int     @default(1)
-  orgId    Int     @default(0)
-  roles    Role[]
-  posts    Post[]
+  username  String   @unique
+  password  String
+  email     String?
+  nickname  String?
+  phone     String?
+  age       Int?
+  admin     Int      @default(0)
+  sex       Int      @default(1)
+  state     Int      @default(1)
+  Post      Post[]
+  Role      Role[]
+  Organ     Organ?   @relation(fields: [organId], references: [id])
+  organId   Int?
 
   @@map("users")
+}
+
+model Menu {
+  id          Int     @id @default(autoincrement())
+  name        String
+  description String?
+  icon        String?
+  sort        Int     @default(0)
+  state       Int     @default(1)
+  roles       Role[]
+  crud        Int[]   @default([0, 1, 2, 3])
 }
 
 model Organ {
@@ -38,33 +48,27 @@ model Organ {
   description String?
   parentId    Int     @default(0)
   sort        Int     @default(0)
-}
-
-model Menus {
-  id          Int     @id @default(autoincrement())
-  name        String
-  description String?
-  icon        String?
-  parentId    Int     @default(0)
-  sort        Int     @default(0)
-}
-
-model Role {
-  id          Int     @id @default(autoincrement())
-  name        String
-  description String?
-  User        User?   @relation(fields: [userId], references: [id])
-  userId      Int?
-  parentId    Int     @default(0)
-  sort        Int     @default(0)
+  state       Int     @default(1)
+  users       User[]
 }
 
 model Post {
   id          Int     @id @default(autoincrement())
   name        String
   description String?
-  User        User?   @relation(fields: [userId], references: [id])
-  userId      Int?
   parentId    Int     @default(0)
   sort        Int     @default(0)
+  state       Int     @default(1)
+  users       User[]
+}
+
+model Role {
+  id          Int     @id @default(autoincrement())
+  name        String
+  description String?
+  parentId    Int     @default(0)
+  sort        Int     @default(0)
+  state       Int     @default(1)
+  users       User[]
+  menus       Menu[]
 }

@@ -1,8 +1,8 @@
-import { PrismaService } from "@/prisma/prisma.service"
+import { PrismaService } from "@/common/prisma/prisma.service"
 import { Injectable } from "@nestjs/common"
 import { ConfigService } from "@nestjs/config"
 import { PassportStrategy } from "@nestjs/passport"
-import { User } from "@prisma/client"
+import { User } from ".prisma/client"
 import { Strategy } from "passport-local"
 import { ExtractJwt } from "passport-jwt"
 

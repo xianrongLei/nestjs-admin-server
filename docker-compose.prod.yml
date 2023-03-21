@@ -22,7 +22,6 @@ services:
       - -c
       - |
         npm run prisma:generate
-        npm run prisma:push
         npm run prisma:deploy
         npm run build 
         npm run prod

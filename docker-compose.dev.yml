@@ -16,12 +16,13 @@ services:
       - DB_IP=postgres
       - DB_USER=admin
       - DB_PASSWORD=admin
-      - DB_NAME=admin
+      - DB_NAME=nest
     command:
       - sh
       - -c
       - |
-        npm run prisma:generate
-        npm run prisma:push
         npm run prisma:dev
         npm run dev
+# npm run prisma:generate
+# npm run prisma:push
+# npm run prisma:pull

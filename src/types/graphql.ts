@@ -40,14 +40,40 @@ export interface UpdateRoleInput {
 }
 
 export interface CreateUserInput {
-  username?: Nullable<string>
-  password?: Nullable<string>
+  creator?: Nullable<string>
+  updater?: Nullable<string>
+  username: string
+  password: string
+  nickname?: Nullable<string>
+  email?: Nullable<string>
+  phone?: Nullable<string>
+  sex?: Nullable<number>
+  age?: Nullable<number>
+  admin?: Nullable<number>
+  avatar?: Nullable<string>
+  organId?: Nullable<number>
+  posts?: Nullable<Nullable<number>[]>
+  roles?: Nullable<Nullable<number>[]>
+  state?: Nullable<number>
 }
 
 export interface UpdateUserInput {
-  id?: Nullable<number>
+  id: number
+  creator?: Nullable<string>
+  updater?: Nullable<string>
   username?: Nullable<string>
   password?: Nullable<string>
+  nickname?: Nullable<string>
+  email?: Nullable<string>
+  phone?: Nullable<string>
+  sex?: Nullable<number>
+  age?: Nullable<number>
+  admin?: Nullable<number>
+  avatar?: Nullable<string>
+  organId?: Nullable<number>
+  posts?: Nullable<Nullable<number>[]>
+  roles?: Nullable<Nullable<number>[]>
+  state?: Nullable<number>
 }
 
 export interface Menu {
@@ -98,9 +124,25 @@ export interface Role {
 }
 
 export interface User {
-  id?: Nullable<number>
-  username?: Nullable<string>
-  password?: Nullable<string>
+  id: number
+  createdAt: DateTime
+  updatedAt: DateTime
+  creator?: Nullable<string>
+  updater?: Nullable<string>
+  username: string
+  password: string
+  nickname?: Nullable<string>
+  email?: Nullable<string>
+  phone?: Nullable<string>
+  sex?: Nullable<number>
+  age?: Nullable<number>
+  admin?: Nullable<number>
+  avatar?: Nullable<string>
+  organId?: Nullable<number>
+  posts?: Nullable<Nullable<number>[]>
+  roles?: Nullable<Nullable<number>[]>
+  state?: Nullable<number>
 }
 
+export type DateTime = any
 type Nullable<T> = T | null
