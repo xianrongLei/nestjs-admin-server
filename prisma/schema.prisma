@@ -23,6 +23,7 @@ model User {
   admin     Int      @default(0)
   sex       Int      @default(1)
   state     Int      @default(1)
+  avatar    String?
   Post      Post[]
   Role      Role[]
   Organ     Organ?   @relation(fields: [organId], references: [id])
@@ -38,6 +39,8 @@ model Menu {
   icon        String?
   sort        Int     @default(0)
   state       Int     @default(1)
+  type        Int     @default(0)
+  route       String
   roles       Role[]
   crud        Int[]   @default([0, 1, 2, 3])
 }
