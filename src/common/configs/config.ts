@@ -1,4 +1,5 @@
 import type { Config } from "./config.interface"
+
 const config: Config = {
   jwt: {
     secret: "jwt_secret",

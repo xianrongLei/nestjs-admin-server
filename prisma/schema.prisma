@@ -20,14 +20,14 @@ model User {
   nickname  String?
   phone     String?
   age       Int?
-  admin     Int      @default(0)
   sex       Int      @default(1)
-  state     Int      @default(1)
+  admin     Int      @default(0)
   avatar    String?
-  Post      Post[]
-  Role      Role[]
-  Organ     Organ?   @relation(fields: [organId], references: [id])
   organId   Int?
+  state     Int      @default(1)
+  Organ     Organ?   @relation(fields: [organId], references: [id])
+  Post      Post[]   @relation("PostToUser")
+  Role      Role[]   @relation("RoleToUser")
 
   @@map("users")
 }
@@ -41,8 +41,9 @@ model Menu {
   state       Int     @default(1)
   type        Int     @default(0)
   route       String
-  roles       Role[]
   crud        Int[]   @default([0, 1, 2, 3])
+  roles       Role[]  @relation("MenuToRole")
+  @@map("menus")
 }
 
 model Organ {
@@ -53,6 +54,7 @@ model Organ {
   sort        Int     @default(0)
   state       Int     @default(1)
   users       User[]
+  @@map("organ")
 }
 
 model Post {
@@ -62,7 +64,8 @@ model Post {
   parentId    Int     @default(0)
   sort        Int     @default(0)
   state       Int     @default(1)
-  users       User[]
+  users       User[]  @relation("PostToUser")
+  @@map("posts")
 }
 
 model Role {
@@ -72,6 +75,7 @@ model Role {
   parentId    Int     @default(0)
   sort        Int     @default(0)
   state       Int     @default(1)
-  users       User[]
-  menus       Menu[]
+  menus       Menu[]  @relation("MenuToRole")
+  users       User[]  @relation("RoleToUser")
+  @@map("roles")
 }
