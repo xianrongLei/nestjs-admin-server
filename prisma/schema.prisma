@@ -43,6 +43,7 @@ model Menu {
   route       String
   crud        Int[]   @default([0, 1, 2, 3])
   roles       Role[]  @relation("MenuToRole")
+
   @@map("menus")
 }
 
@@ -54,6 +55,7 @@ model Organ {
   sort        Int     @default(0)
   state       Int     @default(1)
   users       User[]
+
   @@map("organ")
 }
 
@@ -65,6 +67,7 @@ model Post {
   sort        Int     @default(0)
   state       Int     @default(1)
   users       User[]  @relation("PostToUser")
+
   @@map("posts")
 }
 
@@ -77,5 +80,6 @@ model Role {
   state       Int     @default(1)
   menus       Menu[]  @relation("MenuToRole")
   users       User[]  @relation("RoleToUser")
+
   @@map("roles")
 }
