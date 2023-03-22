@@ -5,12 +5,13 @@ module.exports = {
     node: true,
     jest: true
   },
+  incl: ["./tsconfig.json"],
   // 插件从右到左覆盖处理
   extends: ["eslint:recommended", "prettier"],
   // 解析器配置
   parser: "@typescript-eslint/parser",
   parserOptions: {
-    project: 'tsconfig.json',
+    project: ["tsconfig.json"],
     ecmaVersion: "latest",
     sourceType: "module",
     parser: "@typescript-eslint/parser",
