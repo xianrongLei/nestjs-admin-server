@@ -1,6 +1,6 @@
 import { Test, TestingModule } from "@nestjs/testing"
-import { MenusResolver } from "./menus.resolver"
-import { MenusService } from "./menus.service"
+import { MenusResolver } from "./menu.resolver"
+import { MenusService } from "./menu.service"
 
 describe("MenusResolver", () => {
   let resolver: MenusResolver
