@@ -1,19 +1,25 @@
-import { Prisma } from ".prisma/client"
+import { Prisma, User } from ".prisma/client"
 import { PrismaService } from "@/common/prisma/prisma.service"
 import { ForbiddenException, Injectable } from "@nestjs/common"
-import { CreateUserInput } from "./dto/create-user.input"
-import { UpdateUserInput } from "./dto/update-user.input"
+import * as argon from "argon2"
+import { CreateUserInput } from "./dto/create-user.input.dto"
+import { UpdateUserInput } from "./dto/update-user.input.dto"
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) {
+    this.prisma = prisma
+  }
 
-  async create(createUserInput: CreateUserInput): Promise<CreateUserInput> {
+  async create(createUserInput: CreateUserInput): Promise<any> {
     try {
-      const data: CreateUserInput = await this.prisma.user.create({
-        data: createUserInput
+      const password: string = await argon.hash(createUserInput.password)
+      return await this.prisma.user.create({
+        data: {
+          ...createUserInput,
+          password
+        }
       })
-      return data
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         if (error.code == "P2002") {
@@ -24,16 +30,27 @@ export class UsersService {
     }
   }
 
-  findAll() {
-    return `This action returns all users`
+  async findAll(): Promise<User[]> {
+    return await this.prisma.user.findMany()
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`
+  async findOne(id: number): Promise<User> {
+    return <User>await this.prisma.user.findFirst({
+      where: {
+        id
+      }
+    })
   }
 
-  update(id: number, updateUserInput: UpdateUserInput) {
-    return `This action updates a #${id} user`
+  async update(id: number, updateUserInput: UpdateUserInput): Promise<User> {
+    console.log(updateUserInput)
+
+    return await this.prisma.user.update({
+      where: {
+        id
+      },
+      data: updateUserInput
+    })
   }
 
   remove(id: number) {

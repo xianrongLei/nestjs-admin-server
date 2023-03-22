@@ -1,19 +1,19 @@
 scalar DateTime
 
 type User {
-  id: Int!
+  id: Int
 
-  createdAt: DateTime!
+  createdAt: DateTime
 
-  updatedAt: DateTime!
+  updatedAt: DateTime
 
   creator: String
 
   updater: String
 
-  username: String!
+  username: String
 
-  password: String!
+  password: String
 
   nickname: String
 
@@ -43,9 +43,9 @@ input CreateUserInput {
 
   updater: String
 
-  username: String!
+  username: String
 
-  password: String!
+  password: String
 
   nickname: String
 
@@ -71,7 +71,7 @@ input CreateUserInput {
 }
 
 input UpdateUserInput {
-  id: Int!
+  id: Int
 
   creator: String
 

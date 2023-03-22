@@ -47,7 +47,7 @@ import { PostsModule } from "./post/post.module"
         plugins: [ApolloServerPluginLandingPageLocalDefault()],
         definitions: {
           path: join(process.cwd(), "src/types/graphql.ts"),
-          outputAs: "interface"
+          outputAs: configService.get("graphql.outputAs")
         }
       }),
       inject: [ConfigService]

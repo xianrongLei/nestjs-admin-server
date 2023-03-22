@@ -42,8 +42,8 @@ export interface UpdateRoleInput {
 export interface CreateUserInput {
   creator?: Nullable<string>
   updater?: Nullable<string>
-  username: string
-  password: string
+  username?: Nullable<string>
+  password?: Nullable<string>
   nickname?: Nullable<string>
   email?: Nullable<string>
   phone?: Nullable<string>
@@ -58,7 +58,7 @@ export interface CreateUserInput {
 }
 
 export interface UpdateUserInput {
-  id: number
+  id?: Nullable<number>
   creator?: Nullable<string>
   updater?: Nullable<string>
   username?: Nullable<string>
@@ -124,13 +124,13 @@ export interface Role {
 }
 
 export interface User {
-  id: number
-  createdAt: DateTime
-  updatedAt: DateTime
+  id?: Nullable<number>
+  createdAt?: Nullable<DateTime>
+  updatedAt?: Nullable<DateTime>
   creator?: Nullable<string>
   updater?: Nullable<string>
-  username: string
-  password: string
+  username?: Nullable<string>
+  password?: Nullable<string>
   nickname?: Nullable<string>
   email?: Nullable<string>
   phone?: Nullable<string>

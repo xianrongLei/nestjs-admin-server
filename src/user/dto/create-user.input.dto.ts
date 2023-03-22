@@ -1,7 +1,8 @@
 import { IsNotEmpty, IsString } from "class-validator"
 import { ApiProperty } from "@nestjs/swagger"
+import { User } from "@/types/graphql"
 
-export class AuthDto {
+export class CreateUserInput implements User {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
@@ -11,13 +12,4 @@ export class AuthDto {
   @IsString()
   @IsNotEmpty()
   password!: string
-
-  @ApiProperty()
-  @IsString()
-  @IsNotEmpty()
-  uniCode!: string
-
-  @ApiProperty()
-  @IsNotEmpty()
-  answer!: string | number
 }

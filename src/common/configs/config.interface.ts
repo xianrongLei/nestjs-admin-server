@@ -19,6 +19,7 @@ export type Reids = {
   port: number
 }
 export type Graphql = {
+  outputAs?: "interface" | "class"
   playground?: boolean
   playgroundEnabled?: boolean
   debug?: boolean

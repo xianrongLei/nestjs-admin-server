@@ -6,7 +6,8 @@ const config: Config = {
     signOptions: { expiresIn: "60s" }
   },
   graphql: {
-    playground: false
+    playground: false,
+    outputAs: "interface"
   },
   app: {
     port: 3000,
