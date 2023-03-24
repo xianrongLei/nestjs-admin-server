@@ -5,7 +5,7 @@ module.exports = {
     node: true,
     jest: true
   },
-  incl: ["./tsconfig.json"],
+  incl:[],
   // 插件从右到左覆盖处理
   extends: ["eslint:recommended", "prettier"],
   // 解析器配置
