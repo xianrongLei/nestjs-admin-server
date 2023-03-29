@@ -1,15 +1,42 @@
 type Menu {
-  # Example field (placeholder)
-  exampleField: Int
+  id: Int
+  name: String
+  route: String
+  description: String
+  icon: String
+  title: String
+  sort: Int
+  state: Int
+  type: Int
+  outside: Boolean
+  crud: [Int]
 }
 
 input CreateMenuInput {
-  # Example field (placeholder)
-  exampleField: Int
+  name: String
+  route: String
+  description: String
+  icon: String
+  title: String
+  sort: Int
+  state: Int
+  type: Int
+  outside: Boolean
+  crud: [Int]
 }
 
 input UpdateMenuInput {
   id: Int
+  name: String
+  route: String
+  description: String
+  icon: String
+  title: String
+  sort: Int
+  state: Int
+  type: Int
+  outside: Boolean
+  crud: [Int]
 }
 
 type Query {

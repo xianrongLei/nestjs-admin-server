@@ -10,7 +10,11 @@ export class UsersService {
   constructor(private readonly prisma: PrismaService) {
     this.prisma = prisma
   }
-
+  /**
+   * 创建用户
+   * @param createUserInput 
+   * @returns 
+   */
   async create(createUserInput: CreateUserInput): Promise<any> {
     try {
       const password: string = await argon.hash(createUserInput.password)
@@ -29,7 +33,10 @@ export class UsersService {
       throw error
     }
   }
-
+  /**
+   * 查询所有用户
+   * @returns 
+   */
   async findAll(): Promise<User[]> {
     return await this.prisma.user.findMany()
   }

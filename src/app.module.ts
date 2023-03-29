@@ -1,4 +1,4 @@
-import { CacheModule, Module } from "@nestjs/common"
+import { CacheModule, CacheStore, Module } from "@nestjs/common"
 import { ConfigModule, ConfigService } from "@nestjs/config"
 import { AuthModule } from "./auth/auth.module"
 import { PrismaModule } from "./common/prisma/prisma.module"
@@ -9,7 +9,6 @@ import { AppService } from "./app.service"
 import { UsersModule } from "./user/user.module"
 import config from "./common/configs/config"
 import { GraphQLModule } from "@nestjs/graphql"
-import { join } from "path"
 import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo"
 import { ApolloServerPluginLandingPageLocalDefault } from "@apollo/server/plugin/landingPage/default"
 import { OrgansModule } from "./organ/organ.module"
@@ -28,7 +27,7 @@ import { PostsModule } from "./post/post.module"
     PrismaModule,
     CacheModule.register({
       isGlobal: true,
-      store: <any>redisStore,
+      store: redisStore as CacheStore,
       useFactory: function (configService: ConfigService) {
         return {
           socket: {
@@ -43,10 +42,10 @@ import { PostsModule } from "./post/post.module"
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
         playground: configService.get("graphql.playground"),
-        typePaths: ["./**/*.graphql"],
+        typePaths: configService.get("graphql.typePaths"),
         plugins: [ApolloServerPluginLandingPageLocalDefault()],
         definitions: {
-          path: join(process.cwd(), "src/types/graphql.ts"),
+          path: configService.get("graphql.path"),
           outputAs: configService.get("graphql.outputAs")
         }
       }),

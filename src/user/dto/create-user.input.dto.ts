@@ -1,14 +1,13 @@
 import { IsNotEmpty, IsString } from "class-validator"
-import { ApiProperty } from "@nestjs/swagger"
-import { User } from "@/types/graphql"
+import { Field, InputType } from "@nestjs/graphql"
 
-export class CreateUserInput implements User {
-  @ApiProperty()
+@InputType()
+export class CreateUserInput {
+  @Field()
   @IsString()
   @IsNotEmpty()
   username!: string
-
-  @ApiProperty()
+  @Field()
   @IsString()
   @IsNotEmpty()
   password!: string

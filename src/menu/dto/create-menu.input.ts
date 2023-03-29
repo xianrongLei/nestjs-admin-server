@@ -1,1 +1,5 @@
-export class CreateMenuInput {}
+import { Field, ObjectType } from "@nestjs/graphql";
+
+@ObjectType()
+export class CreateMenuInput {
+}

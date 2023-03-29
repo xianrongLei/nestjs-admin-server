@@ -18,13 +18,13 @@ model User {
   password  String
   email     String?
   nickname  String?
-  phone     String?
   age       Int?
   sex       Int      @default(1)
   admin     Int      @default(0)
   avatar    String?
   organId   Int?
   state     Int      @default(1)
+  phone     Int?
   Organ     Organ?   @relation(fields: [organId], references: [id])
   Post      Post[]   @relation("PostToUser")
   Role      Role[]   @relation("RoleToUser")
@@ -35,15 +35,15 @@ model User {
 model Menu {
   id          Int     @id @default(autoincrement())
   name        String
-  route       String
   description String?
   icon        String?
-  title       String?
   sort        Int     @default(0)
   state       Int     @default(1)
   type        Int     @default(0)
-  outside     Boolean @default(false)
+  route       String
   crud        Int[]   @default([0, 1, 2, 3])
+  outside     Boolean @default(false)
+  title       String?
   roles       Role[]  @relation("MenuToRole")
 
   @@map("menus")

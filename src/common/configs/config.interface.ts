@@ -19,12 +19,14 @@ export type Reids = {
   port: number
 }
 export type Graphql = {
-  outputAs?: "interface" | "class"
-  playground?: boolean
+  outputAs: "interface" | "class"
+  playground: boolean
   playgroundEnabled?: boolean
   debug?: boolean
   schemaDestination?: string
   sortSchema?: boolean
+  typePaths: string[]
+  path: string
 }
 export interface Config {
   jwt: Jwt

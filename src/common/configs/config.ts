@@ -1,3 +1,4 @@
+import { join } from "path"
 import type { Config } from "./config.interface"
 
 const config: Config = {
@@ -7,7 +8,9 @@ const config: Config = {
   },
   graphql: {
     playground: false,
-    outputAs: "interface"
+    outputAs: "interface",
+    path: join(process.cwd(), "src/types/graphql.ts"),
+    typePaths: ["./**/*.graphql"]
   },
   app: {
     port: 3000,

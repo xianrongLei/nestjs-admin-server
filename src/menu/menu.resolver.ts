@@ -3,7 +3,7 @@ import { MenusService } from "./menu.service"
 import { CreateMenuInput } from "./dto/create-menu.input"
 import { UpdateMenuInput } from "./dto/update-menu.input"
 
-@Resolver("Menu")
+@Resolver("menu")
 export class MenusResolver {
   constructor(private readonly menusService: MenusService) {}
 
