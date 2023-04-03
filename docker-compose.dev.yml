@@ -21,6 +21,6 @@ services:
       - sh
       - -c
       - |
-        npm run prisma:generate
         npm run prisma:dev
+        npm run prisma:generate
         npm run dev

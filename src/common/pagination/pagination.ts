@@ -6,26 +6,26 @@ export default function Paginated<TItem>(TItemClass: Type<TItem>) {
   @ObjectType(`${TItemClass.name}Edge`)
   abstract class EdgeType {
     @Field(() => String)
-    cursor: string;
+    cursor!: string;
 
     @Field(() => TItemClass)
-    node: TItem;
+    node!: TItem;
   }
 
   // `isAbstract` decorator option is mandatory to prevent registering in schema
   @ObjectType({ isAbstract: true })
   abstract class PaginatedType {
     @Field(() => [EdgeType], { nullable: true })
-    edges: Array<EdgeType>;
+    edges!: Array<EdgeType>;
 
     // @Field((type) => [TItemClass], { nullable: true })
     // nodes: Array<TItem>;
 
     @Field(() => PageInfo)
-    pageInfo: PageInfo;
+    pageInfo!: PageInfo;
 
     @Field(() => Int)
-    totalCount: number;
+    totalCount!: number;
   }
   return PaginatedType;
 }

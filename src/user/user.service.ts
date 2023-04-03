@@ -4,6 +4,7 @@ import { ForbiddenException, Injectable } from "@nestjs/common"
 import * as argon from "argon2"
 import { CreateUserInput } from "./dto/create-user.input.dto"
 import { UpdateUserInput } from "./dto/update-user.input.dto"
+import { UserOrder } from "./dto/order-user.input.dto"
 
 @Injectable()
 export class UsersService {
@@ -12,8 +13,8 @@ export class UsersService {
   }
   /**
    * 创建用户
-   * @param createUserInput 
-   * @returns 
+   * @param createUserInput
+   * @returns
    */
   async create(createUserInput: CreateUserInput): Promise<any> {
     try {
@@ -35,10 +36,12 @@ export class UsersService {
   }
   /**
    * 查询所有用户
-   * @returns 
+   * @returns
    */
-  async findAll(): Promise<User[]> {
-    return await this.prisma.user.findMany()
+  async findAll(orderBy?: UserOrder): Promise<User[]> {
+    return await this.prisma.user.findMany({
+      orderBy: (orderBy || {}) as Record<string, any>
+    })
   }
 
   async findOne(id: number): Promise<User> {
