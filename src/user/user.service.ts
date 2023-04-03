@@ -67,8 +67,6 @@ export class UsersService {
    * @returns
    */
   async update(id: number, updateUserInput: UpdateUserInput): Promise<User> {
-    console.log(updateUserInput)
-
     return await this.prisma.user.update({
       where: {
         id
@@ -77,7 +75,16 @@ export class UsersService {
     })
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`
+  /**
+   * 删除用户
+   * @param id
+   * @returns
+   */
+  async remove(id: number) {
+    return await this.prisma.user.delete({
+      where: {
+        id
+      }
+    })
   }
 }
