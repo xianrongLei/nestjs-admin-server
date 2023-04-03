@@ -15,6 +15,7 @@
     "prisma:push": "npx prisma db push",
     "prisma:pull": "npx prisma db pull",
     "prisma:studio": "npx prisma studio",
+    "husky:init": "npx husky install",
     "dev": "nest start --watch",
     "build": "nest build",
     "prod": "node dist/main",
