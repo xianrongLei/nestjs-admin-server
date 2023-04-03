@@ -4,7 +4,7 @@ import { ForbiddenException, Injectable } from "@nestjs/common"
 import * as argon from "argon2"
 import { CreateUserInput } from "./dto/create-user.input.dto"
 import { UpdateUserInput } from "./dto/update-user.input.dto"
-import { UserOrder } from "./dto/order-user.input.dto"
+import { OrderByParams } from "@/types/graphql"
 
 @Injectable()
 export class UsersService {
@@ -16,15 +16,16 @@ export class UsersService {
    * @param createUserInput
    * @returns
    */
-  async create(createUserInput: CreateUserInput): Promise<any> {
+  async create(createUserInput: CreateUserInput): Promise<User> {
     try {
       const password: string = await argon.hash(createUserInput.password)
-      return await this.prisma.user.create({
+      const user = await this.prisma.user.create({
         data: {
           ...createUserInput,
           password
         }
       })
+      return { ...user, password: "" }
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         if (error.code == "P2002") {
@@ -38,12 +39,17 @@ export class UsersService {
    * 查询所有用户
    * @returns
    */
-  async findAll(orderBy?: UserOrder): Promise<User[]> {
-    return await this.prisma.user.findMany({
-      orderBy: (orderBy || {}) as Record<string, any>
+  async findAll(orderBy?: OrderByParams): Promise<User[]> {
+    const users = await this.prisma.user.findMany({
+      orderBy: orderBy?.field ? { [orderBy.field]: orderBy?.direction } : {}
     })
+    return users.map(item => ({ ...item, password: "" }))
   }
-
+  /**
+   * 查询单个用户信息
+   * @param id
+   * @returns
+   */
   async findOne(id: number): Promise<User> {
     return <User>await this.prisma.user.findFirst({
       where: {

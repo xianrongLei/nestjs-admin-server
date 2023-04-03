@@ -1,7 +1,4 @@
-import { IsNotEmpty, IsNumber } from "class-validator"
-import { ApiProperty } from "@nestjs/swagger"
-import { HideField, Field, InputType } from "@nestjs/graphql"
-import { User } from "@/types/graphql"
+import { Field, InputType } from "@nestjs/graphql"
 
 @InputType()
 export class UpdateUserInput {

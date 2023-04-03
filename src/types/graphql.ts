@@ -77,6 +77,11 @@ export interface CreateUserInput {
     state?: Nullable<number>;
 }
 
+export interface OrderByParams {
+    field?: Nullable<string>;
+    direction?: Nullable<string>;
+}
+
 export interface UpdateUserInput {
     id?: Nullable<number>;
     creator?: Nullable<string>;
@@ -119,7 +124,7 @@ export interface IQuery {
     post(id: number): Nullable<Post> | Promise<Nullable<Post>>;
     roles(): Nullable<Role>[] | Promise<Nullable<Role>[]>;
     role(id: number): Nullable<Role> | Promise<Nullable<Role>>;
-    users(): Nullable<User>[] | Promise<Nullable<User>[]>;
+    users(orderBy?: Nullable<OrderByParams>): Nullable<User>[] | Promise<Nullable<User>[]>;
     user(id: number): Nullable<User> | Promise<Nullable<User>>;
 }
 

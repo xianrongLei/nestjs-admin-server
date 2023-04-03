@@ -2,7 +2,7 @@ import { Resolver, Query, Mutation, Args } from "@nestjs/graphql"
 import { UsersService } from "./user.service"
 import { CreateUserInput } from "./dto/create-user.input.dto"
 import { UpdateUserInput } from "./dto/update-user.input.dto"
-import { UserOrder } from "./dto/order-user.input.dto"
+import { OrderByParams } from "@/types/graphql"
 
 @Resolver("user")
 export class UsersResolver {
@@ -14,7 +14,10 @@ export class UsersResolver {
   }
 
   @Query("users")
-  findAll(@Args("orderBy") orderBy?: UserOrder) {
+  findAll(
+    @Args("orderBy")
+    orderBy?: OrderByParams
+  ) {
     return this.usersService.findAll(orderBy)
   }
 
