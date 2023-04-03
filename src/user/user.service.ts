@@ -35,9 +35,11 @@ export class UsersService {
       throw error
     }
   }
+
   /**
    * 查询所有用户
-   * @returns
+   * @param orderBy 
+   * @returns 
    */
   async findAll(orderBy?: OrderByParams): Promise<User[]> {
     const users = await this.prisma.user.findMany({
@@ -58,6 +60,12 @@ export class UsersService {
     })
   }
 
+  /**
+   * 更新用户信息
+   * @param id 
+   * @param updateUserInput 
+   * @returns 
+   */
   async update(id: number, updateUserInput: UpdateUserInput): Promise<User> {
     console.log(updateUserInput)
 

@@ -8,7 +8,6 @@ import { User, Prisma } from ".prisma/client"
 import svgCaptcha from "svg-captcha"
 import { CaptchaDto } from "./dto/captcha.dto"
 import { Cache } from "cache-manager"
-import { OK } from "@/common/response/ok.response"
 
 @Injectable()
 export class AuthService {
@@ -28,7 +27,7 @@ export class AuthService {
    * @param param0
    * @returns
    */
-  async signup(dto: AuthDto): Promise<OK<User>> {
+  async signup(dto: AuthDto): Promise<User> {
     try {
       //验证码比对
       const cacheAnswer = await this.cacheManager.get(dto.uniCode)
@@ -43,7 +42,7 @@ export class AuthService {
           password: password
         }
       })
-      return new OK(user)
+      return user
     } catch (error: unknown) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         if (error.code == "P2002") {
@@ -59,7 +58,7 @@ export class AuthService {
    * @param param0
    * @returns
    */
-  async signin({ password, username, uniCode, answer }: AuthDto): Promise<OK<Record<string, any>>> {
+  async signin({ password, username, uniCode, answer }: AuthDto): Promise<Record<string, any>> {
     //验证码比对
     const cacheAnswer = await this.cacheManager.get(uniCode)
     if (cacheAnswer !== answer) {
@@ -86,18 +85,18 @@ export class AuthService {
     const token = await this.jwt.signAsync(payload, {
       secret: this.config.get("JWT_SECRET")
     })
-    return new OK({
+    return {
       ...user,
       password: "",
       access_token: token
-    })
+    }
   }
   /**
    * 验证码
    * @param dto
    * @returns
    */
-  async captcha(dto: CaptchaDto): Promise<OK<Record<string, any>>> {
+  async captcha(dto: CaptchaDto): Promise<Record<string, any>> {
     let captcha: svgCaptcha.CaptchaObj
     if (Number(dto.type) == 0) {
       captcha = svgCaptcha.create({
@@ -117,10 +116,10 @@ export class AuthService {
     const time = 60 * 5
     await this.cacheManager.set(uniCode, captcha.text, time)
 
-    return new OK({
+    return {
       time,
       uniCode,
       svg: captcha.data
-    })
+    }
   }
 }

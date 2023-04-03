@@ -24,7 +24,7 @@ model User {
   avatar    String?
   organId   Int?
   state     Int      @default(1)
-  phone     Int?
+  phone     String?
   Organ     Organ?   @relation(fields: [organId], references: [id])
   Post      Post[]   @relation("PostToUser")
   Role      Role[]   @relation("RoleToUser")
