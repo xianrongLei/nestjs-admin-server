@@ -17,7 +17,8 @@ export interface CreateMenuInput {
   state?: Nullable<number>;
   type?: Nullable<number>;
   outside?: Nullable<boolean>;
-  crud?: Nullable<Nullable<number>[]>;
+  authNames?: Nullable<Nullable<string>[]>;
+  parentId?: Nullable<number>;
 }
 
 export interface UpdateMenuInput {
@@ -31,7 +32,8 @@ export interface UpdateMenuInput {
   state?: Nullable<number>;
   type?: Nullable<number>;
   outside?: Nullable<boolean>;
-  crud?: Nullable<Nullable<number>[]>;
+  authNames?: Nullable<Nullable<string>[]>;
+  parentId?: Nullable<number>;
 }
 
 export interface CreateOrganInput {
@@ -111,7 +113,8 @@ export interface Menu {
   state?: Nullable<number>;
   type?: Nullable<number>;
   outside?: Nullable<boolean>;
-  crud?: Nullable<Nullable<number>[]>;
+  authNames?: Nullable<Nullable<string>[]>;
+  parentId?: Nullable<number>;
 }
 
 export interface IQuery {

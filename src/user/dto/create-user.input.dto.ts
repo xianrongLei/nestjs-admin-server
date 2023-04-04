@@ -1,5 +1,5 @@
-import { IsEmail, IsNotEmpty, IsString, IsOptional, IsDate } from "class-validator"
-import { Field, InputType, Int } from "@nestjs/graphql"
+import { IsEmail, IsNotEmpty, IsString, IsOptional, IsDate } from "class-validator";
+import { Field, InputType, Int } from "@nestjs/graphql";
 
 @InputType()
 export class CreateUserInput {
@@ -9,111 +9,111 @@ export class CreateUserInput {
   @Field(() => String)
   @IsString()
   @IsNotEmpty()
-  username!: string
+  username!: string;
   /**
    * 用户密码
    */
   @Field(() => String)
   @IsString()
   @IsNotEmpty()
-  password!: string
+  password!: string;
   /**
    * id
    */
   @Field(() => Int)
   @IsOptional()
-  id?: number
+  id?: number;
   /**
    * 创建时间
    */
   @Field(() => Date)
   @IsOptional()
   @IsDate()
-  createdAt?: string
+  createdAt?: string;
   /**
    * 更新时间
    */
   @Field(() => Date)
   @IsOptional()
   @IsDate()
-  updatedAt?: string
+  updatedAt?: string;
   /**
    * 创建人
    */
   @Field(() => Int)
   @IsOptional()
-  creator?: number
+  creator?: number;
   /**
    * 更新人
    */
   @Field(() => Int)
   @IsOptional()
-  updater?: number
+  updater?: number;
   /**
    * 昵称
    */
   @Field(() => String)
   @IsOptional()
-  nickname?: string
+  nickname?: string;
   /**
    * 邮箱
    */
   @Field(() => String)
   @IsEmail()
   @IsOptional()
-  email?: string
+  email?: string;
   /**
    * 手机号码
    */
   @Field(() => String)
   @IsOptional()
-  phone?: string
+  phone?: string;
   /**
    * 性别 0 女 1 男
    */
   @Field(() => Int)
   @IsOptional()
-  sex?: number
+  sex?: number;
   /**
    * 手机号码
    */
   @Field(() => Int)
   @IsOptional()
-  age!: number
+  age!: number;
   /**
    * 是否管理员 0否 1是
    */
   @Field(() => Int)
   @IsOptional()
-  admin?: number
+  admin?: number;
   /**
    * 用户头像
    */
   @Field(() => String)
   @IsOptional()
-  avatar?: string
+  avatar?: string;
   /**
    * 用户组织id
    */
   @Field(() => Int)
   @IsOptional()
-  organId?: number
+  organId?: number;
   /**
    * 用户岗位列表id
    */
   @Field(() => [Int])
   @IsOptional()
-  posts?: number
+  posts?: number;
   /**
    * 用户角色列表id
    */
   @Field(() => [Int])
   @IsOptional()
-  roles?: number
+  roles?: number;
   /**
    * 用户账号状态
    */
   @Field(() => Int)
   @IsOptional()
-  state?: number
+  state?: number;
 }

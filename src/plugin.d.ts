@@ -1,1 +1,1 @@
-declare module "shelljs"
+declare module "shelljs";

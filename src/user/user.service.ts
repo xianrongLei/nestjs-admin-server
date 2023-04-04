@@ -1,15 +1,15 @@
-import { Prisma, User } from ".prisma/client"
-import { PrismaService } from "@/common/prisma/prisma.service"
-import { ForbiddenException, Injectable } from "@nestjs/common"
-import * as argon from "argon2"
-import { CreateUserInput } from "./dto/create-user.input.dto"
-import { UpdateUserInput } from "./dto/update-user.input.dto"
-import { OrderByParams } from "@/types/graphql"
+import { Prisma, User } from ".prisma/client";
+import { PrismaService } from "@/common/prisma/prisma.service";
+import { ForbiddenException, Injectable } from "@nestjs/common";
+import * as argon from "argon2";
+import { CreateUserInput } from "./dto/create-user.input.dto";
+import { UpdateUserInput } from "./dto/update-user.input.dto";
+import { OrderByParams } from "@/types/graphql";
 
 @Injectable()
 export class UsersService {
   constructor(private readonly prisma: PrismaService) {
-    this.prisma = prisma
+    this.prisma = prisma;
   }
   /**
    * 创建用户
@@ -18,21 +18,21 @@ export class UsersService {
    */
   async create(createUserInput: CreateUserInput): Promise<User> {
     try {
-      const password: string = await argon.hash(createUserInput.password)
+      const password: string = await argon.hash(createUserInput.password);
       const user = await this.prisma.user.create({
         data: {
           ...createUserInput,
           password
         }
-      })
-      return { ...user, password: "" }
+      });
+      return { ...user, password: "" };
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         if (error.code == "P2002") {
-          throw new ForbiddenException(`${error?.meta?.target} should be unique`)
+          throw new ForbiddenException(`${error?.meta?.target} should be unique`);
         }
       }
-      throw error
+      throw error;
     }
   }
 
@@ -44,8 +44,8 @@ export class UsersService {
   async findAll(orderBy?: OrderByParams): Promise<User[]> {
     const users = await this.prisma.user.findMany({
       orderBy: orderBy?.field ? { [orderBy.field]: orderBy?.direction } : {}
-    })
-    return users.map(item => ({ ...item, password: "" }))
+    });
+    return users.map(item => ({ ...item, password: "" }));
   }
   /**
    * 查询单个用户信息
@@ -57,7 +57,7 @@ export class UsersService {
       where: {
         id
       }
-    })
+    });
   }
 
   /**
@@ -72,7 +72,7 @@ export class UsersService {
         id
       },
       data: updateUserInput
-    })
+    });
   }
 
   /**
@@ -85,6 +85,6 @@ export class UsersService {
       where: {
         id
       }
-    })
+    });
   }
 }

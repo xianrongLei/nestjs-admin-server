@@ -1,7 +1,7 @@
-import { Resolver, Query, Mutation, Args } from "@nestjs/graphql"
-import { MenusService } from "./menu.service"
-import { CreateMenuInput } from "./dto/create-menu.input"
-import { UpdateMenuInput } from "./dto/update-menu.input"
+import { Resolver, Query, Mutation, Args } from "@nestjs/graphql";
+import { MenusService } from "./menu.service";
+import { CreateMenuInput } from "./dto/create-menu.input";
+import { UpdateMenuInput } from "./dto/update-menu.input";
 
 @Resolver("menu")
 export class MenusResolver {
@@ -9,26 +9,26 @@ export class MenusResolver {
 
   @Mutation("createMenu")
   create(@Args("createMenuInput") createMenuInput: CreateMenuInput) {
-    return this.menusService.create(createMenuInput)
+    return this.menusService.create(createMenuInput);
   }
 
   @Query("menus")
   findAll() {
-    return this.menusService.findAll()
+    return this.menusService.findAll();
   }
 
   @Query("menu")
   findOne(@Args("id") id: number) {
-    return this.menusService.findOne(id)
+    return this.menusService.findOne(id);
   }
 
   @Mutation("updateMenu")
   update(@Args("updateMenuInput") updateMenuInput: UpdateMenuInput) {
-    return this.menusService.update(updateMenuInput.id, updateMenuInput)
+    return this.menusService.update(updateMenuInput.id, updateMenuInput);
   }
 
   @Mutation("removeMenu")
   remove(@Args("id") id: number) {
-    return this.menusService.remove(id)
+    return this.menusService.remove(id);
   }
 }

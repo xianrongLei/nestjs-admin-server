@@ -1,14 +1,13 @@
 import { Field, Int, ObjectType } from "@nestjs/graphql";
-import { IsOptional } from "class-validator";
-
+import { IsNotEmpty, IsOptional } from "class-validator";
 @ObjectType()
 export class CreateMenuInput {
   /**
    * 菜单名称
    */
   @Field(() => String)
-  @IsOptional()
-  name?: string;
+  @IsNotEmpty()
+  name!: string;
   /**
    * 路由地址
    */
@@ -36,9 +35,9 @@ export class CreateMenuInput {
   /**
    * 排序
    */
-  @Field(() => String)
+  @Field(() => Int)
   @IsOptional()
-  sort?: string;
+  sort?: number;
   /**
    * 状态 0禁用1启用
    */
@@ -58,9 +57,15 @@ export class CreateMenuInput {
   @IsOptional()
   outside?: false;
   /**
-   * 菜单权限
+   * 授权标识
    */
-  @Field(() => [Int])
+  @Field(() => [String])
   @IsOptional()
-  crud?: number[];
+  authNames?: string[];
+  /**
+   * 父节点id
+   */
+  @Field(() => Int)
+  @IsOptional()
+  parentId?: number;
 }

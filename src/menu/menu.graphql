@@ -9,7 +9,8 @@ type Menu {
   state: Int
   type: Int
   outside: Boolean
-  crud: [Int]
+  authNames: [String]
+  parentId: Int 
 }
 
 input CreateMenuInput {
@@ -22,7 +23,8 @@ input CreateMenuInput {
   state: Int
   type: Int
   outside: Boolean
-  crud: [Int]
+  authNames: [String]
+  parentId: Int 
 }
 
 input UpdateMenuInput {
@@ -36,7 +38,8 @@ input UpdateMenuInput {
   state: Int
   type: Int
   outside: Boolean
-  crud: [Int]
+  authNames: [String]
+  parentId: Int 
 }
 
 type Query {

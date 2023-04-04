@@ -1,5 +1,5 @@
-import { Field, HideField, ID, InputType, Int } from "@nestjs/graphql"
-import { IsEmail } from "class-validator"
+import { Field, HideField, ID, InputType, Int } from "@nestjs/graphql";
+import { IsEmail } from "class-validator";
 
 @InputType()
 export class User {
@@ -7,74 +7,74 @@ export class User {
    * 昵称
    */
   @Field(() => String)
-  nickname?: string
+  nickname?: string;
   /**
    * 用户名
    */
   @Field()
-  username?: string
+  username?: string;
   /**
    * 密码
    */
   @Field()
   @HideField()
-  password?: string
+  password?: string;
   /**
    * id
    */
   @Field(() => ID)
-  id?: number
+  id?: number;
   /**
    * 创建时间
    */
   @Field(() => Date)
-  createdAt?: string
+  createdAt?: string;
   /**
    * 更新时间
    */
   @Field(() => Date)
-  updatedAt?: string
+  updatedAt?: string;
   /**
    * 创建人
    */
   @Field(() => Int)
-  creator?: number
+  creator?: number;
   /**
    * 更新人
    */
   @Field(() => Int)
-  updater?: number
+  updater?: number;
   /**
    * 邮箱
    */
   @Field()
   @IsEmail()
-  email?: string
+  email?: string;
   /**
    * 手机号码
    */
   @Field(() => Int)
-  phone?: number
+  phone?: number;
   /**
    * 年龄
    */
   @Field(() => Int)
-  age?: number
+  age?: number;
   /**
    * 性别
    */
   @Field(() => Int)
-  sex?: number
+  sex?: number;
   /**
    * 是否是管理员
    */
   @Field(() => Int)
-  admin?: number
+  admin?: number;
   /**
    * 头像
    */
   @Field()
-  avatar?: string
+  avatar?: string;
   // /**
   //  * 组织id
   //  */

@@ -38,14 +38,14 @@ model Menu {
   description String?
   icon        String?
   sort        Int      @default(0)
-  route       String
-  outside     Boolean  @default(false)
-  title       String?
-  roles       Role[]   @relation("MenuToRole")
   state       Int      @default(1)
   type        Int      @default(0)
+  route       String?
+  outside     Boolean  @default(false)
+  title       String?
   authNames   String[]
   parentId    Int?
+  roles       Role[]   @relation("MenuToRole")
 
   @@map("menus")
 }

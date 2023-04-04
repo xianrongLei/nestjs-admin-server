@@ -1,4 +1,4 @@
-import { Field, InputType } from "@nestjs/graphql"
+import { Field, InputType } from "@nestjs/graphql";
 
 export enum OrderDirection {
   // Specifies an ascending order for a given `orderBy` argument.
@@ -9,5 +9,5 @@ export enum OrderDirection {
 @InputType({ isAbstract: true })
 export abstract class Order {
   @Field(() => OrderDirection)
-  direction!: OrderDirection
+  direction!: OrderDirection;
 }
