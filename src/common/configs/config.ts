@@ -1,5 +1,5 @@
-import { join } from "path"
-import type { Config } from "./config.interface"
+import { join } from "path";
+import type { Config } from "./config.interface";
 
 const config: Config = {
   jwt: {
@@ -26,6 +26,6 @@ const config: Config = {
     ip: "redis",
     port: 6379
   },
-  databaseURL: <string>process.env.DATABASE_URL
-}
-export default (): Config => config
+  databaseURL: process.env.DATABASE_URL as string
+};
+export default (): Config => config;
