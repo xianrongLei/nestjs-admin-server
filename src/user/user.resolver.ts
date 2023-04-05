@@ -3,6 +3,7 @@ import { UsersService } from "./user.service";
 import { CreateUserInput } from "./dto/create-user.input.dto";
 import { UpdateUserInput } from "./dto/update-user.input.dto";
 import { OrderByParams } from "@/types/graphql";
+import { PaginationArgs } from "@/common/pagination/pagination.args";
 
 @Resolver("user")
 export class UsersResolver {
@@ -15,10 +16,13 @@ export class UsersResolver {
 
   @Query("users")
   findAll(
-    @Args("orderBy")
-    orderBy?: OrderByParams
+    @Args("orderBy") orderBy: OrderByParams,
+    @Args("query") query: string,
+    @Args() paginationArgs: PaginationArgs
   ) {
-    return this.usersService.findAll(orderBy);
+    console.log(paginationArgs);
+
+    return this.usersService.findAll(orderBy, paginationArgs, query);
   }
 
   @Query("user")

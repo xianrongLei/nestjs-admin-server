@@ -9,7 +9,7 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
+  id        String      @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   creator   Int?
@@ -22,7 +22,7 @@ model User {
   sex       Int      @default(1)
   admin     Int      @default(0)
   avatar    String?
-  organId   Int?
+  organId   String?
   state     Int      @default(1)
   phone     String?
   Organ     Organ?   @relation(fields: [organId], references: [id])
@@ -33,7 +33,7 @@ model User {
 }
 
 model Menu {
-  id          Int      @id @default(autoincrement())
+  id          String      @id @default(cuid())
   name        String
   description String?
   icon        String?
@@ -44,14 +44,14 @@ model Menu {
   outside     Boolean  @default(false)
   title       String?
   authNames   String[]
-  parentId    Int?
+  parentId    String?
   roles       Role[]   @relation("MenuToRole")
 
   @@map("menus")
 }
 
 model Organ {
-  id          Int     @id @default(autoincrement())
+  id          String      @id @default(cuid())
   name        String
   description String?
   parentId    Int     @default(0)
@@ -63,7 +63,7 @@ model Organ {
 }
 
 model Post {
-  id          Int     @id @default(autoincrement())
+  id          String      @id @default(cuid())
   name        String
   description String?
   parentId    Int     @default(0)
@@ -75,7 +75,7 @@ model Post {
 }
 
 model Role {
-  id          Int     @id @default(autoincrement())
+  id          String      @id @default(cuid())
   name        String
   description String?
   parentId    Int     @default(0)

@@ -1,7 +1,7 @@
 scalar DateTime
 
 type User {
-  id: Int
+  id: ID
 
   createdAt: DateTime
 
@@ -29,7 +29,7 @@ type User {
 
   avatar: String
 
-  organId: Int
+  organId: ID
 
   posts: [Int]
 
@@ -61,7 +61,7 @@ input CreateUserInput {
 
   avatar: String
 
-  organId: Int
+  organId: ID
 
   posts: [Int]
 
@@ -70,13 +70,8 @@ input CreateUserInput {
   state: Int
 }
 
-input OrderByParams {
-  field: String
-  direction: String
-}
-
 input UpdateUserInput {
-  id: Int
+  id: ID
 
   creator: Int
 
@@ -100,7 +95,7 @@ input UpdateUserInput {
 
   avatar: String
 
-  organId: Int
+  organId: ID
 
   posts: [Int]
 
@@ -109,13 +104,67 @@ input UpdateUserInput {
   state: Int
 }
 
+enum OrderDirection {
+  asc
+  desc
+}
+
+enum OrderFild {
+  id
+  createdAt
+  updatedAt
+  creator
+  updater
+  username
+  nickname
+  email
+  phone
+  sex
+  age
+  admin
+  avatar
+  organId
+  state
+}
+
+input OrderByParams {
+  field: OrderFild
+  direction: OrderDirection
+}
+
+type PageInfo {
+  endCursor: String
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+}
+
+type UserConnection {
+  edges: [UserEdge!]
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type UserEdge {
+  cursor: String!
+  node: User!
+}
+
 type Query {
-  users(orderBy: OrderByParams): [User]!
-  user(id: Int!): User
+  users(
+    orderBy: OrderByParams
+    after: String
+    before: String
+    first: Int
+    last: Int
+    query: String
+    skip: Int
+  ): UserConnection!
+  user(id: ID!): User
 }
 
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
   updateUser(updateUserInput: UpdateUserInput!): User!
-  removeUser(id: Int!): User
+  removeUser(id: ID!): User
 }

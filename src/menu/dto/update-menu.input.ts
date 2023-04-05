@@ -5,7 +5,7 @@ export class UpdateMenuInput {
   /**
    * id
    */
-  @Field(() => String)
+  @Field(() => Int)
   @IsNotEmpty()
   id!: number;
   /**

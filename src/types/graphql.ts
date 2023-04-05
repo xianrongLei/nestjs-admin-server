@@ -7,6 +7,29 @@
 /* tslint:disable */
 /* eslint-disable */
 
+export enum OrderDirection {
+  asc = "asc",
+  desc = "desc"
+}
+
+export enum OrderFild {
+  id = "id",
+  createdAt = "createdAt",
+  updatedAt = "updatedAt",
+  creator = "creator",
+  updater = "updater",
+  username = "username",
+  nickname = "nickname",
+  email = "email",
+  phone = "phone",
+  sex = "sex",
+  age = "age",
+  admin = "admin",
+  avatar = "avatar",
+  organId = "organId",
+  state = "state"
+}
+
 export interface CreateMenuInput {
   name?: Nullable<string>;
   route?: Nullable<string>;
@@ -72,19 +95,14 @@ export interface CreateUserInput {
   age?: Nullable<number>;
   admin?: Nullable<number>;
   avatar?: Nullable<string>;
-  organId?: Nullable<number>;
+  organId?: Nullable<string>;
   posts?: Nullable<Nullable<number>[]>;
   roles?: Nullable<Nullable<number>[]>;
   state?: Nullable<number>;
 }
 
-export interface OrderByParams {
-  field?: Nullable<string>;
-  direction?: Nullable<string>;
-}
-
 export interface UpdateUserInput {
-  id?: Nullable<number>;
+  id?: Nullable<string>;
   creator?: Nullable<number>;
   updater?: Nullable<number>;
   username?: Nullable<string>;
@@ -96,10 +114,15 @@ export interface UpdateUserInput {
   age?: Nullable<number>;
   admin?: Nullable<number>;
   avatar?: Nullable<string>;
-  organId?: Nullable<number>;
+  organId?: Nullable<string>;
   posts?: Nullable<Nullable<number>[]>;
   roles?: Nullable<Nullable<number>[]>;
   state?: Nullable<number>;
+}
+
+export interface OrderByParams {
+  field?: Nullable<OrderFild>;
+  direction?: Nullable<OrderDirection>;
 }
 
 export interface Menu {
@@ -126,8 +149,16 @@ export interface IQuery {
   post(id: number): Nullable<Post> | Promise<Nullable<Post>>;
   roles(): Nullable<Role>[] | Promise<Nullable<Role>[]>;
   role(id: number): Nullable<Role> | Promise<Nullable<Role>>;
-  users(orderBy?: Nullable<OrderByParams>): Nullable<User>[] | Promise<Nullable<User>[]>;
-  user(id: number): Nullable<User> | Promise<Nullable<User>>;
+  users(
+    orderBy?: Nullable<OrderByParams>,
+    after?: Nullable<string>,
+    before?: Nullable<string>,
+    first?: Nullable<number>,
+    last?: Nullable<number>,
+    query?: Nullable<string>,
+    skip?: Nullable<number>
+  ): UserConnection | Promise<UserConnection>;
+  user(id: string): Nullable<User> | Promise<Nullable<User>>;
 }
 
 export interface IMutation {
@@ -145,7 +176,7 @@ export interface IMutation {
   removeRole(id: number): Nullable<Role> | Promise<Nullable<Role>>;
   createUser(createUserInput: CreateUserInput): User | Promise<User>;
   updateUser(updateUserInput: UpdateUserInput): User | Promise<User>;
-  removeUser(id: number): Nullable<User> | Promise<Nullable<User>>;
+  removeUser(id: string): Nullable<User> | Promise<Nullable<User>>;
 }
 
 export interface Organ {
@@ -161,7 +192,7 @@ export interface Role {
 }
 
 export interface User {
-  id?: Nullable<number>;
+  id?: Nullable<string>;
   createdAt?: Nullable<DateTime>;
   updatedAt?: Nullable<DateTime>;
   creator?: Nullable<number>;
@@ -175,10 +206,28 @@ export interface User {
   age?: Nullable<number>;
   admin?: Nullable<number>;
   avatar?: Nullable<string>;
-  organId?: Nullable<number>;
+  organId?: Nullable<string>;
   posts?: Nullable<Nullable<number>[]>;
   roles?: Nullable<Nullable<number>[]>;
   state?: Nullable<number>;
+}
+
+export interface PageInfo {
+  endCursor?: Nullable<string>;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  startCursor?: Nullable<string>;
+}
+
+export interface UserConnection {
+  edges?: Nullable<UserEdge[]>;
+  pageInfo: PageInfo;
+  totalCount: number;
+}
+
+export interface UserEdge {
+  cursor: string;
+  node: User;
 }
 
 export type DateTime = any;

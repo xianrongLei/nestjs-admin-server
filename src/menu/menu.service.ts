@@ -8,6 +8,11 @@ export class MenusService {
   constructor(private readonly prisma: PrismaService) {
     this.prisma = prisma;
   }
+  /**
+   * 添加菜单
+   * @param createMenuInput
+   * @returns
+   */
   async create(createMenuInput: CreateMenuInput): Promise<Menu> {
     return await this.prisma.menu.create({
       data: createMenuInput

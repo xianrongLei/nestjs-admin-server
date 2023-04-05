@@ -5,6 +5,9 @@ import * as argon from "argon2";
 import { CreateUserInput } from "./dto/create-user.input.dto";
 import { UpdateUserInput } from "./dto/update-user.input.dto";
 import { OrderByParams } from "@/types/graphql";
+import { PaginationArgs } from "@/common/pagination/pagination.args";
+import { findManyCursorConnection } from "@devoxa/prisma-relay-cursor-connection";
+import { UserConnection } from "@/types/graphql";
 
 @Injectable()
 export class UsersService {
@@ -41,11 +44,30 @@ export class UsersService {
    * @param orderBy
    * @returns
    */
-  async findAll(orderBy?: OrderByParams): Promise<User[]> {
-    const users = await this.prisma.user.findMany({
-      orderBy: orderBy?.field ? { [orderBy.field]: orderBy?.direction } : {}
-    });
-    return users.map(item => ({ ...item, password: "" }));
+  async findAll(
+    orderBy: OrderByParams,
+    { skip, after, before, first, last }: PaginationArgs,
+    query: string
+  ): Promise<any> {
+    const result = await findManyCursorConnection(
+      args =>
+        this.prisma.user.findMany({
+          where: {
+            username: { contains: query || "" }
+          },
+          skip,
+          orderBy: (orderBy?.field && { [orderBy.field]: orderBy.direction }) ?? {},
+          ...args
+        } as Prisma.UserFindManyArgs),
+      () =>
+        this.prisma.user.count({
+          where: {
+            username: { contains: query || "" }
+          }
+        }),
+      { first, last, before, after }
+    );
+    return result;
   }
   /**
    * 查询单个用户信息

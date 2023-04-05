@@ -3,6 +3,12 @@ import { IsNotEmpty, IsOptional } from "class-validator";
 @ObjectType()
 export class CreateMenuInput {
   /**
+   * id
+   */
+  @Field(() => Int)
+  @IsNotEmpty()
+  id?: number;
+  /**
    * 菜单名称
    */
   @Field(() => String)
@@ -45,7 +51,7 @@ export class CreateMenuInput {
   @IsOptional()
   state?: number;
   /**
-   * 类型
+   * 类型 0菜单1按钮2接口
    */
   @Field(() => Int)
   @IsOptional()
