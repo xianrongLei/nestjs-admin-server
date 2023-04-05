@@ -41,11 +41,11 @@ export interface CreateMenuInput {
   type?: Nullable<number>;
   outside?: Nullable<boolean>;
   authNames?: Nullable<Nullable<string>[]>;
-  parentId?: Nullable<number>;
+  parentId?: Nullable<string>;
 }
 
 export interface UpdateMenuInput {
-  id?: Nullable<number>;
+  id?: Nullable<string>;
   name?: Nullable<string>;
   route?: Nullable<string>;
   description?: Nullable<string>;
@@ -56,7 +56,7 @@ export interface UpdateMenuInput {
   type?: Nullable<number>;
   outside?: Nullable<boolean>;
   authNames?: Nullable<Nullable<string>[]>;
-  parentId?: Nullable<number>;
+  parentId?: Nullable<string>;
 }
 
 export interface CreateOrganInput {
@@ -84,8 +84,8 @@ export interface UpdateRoleInput {
 }
 
 export interface CreateUserInput {
-  creator?: Nullable<number>;
-  updater?: Nullable<number>;
+  creator?: Nullable<string>;
+  updater?: Nullable<string>;
   username?: Nullable<string>;
   password?: Nullable<string>;
   nickname?: Nullable<string>;
@@ -103,8 +103,8 @@ export interface CreateUserInput {
 
 export interface UpdateUserInput {
   id?: Nullable<string>;
-  creator?: Nullable<number>;
-  updater?: Nullable<number>;
+  creator?: Nullable<string>;
+  updater?: Nullable<string>;
   username?: Nullable<string>;
   password?: Nullable<string>;
   nickname?: Nullable<string>;
@@ -126,7 +126,7 @@ export interface OrderByParams {
 }
 
 export interface Menu {
-  id?: Nullable<number>;
+  id?: Nullable<string>;
   name?: Nullable<string>;
   route?: Nullable<string>;
   description?: Nullable<string>;
@@ -137,12 +137,12 @@ export interface Menu {
   type?: Nullable<number>;
   outside?: Nullable<boolean>;
   authNames?: Nullable<Nullable<string>[]>;
-  parentId?: Nullable<number>;
+  parentId?: Nullable<string>;
 }
 
 export interface IQuery {
   menus(): Nullable<Menu>[] | Promise<Nullable<Menu>[]>;
-  menu(id: number): Nullable<Menu> | Promise<Nullable<Menu>>;
+  menu(id: string): Nullable<Menu> | Promise<Nullable<Menu>>;
   organs(): Nullable<Organ>[] | Promise<Nullable<Organ>[]>;
   organ(id: number): Nullable<Organ> | Promise<Nullable<Organ>>;
   posts(): Nullable<Post>[] | Promise<Nullable<Post>[]>;
@@ -164,7 +164,7 @@ export interface IQuery {
 export interface IMutation {
   createMenu(createMenuInput: CreateMenuInput): Menu | Promise<Menu>;
   updateMenu(updateMenuInput: UpdateMenuInput): Menu | Promise<Menu>;
-  removeMenu(id: number): Nullable<Menu> | Promise<Nullable<Menu>>;
+  removeMenu(id: string): Nullable<Menu> | Promise<Nullable<Menu>>;
   createOrgan(createOrganInput: CreateOrganInput): Organ | Promise<Organ>;
   updateOrgan(updateOrganInput: UpdateOrganInput): Organ | Promise<Organ>;
   removeOrgan(id: number): Nullable<Organ> | Promise<Nullable<Organ>>;
@@ -195,8 +195,8 @@ export interface User {
   id?: Nullable<string>;
   createdAt?: Nullable<DateTime>;
   updatedAt?: Nullable<DateTime>;
-  creator?: Nullable<number>;
-  updater?: Nullable<number>;
+  creator?: Nullable<string>;
+  updater?: Nullable<string>;
   username?: Nullable<string>;
   password?: Nullable<string>;
   nickname?: Nullable<string>;

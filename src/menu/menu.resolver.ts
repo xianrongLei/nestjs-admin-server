@@ -13,7 +13,7 @@ export class MenusResolver {
   }
 
   @Query("menus")
-  findAll() {
+  findAll(@Args() a) {
     return this.menusService.findAll();
   }
 

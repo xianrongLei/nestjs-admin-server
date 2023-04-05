@@ -20,13 +20,11 @@ export class UsersResolver {
     @Args("query") query: string,
     @Args() paginationArgs: PaginationArgs
   ) {
-    console.log(paginationArgs);
-
     return this.usersService.findAll(orderBy, paginationArgs, query);
   }
 
   @Query("user")
-  findOne(@Args("id") id: number) {
+  findOne(@Args("id") id: string) {
     return this.usersService.findOne(id);
   }
 
@@ -36,7 +34,7 @@ export class UsersResolver {
   }
 
   @Mutation("removeUser")
-  remove(@Args("id") id: number) {
+  remove(@Args("id") id: string) {
     return this.usersService.remove(id);
   }
 }

@@ -7,9 +7,9 @@ type User {
 
   updatedAt: DateTime
 
-  creator: Int
+  creator: ID
 
-  updater: Int
+  updater: ID
 
   username: String
 
@@ -39,9 +39,9 @@ type User {
 }
 
 input CreateUserInput {
-  creator: Int
+  creator: ID
 
-  updater: Int
+  updater: ID
 
   username: String
 
@@ -73,9 +73,9 @@ input CreateUserInput {
 input UpdateUserInput {
   id: ID
 
-  creator: Int
+  creator: ID
 
-  updater: Int
+  updater: ID
 
   username: String
 

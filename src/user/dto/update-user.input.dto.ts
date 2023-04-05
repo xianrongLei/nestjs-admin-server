@@ -6,9 +6,9 @@ export class UpdateUserInput {
   /**
    * id
    */
-  @Field(() => Int)
+  @Field(() => String)
   @IsNotEmpty()
-  id!: number;
+  id!: string;
   /**
    * 创建时间
    */
@@ -26,15 +26,15 @@ export class UpdateUserInput {
   /**
    * 创建人
    */
-  @Field(() => Int)
+  @Field(() => String)
   @IsOptional()
-  creator?: number;
+  creator?: string;
   /**
    * 更新人
    */
-  @Field(() => Int)
+  @Field(() => String)
   @IsOptional()
-  updater?: number;
+  updater?: string;
   /**
    * 昵称
    */
@@ -81,9 +81,9 @@ export class UpdateUserInput {
   /**
    * 用户组织id
    */
-  @Field(() => Int)
+  @Field(() => String)
   @IsOptional()
-  organId?: number;
+  organId?: string;
   /**
    * 用户岗位列表id
    */

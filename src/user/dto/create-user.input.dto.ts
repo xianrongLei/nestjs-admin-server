@@ -6,7 +6,7 @@ export class CreateUserInput {
   /**
    * id
    */
-  @Field(() => Int)
+  @Field(() => String)
   @IsOptional()
   id?: string;
   /**
@@ -40,13 +40,13 @@ export class CreateUserInput {
   /**
    * 创建人
    */
-  @Field(() => Int)
+  @Field(() => String)
   @IsOptional()
   creator?: string;
   /**
    * 更新人
    */
-  @Field(() => Int)
+  @Field(() => String)
   @IsOptional()
   updater?: string;
   /**
@@ -95,7 +95,7 @@ export class CreateUserInput {
   /**
    * 用户组织id
    */
-  @Field(() => Int)
+  @Field(() => String)
   @IsOptional()
   organId?: string;
   /**

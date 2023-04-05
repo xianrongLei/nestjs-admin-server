@@ -4,10 +4,9 @@ import { ForbiddenException, Injectable } from "@nestjs/common";
 import * as argon from "argon2";
 import { CreateUserInput } from "./dto/create-user.input.dto";
 import { UpdateUserInput } from "./dto/update-user.input.dto";
-import { OrderByParams } from "@/types/graphql";
+import { OrderByParams, UserConnection } from "@/types/graphql";
 import { PaginationArgs } from "@/common/pagination/pagination.args";
 import { findManyCursorConnection } from "@devoxa/prisma-relay-cursor-connection";
-import { UserConnection } from "@/types/graphql";
 
 @Injectable()
 export class UsersService {
@@ -46,19 +45,18 @@ export class UsersService {
    */
   async findAll(
     orderBy: OrderByParams,
-    { skip, after, before, first, last }: PaginationArgs,
+    { after, before, first, last }: PaginationArgs,
     query: string
-  ): Promise<any> {
+  ): Promise<UserConnection> {
     const result = await findManyCursorConnection(
       args =>
         this.prisma.user.findMany({
           where: {
             username: { contains: query || "" }
           },
-          skip,
           orderBy: (orderBy?.field && { [orderBy.field]: orderBy.direction }) ?? {},
           ...args
-        } as Prisma.UserFindManyArgs),
+        }),
       () =>
         this.prisma.user.count({
           where: {
@@ -67,6 +65,7 @@ export class UsersService {
         }),
       { first, last, before, after }
     );
+    result.edges.map(user => (user.node.password = ""));
     return result;
   }
   /**
@@ -74,7 +73,7 @@ export class UsersService {
    * @param id
    * @returns
    */
-  async findOne(id: number): Promise<User> {
+  async findOne(id: string): Promise<User> {
     return <User>await this.prisma.user.findFirst({
       where: {
         id
@@ -88,7 +87,7 @@ export class UsersService {
    * @param updateUserInput
    * @returns
    */
-  async update(id: number, updateUserInput: UpdateUserInput): Promise<User> {
+  async update(id: string, updateUserInput: UpdateUserInput): Promise<User> {
     return await this.prisma.user.update({
       where: {
         id
@@ -102,7 +101,7 @@ export class UsersService {
    * @param id
    * @returns
    */
-  async remove(id: number) {
+  async remove(id: string) {
     return await this.prisma.user.delete({
       where: {
         id
