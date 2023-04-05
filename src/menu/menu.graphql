@@ -1,5 +1,5 @@
 type Menu {
-  id: Int
+  id: ID
   name: String
   route: String
   description: String
@@ -10,7 +10,7 @@ type Menu {
   type: Int
   outside: Boolean
   authNames: [String]
-  parentId: Int 
+  parentId: ID
 }
 
 input CreateMenuInput {
@@ -24,11 +24,11 @@ input CreateMenuInput {
   type: Int
   outside: Boolean
   authNames: [String]
-  parentId: Int 
+  parentId: ID
 }
 
 input UpdateMenuInput {
-  id: Int
+  id: ID
   name: String
   route: String
   description: String
@@ -39,16 +39,16 @@ input UpdateMenuInput {
   type: Int
   outside: Boolean
   authNames: [String]
-  parentId: Int 
+  parentId: ID
 }
 
 type Query {
   menus: [Menu]!
-  menu(id: Int!): Menu
+  menu(id: ID!): Menu
 }
 
 type Mutation {
   createMenu(createMenuInput: CreateMenuInput!): Menu!
   updateMenu(updateMenuInput: UpdateMenuInput!): Menu!
-  removeMenu(id: Int!): Menu
+  removeMenu(id: ID!): Menu
 }

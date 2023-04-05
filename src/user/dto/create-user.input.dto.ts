@@ -4,6 +4,12 @@ import { Field, InputType, Int } from "@nestjs/graphql";
 @InputType()
 export class CreateUserInput {
   /**
+   * id
+   */
+  @Field(() => Int)
+  @IsOptional()
+  id?: string;
+  /**
    * 用户名
    */
   @Field(() => String)
@@ -17,12 +23,6 @@ export class CreateUserInput {
   @IsString()
   @IsNotEmpty()
   password!: string;
-  /**
-   * id
-   */
-  @Field(() => Int)
-  @IsOptional()
-  id?: number;
   /**
    * 创建时间
    */
@@ -42,13 +42,13 @@ export class CreateUserInput {
    */
   @Field(() => Int)
   @IsOptional()
-  creator?: number;
+  creator?: string;
   /**
    * 更新人
    */
   @Field(() => Int)
   @IsOptional()
-  updater?: number;
+  updater?: string;
   /**
    * 昵称
    */
@@ -97,7 +97,7 @@ export class CreateUserInput {
    */
   @Field(() => Int)
   @IsOptional()
-  organId?: number;
+  organId?: string;
   /**
    * 用户岗位列表id
    */

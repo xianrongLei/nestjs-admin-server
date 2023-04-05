@@ -13,7 +13,7 @@ export class MenusService {
    * @param createMenuInput
    * @returns
    */
-  async create(createMenuInput: CreateMenuInput): Promise<Menu> {
+  async create(createMenuInput: CreateMenuInput) {
     return await this.prisma.menu.create({
       data: createMenuInput
     });

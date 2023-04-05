@@ -9,11 +9,11 @@ datasource db {
 }
 
 model User {
-  id        String      @id @default(cuid())
+  id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  creator   Int?
-  updater   Int?
+  creator   String?
+  updater   String?
   username  String   @unique
   password  String
   email     String?
@@ -33,7 +33,7 @@ model User {
 }
 
 model Menu {
-  id          String      @id @default(cuid())
+  id          String   @id @default(cuid())
   name        String
   description String?
   icon        String?
@@ -51,7 +51,7 @@ model Menu {
 }
 
 model Organ {
-  id          String      @id @default(cuid())
+  id          String  @id @default(cuid())
   name        String
   description String?
   parentId    Int     @default(0)
@@ -63,7 +63,7 @@ model Organ {
 }
 
 model Post {
-  id          String      @id @default(cuid())
+  id          String  @id @default(cuid())
   name        String
   description String?
   parentId    Int     @default(0)
@@ -75,7 +75,7 @@ model Post {
 }
 
 model Role {
-  id          String      @id @default(cuid())
+  id          String  @id @default(cuid())
   name        String
   description String?
   parentId    Int     @default(0)

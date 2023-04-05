@@ -7,7 +7,7 @@ export class CreateMenuInput {
    */
   @Field(() => Int)
   @IsNotEmpty()
-  id?: number;
+  id?: string;
   /**
    * 菜单名称
    */
@@ -73,5 +73,5 @@ export class CreateMenuInput {
    */
   @Field(() => Int)
   @IsOptional()
-  parentId?: number;
+  parentId?: string;
 }
