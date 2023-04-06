@@ -125,6 +125,21 @@ export interface OrderByParams {
   direction?: Nullable<OrderDirection>;
 }
 
+export interface UserQuery {
+  creator?: Nullable<string>;
+  updater?: Nullable<string>;
+  username?: Nullable<string>;
+  password?: Nullable<string>;
+  nickname?: Nullable<string>;
+  email?: Nullable<string>;
+  phone?: Nullable<string>;
+  sex?: Nullable<number>;
+  age?: Nullable<number>;
+  admin?: Nullable<number>;
+  organId?: Nullable<string>;
+  state?: Nullable<number>;
+}
+
 export interface Menu {
   id?: Nullable<string>;
   name?: Nullable<string>;
@@ -155,7 +170,7 @@ export interface IQuery {
     before?: Nullable<string>,
     first?: Nullable<number>,
     last?: Nullable<number>,
-    query?: Nullable<string>,
+    query?: Nullable<UserQuery>,
     skip?: Nullable<number>
   ): UserConnection | Promise<UserConnection>;
   user(id: string): Nullable<User> | Promise<Nullable<User>>;

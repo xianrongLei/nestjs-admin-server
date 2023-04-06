@@ -150,6 +150,21 @@ type UserEdge {
   node: User!
 }
 
+input UserQuery {
+  creator: ID
+  updater: ID
+  username: String
+  password: String
+  nickname: String
+  email: String
+  phone: String
+  sex: Int
+  age: Int
+  admin: Int
+  organId: ID
+  state: Int
+}
+
 type Query {
   users(
     orderBy: OrderByParams
@@ -157,7 +172,7 @@ type Query {
     before: String
     first: Int
     last: Int
-    query: String
+    query: UserQuery
     skip: Int
   ): UserConnection!
   user(id: ID!): User

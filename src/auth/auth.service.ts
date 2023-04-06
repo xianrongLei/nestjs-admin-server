@@ -21,13 +21,28 @@ export class AuthService {
     this.config = config;
     this.jwt = jwt;
   }
+  /**
+   * 生成token
+   * @param payload
+   * @returns
+   */
+  async generateTokens(payload: Record<string, any>): Promise<Record<string, any>> {
+    const accessToken = await this.jwt.signAsync(payload, {
+      secret: this.config.get("jwt.secret")
+    });
+    const refreshToken = await this.jwt.signAsync(payload, { expiresIn: this.config.get("jwt.refExpiresIn") });
+    return {
+      access_token: accessToken,
+      refresh_token: refreshToken
+    };
+  }
 
   /**
    * 注册
    * @param param0
    * @returns
    */
-  async signup(dto: AuthDto): Promise<User> {
+  async signup(dto: AuthDto): Promise<Record<string, any>> {
     try {
       //验证码比对
       const cacheAnswer = await this.cacheManager.get(dto.uniCode);
@@ -42,7 +57,17 @@ export class AuthService {
           password: password
         }
       });
-      return user;
+      const payload: Record<string, any> = {
+        sub: user.id,
+        username: user.username
+      };
+      const { access_token, refresh_token } = await this.generateTokens(payload);
+      return {
+        ...user,
+        password: "",
+        access_token,
+        refresh_token
+      };
     } catch (error: unknown) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         if (error.code == "P2002") {
@@ -78,17 +103,16 @@ export class AuthService {
     const pwMatches = await argon.verify(user.password, password);
     if (!pwMatches) throw new ForbiddenException("用户名不存在或密码错误");
     //生成token
-    const payload: object = {
+    const payload: Record<string, any> = {
       sub: user.id,
       username: user.username
     };
-    const token = await this.jwt.signAsync(payload, {
-      secret: this.config.get("JWT_SECRET")
-    });
+    const { access_token, refresh_token } = await this.generateTokens(payload);
     return {
       ...user,
       password: "",
-      access_token: token
+      access_token,
+      refresh_token
     };
   }
   /**
@@ -113,7 +137,7 @@ export class AuthService {
       });
     }
     const uniCode = `uni${new Date().getTime()}`;
-    const time = 60 * 5;
+    const time = this.config.get("captcha.expriseIn");
     await this.cacheManager.set(uniCode, captcha.text, time);
 
     return {

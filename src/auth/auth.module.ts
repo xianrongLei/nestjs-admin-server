@@ -7,12 +7,13 @@ import { JwtStrategy } from "./strategy";
 
 @Module({
   imports: [
+    // JwtModule.register({})
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
-        secret: configService.get("jwt.secret"),
-        signOptions: configService.get("jwt.signOptions")
+        secret: configService.get("jwt.defaultSecret"),
+        signOptions: configService.get("jwt.defaultDignOptions")
       })
     })
   ],

@@ -13,14 +13,15 @@ export class MenusService {
    * @param createMenuInput
    * @returns
    */
-  async create(createMenuInput: CreateMenuInput) {
+  async create(createMenuInput: CreateMenuInput): Promise<Menu> {
     return await this.prisma.menu.create({
       data: createMenuInput
     });
   }
 
-  findAll() {
-    return `This action returns all menus`;
+  async findAll() {
+    const result = await this.prisma.menu.findMany();
+    return result;
   }
 
   findOne(id: number) {

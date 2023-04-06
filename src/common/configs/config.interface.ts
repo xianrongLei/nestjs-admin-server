@@ -1,8 +1,11 @@
 import { JwtSignOptions } from "@nestjs/jwt";
 
 export type Jwt = {
+  defaultSecret: string;
+  defaultDignOptions: JwtSignOptions;
   secret: string;
   signOptions: JwtSignOptions;
+  refExpiresIn: String;
 };
 export type App = {
   port: number;
@@ -28,6 +31,10 @@ export type Graphql = {
   typePaths: string[];
   path: string;
 };
+
+export type captcha = {
+  expriseIn: number;
+};
 export interface Config {
   jwt: Jwt;
   app: App;
@@ -35,4 +42,5 @@ export interface Config {
   databaseURL: string;
   redis: Reids;
   graphql: Graphql;
+  captcha: captcha;
 }

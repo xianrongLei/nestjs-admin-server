@@ -3,9 +3,15 @@ import type { Config } from "./config.interface";
 
 export default function (): Config {
   return {
+    captcha: {
+      expriseIn: 5 * 60
+    },
     jwt: {
+      defaultSecret: "secret",
+      defaultDignOptions: { expiresIn: "60s" },
       secret: "jwt_secret",
-      signOptions: { expiresIn: "60s" }
+      signOptions: { expiresIn: "60s" },
+      refExpiresIn: "30d"
     },
     graphql: {
       playground: false,

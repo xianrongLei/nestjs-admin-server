@@ -12,5 +12,5 @@ git clone ...
 docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build -V
 # 未来的计划
   - 完善权限、菜单、角色、部门等模块
-  - 整合@compodoc/compodoc api文档模块
+  - 整合knife4j
 

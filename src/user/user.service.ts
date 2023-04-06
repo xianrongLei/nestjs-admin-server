@@ -4,7 +4,7 @@ import { ForbiddenException, Injectable } from "@nestjs/common";
 import * as argon from "argon2";
 import { CreateUserInput } from "./dto/create-user.input.dto";
 import { UpdateUserInput } from "./dto/update-user.input.dto";
-import { OrderByParams, UserConnection } from "@/types/graphql";
+import { OrderByParams, UserConnection, UserQuery } from "@/types/graphql";
 import { PaginationArgs } from "@/common/pagination/pagination.args";
 import { findManyCursorConnection } from "@devoxa/prisma-relay-cursor-connection";
 
@@ -46,26 +46,27 @@ export class UsersService {
   async findAll(
     orderBy: OrderByParams,
     { after, before, first, last }: PaginationArgs,
-    query: string
+    query: UserQuery
   ): Promise<UserConnection> {
+    const where: Prisma.UserWhereInput = {};
+    for (const iterator in query) {
+      const value = query[iterator];
+      where[iterator] = { contains: value };
+    }
     const result = await findManyCursorConnection(
       args =>
         this.prisma.user.findMany({
-          where: {
-            username: { contains: query || "" }
-          },
+          where: where,
           orderBy: (orderBy?.field && { [orderBy.field]: orderBy.direction }) ?? {},
           ...args
         }),
       () =>
         this.prisma.user.count({
-          where: {
-            username: { contains: query || "" }
-          }
+          where: where
         }),
       { first, last, before, after }
     );
-    result.edges.map(user => (user.node.password = ""));
+    result.edges.forEach(user => (user.node.password = ""));
     return result;
   }
   /**
