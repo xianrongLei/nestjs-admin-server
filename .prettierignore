@@ -5,3 +5,4 @@ public
 *.md
 *.yaml
 test
+types/graphql.ts
