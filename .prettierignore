@@ -1,8 +1,6 @@
 node_modules
-dist
-src/assets
-public
 *.md
 *.yaml
-test
-types/graphql.ts
+src/dist
+src/test
+src/types/graphql.ts

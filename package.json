@@ -27,9 +27,8 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --watch --no-cashe --config ./test/jest-e2e.json",
     "lint:init": "eslint --init",
-    "lint:fix": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "prepare": "husky install",
+    "lint:fix": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "prettier:fix": "prettier --config .prettierrc.cjs \"src/**/*.{js,ts}\" --write"
   },
   "dependencies": {
