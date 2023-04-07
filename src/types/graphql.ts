@@ -32,6 +32,10 @@ export enum OrderFild {
 }
 
 export interface CreateMenuInput {
+    createdAt?: Nullable<DateTime>;
+    updatedAt?: Nullable<DateTime>;
+    creator?: Nullable<string>;
+    updater?: Nullable<string>;
     name?: Nullable<string>;
     route?: Nullable<string>;
     description?: Nullable<string>;
@@ -47,6 +51,10 @@ export interface CreateMenuInput {
 
 export interface UpdateMenuInput {
     id?: Nullable<string>;
+    createdAt?: Nullable<DateTime>;
+    updatedAt?: Nullable<DateTime>;
+    creator?: Nullable<string>;
+    updater?: Nullable<string>;
     name?: Nullable<string>;
     route?: Nullable<string>;
     description?: Nullable<string>;
@@ -58,6 +66,26 @@ export interface UpdateMenuInput {
     outside?: Nullable<boolean>;
     authNames?: Nullable<Nullable<string>[]>;
     parentId?: Nullable<string>;
+}
+
+export interface MenuOrderBy {
+    field?: Nullable<OrderFild>;
+    direction?: Nullable<OrderDirection>;
+}
+
+export interface MenuQuery {
+    creator?: Nullable<string>;
+    updater?: Nullable<string>;
+    username?: Nullable<string>;
+    password?: Nullable<string>;
+    nickname?: Nullable<string>;
+    email?: Nullable<string>;
+    phone?: Nullable<string>;
+    sex?: Nullable<number>;
+    age?: Nullable<number>;
+    admin?: Nullable<number>;
+    organId?: Nullable<string>;
+    state?: Nullable<number>;
 }
 
 export interface CreateOrganInput {
@@ -121,7 +149,7 @@ export interface UpdateUserInput {
     state?: Nullable<number>;
 }
 
-export interface OrderByParams {
+export interface UserOrderBy {
     field?: Nullable<OrderFild>;
     direction?: Nullable<OrderDirection>;
 }
@@ -141,8 +169,19 @@ export interface UserQuery {
     state?: Nullable<number>;
 }
 
+export interface PageInfo {
+    endCursor?: Nullable<string>;
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
+    startCursor?: Nullable<string>;
+}
+
 export interface Menu {
     id?: Nullable<string>;
+    createdAt?: Nullable<DateTime>;
+    updatedAt?: Nullable<DateTime>;
+    creator?: Nullable<string>;
+    updater?: Nullable<string>;
     name?: Nullable<string>;
     route?: Nullable<string>;
     description?: Nullable<string>;
@@ -156,8 +195,19 @@ export interface Menu {
     parentId?: Nullable<string>;
 }
 
+export interface MenuConnection {
+    edges?: Nullable<MenuEdge[]>;
+    pageInfo: PageInfo;
+    totalCount: number;
+}
+
+export interface MenuEdge {
+    cursor: string;
+    node: Menu;
+}
+
 export interface IQuery {
-    menus(): Nullable<Menu>[] | Promise<Nullable<Menu>[]>;
+    menus(orderBy?: Nullable<UserOrderBy>, after?: Nullable<string>, before?: Nullable<string>, first?: Nullable<number>, last?: Nullable<number>, query?: Nullable<UserQuery>, skip?: Nullable<number>): MenuConnection | Promise<MenuConnection>;
     menu(id: string): Nullable<Menu> | Promise<Nullable<Menu>>;
     organs(): Nullable<Organ>[] | Promise<Nullable<Organ>[]>;
     organ(id: number): Nullable<Organ> | Promise<Nullable<Organ>>;
@@ -165,7 +215,7 @@ export interface IQuery {
     post(id: number): Nullable<Post> | Promise<Nullable<Post>>;
     roles(): Nullable<Role>[] | Promise<Nullable<Role>[]>;
     role(id: number): Nullable<Role> | Promise<Nullable<Role>>;
-    users(orderBy?: Nullable<OrderByParams>, after?: Nullable<string>, before?: Nullable<string>, first?: Nullable<number>, last?: Nullable<number>, query?: Nullable<UserQuery>, skip?: Nullable<number>): UserConnection | Promise<UserConnection>;
+    users(orderBy?: Nullable<UserOrderBy>, after?: Nullable<string>, before?: Nullable<string>, first?: Nullable<number>, last?: Nullable<number>, query?: Nullable<UserQuery>, skip?: Nullable<number>): UserConnection | Promise<UserConnection>;
     user(id: string): Nullable<User> | Promise<Nullable<User>>;
 }
 
@@ -218,13 +268,6 @@ export interface User {
     posts?: Nullable<Nullable<number>[]>;
     roles?: Nullable<Nullable<number>[]>;
     state?: Nullable<number>;
-}
-
-export interface PageInfo {
-    endCursor?: Nullable<string>;
-    hasNextPage: boolean;
-    hasPreviousPage: boolean;
-    startCursor?: Nullable<string>;
 }
 
 export interface UserConnection {

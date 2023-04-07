@@ -1,5 +1,9 @@
 type Menu {
   id: ID
+  createdAt: DateTime
+  updatedAt: DateTime
+  creator: ID
+  updater: ID
   name: String
   route: String
   description: String
@@ -14,6 +18,10 @@ type Menu {
 }
 
 input CreateMenuInput {
+  createdAt: DateTime
+  updatedAt: DateTime
+  creator: ID
+  updater: ID
   name: String
   route: String
   description: String
@@ -29,6 +37,10 @@ input CreateMenuInput {
 
 input UpdateMenuInput {
   id: ID
+  createdAt: DateTime
+  updatedAt: DateTime
+  creator: ID
+  updater: ID
   name: String
   route: String
   description: String
@@ -42,8 +54,70 @@ input UpdateMenuInput {
   parentId: ID
 }
 
+enum OrderDirection {
+  asc
+  desc
+}
+
+enum OrderFild {
+  id
+  createdAt
+  updatedAt
+  creator
+  updater
+  username
+  nickname
+  email
+  phone
+  sex
+  age
+  admin
+  avatar
+  organId
+  state
+}
+
+input MenuOrderBy {
+  field: OrderFild
+  direction: OrderDirection
+}
+
+type MenuConnection {
+  edges: [MenuEdge!]
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type MenuEdge {
+  cursor: String!
+  node: Menu!
+}
+
+input MenuQuery {
+  creator: ID
+  updater: ID
+  username: String
+  password: String
+  nickname: String
+  email: String
+  phone: String
+  sex: Int
+  age: Int
+  admin: Int
+  organId: ID
+  state: Int
+}
+
 type Query {
-  menus: [Menu]!
+  menus(
+    orderBy: UserOrderBy
+    after: String
+    before: String
+    first: Int
+    last: Int
+    query: UserQuery
+    skip: Int
+  ): MenuConnection!
   menu(id: ID!): Menu
 }
 

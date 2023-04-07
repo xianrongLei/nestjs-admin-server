@@ -4,7 +4,7 @@ import { ForbiddenException, Injectable } from "@nestjs/common";
 import * as argon from "argon2";
 import { CreateUserInput } from "./dto/create-user.input.dto";
 import { UpdateUserInput } from "./dto/update-user.input.dto";
-import { OrderByParams, UserConnection, UserQuery } from "@/types/graphql";
+import { UserOrderBy, UserConnection, UserQuery } from "@/types/graphql";
 import { PaginationArgs } from "@/common/pagination/pagination.args";
 import { findManyCursorConnection } from "@devoxa/prisma-relay-cursor-connection";
 
@@ -44,7 +44,7 @@ export class UsersService {
    * @returns
    */
   async findAll(
-    orderBy: OrderByParams,
+    orderBy: UserOrderBy,
     { after, before, first, last }: PaginationArgs,
     query: UserQuery
   ): Promise<UserConnection> {
