@@ -6,6 +6,10 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
+    "docker": "docker-compose -f docker-compose.yml -f docker-compose.dev.yml down up -d --build -V",
+    "docker:down": "docker-compose -f docker-compose.yml -f docker-compose.dev.yml down",
+    "docker:app:log": "docker logs -f nestjs-example-app_app-server_1",
+    "docker:prune": "docker system prune",
     "nest:generate": "nest generate resource",
     "prisma:init": "npx prisma init --datasource-provider sqlite",
     "prisma:generate": "npx prisma generate",

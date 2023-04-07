@@ -1,104 +1,58 @@
 type User {
   id: ID
-
   createdAt: DateTime
-
   updatedAt: DateTime
-
   creator: ID
-
   updater: ID
-
   username: String
-
   password: String
-
   nickname: String
-
   email: String
-
   phone: String
-
   sex: Int
-
   age: Int
-
   admin: Int
-
   avatar: String
-
   organId: ID
-
   posts: [Int]
-
   roles: [Int]
-
   state: Int
 }
 
 input CreateUserInput {
   creator: ID
-
   updater: ID
-
   username: String
-
   password: String
-
   nickname: String
-
   email: String
-
   phone: String
-
   sex: Int
-
   age: Int
-
   admin: Int
-
   avatar: String
-
   organId: ID
-
   posts: [Int]
-
   roles: [Int]
-
   state: Int
 }
 
 input UpdateUserInput {
   id: ID
-
   creator: ID
-
   updater: ID
-
   username: String
-
   password: String
-
   nickname: String
-
   email: String
-
   phone: String
-
   sex: Int
-
   age: Int
-
   admin: Int
-
   avatar: String
-
   organId: ID
-
   posts: [Int]
-
   roles: [Int]
-
   state: Int
 }
 

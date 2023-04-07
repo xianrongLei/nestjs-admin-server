@@ -44,7 +44,7 @@ model Menu {
   sort        Int      @default(0)
   state       Int      @default(1)
   type        Int      @default(0)
-  route       String?
+  route       String?   
   outside     Boolean  @default(false)
   title       String?
   authNames   String[]

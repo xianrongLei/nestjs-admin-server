@@ -1,13 +1,12 @@
 import { CACHE_MANAGER, ForbiddenException, Injectable, Inject } from "@nestjs/common";
 import { PrismaService } from "../common/prisma/prisma.service";
-import { AuthDto } from "./dto/auth.dto";
 import * as argon from "argon2";
 import { JwtService } from "@nestjs/jwt";
 import { ConfigService } from "@nestjs/config";
 import { User, Prisma } from ".prisma/client";
 import svgCaptcha from "svg-captcha";
-import { CaptchaDto } from "./dto/captcha.dto";
 import { Cache } from "cache-manager";
+import { Captcha, CreateCaptchaInput } from "@/types/graphql";
 
 @Injectable()
 export class AuthService {
@@ -42,7 +41,9 @@ export class AuthService {
    * @param param0
    * @returns
    */
-  async signup(dto: AuthDto): Promise<Record<string, any>> {
+  async signup(): Promise<Record<string, any>> {
+    // async signup(dto: AuthDto): Promise<Record<string, any>> {
+    const dto: any = {};
     try {
       //验证码比对
       const cacheAnswer = await this.cacheManager.get(dto.uniCode);
@@ -83,7 +84,9 @@ export class AuthService {
    * @param param0
    * @returns
    */
-  async signin({ password, username, uniCode, answer }: AuthDto): Promise<Record<string, any>> {
+  async signin(): Promise<Record<string, any>> {
+    // async signin({ password, username, uniCode, answer }: AuthDto): Promise<Record<string, any>> {
+    const { password, username, uniCode, answer }: any = {};
     //验证码比对
     const cacheAnswer = await this.cacheManager.get(uniCode);
     if (cacheAnswer !== answer) {
@@ -117,29 +120,28 @@ export class AuthService {
   }
   /**
    * 验证码
-   * @param dto
+   * @param createCaptchaInput
    * @returns
    */
-  async captcha(dto: CaptchaDto): Promise<Record<string, any>> {
+  async captcha(createCaptchaInput: CreateCaptchaInput): Promise<Captcha> {
     let captcha: svgCaptcha.CaptchaObj;
-    if (Number(dto.type) == 0) {
+    if (Number(createCaptchaInput.type) == 0) {
       captcha = svgCaptcha.create({
-        background: dto.background,
-        size: Number(dto.size),
-        ignoreChars: dto.ignoreChars,
-        color: dto.color
+        background: createCaptchaInput.background as string,
+        size: Number(createCaptchaInput.size),
+        ignoreChars: createCaptchaInput.ignoreChars as string,
+        color: createCaptchaInput.color as boolean
       });
     } else {
       captcha = svgCaptcha.createMathExpr({
-        background: dto.background,
-        ignoreChars: dto.ignoreChars,
-        color: dto.color
+        background: createCaptchaInput.background as string,
+        ignoreChars: createCaptchaInput.ignoreChars as string,
+        color: createCaptchaInput.color as boolean
       });
     }
     const uniCode = `uni${new Date().getTime()}`;
     const time = this.config.get("captcha.expriseIn");
     await this.cacheManager.set(uniCode, captcha.text, time);
-
     return {
       time,
       uniCode,

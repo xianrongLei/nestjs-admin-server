@@ -31,6 +31,21 @@ export enum OrderFild {
     state = "state"
 }
 
+export interface CreateAuthInput {
+    username?: Nullable<string>;
+    password?: Nullable<string>;
+    uniCode?: Nullable<string>;
+    answer?: Nullable<string>;
+}
+
+export interface CreateCaptchaInput {
+    background?: Nullable<string>;
+    ignoreChars?: Nullable<string>;
+    type?: Nullable<string>;
+    size?: Nullable<string>;
+    color?: Nullable<boolean>;
+}
+
 export interface CreateMenuInput {
     createdAt?: Nullable<DateTime>;
     updatedAt?: Nullable<DateTime>;
@@ -169,6 +184,39 @@ export interface UserQuery {
     state?: Nullable<number>;
 }
 
+export interface Auth {
+    user?: Nullable<User>;
+    access_token?: Nullable<JWT>;
+    refresh_token?: Nullable<JWT>;
+}
+
+export interface Captcha {
+    time?: Nullable<number>;
+    uniCode?: Nullable<string>;
+    svg?: Nullable<string>;
+}
+
+export interface IMutation {
+    captcha(createCaptchaInput: CreateCaptchaInput): Captcha | Promise<Captcha>;
+    signup(createAuthInput: CreateAuthInput): Auth | Promise<Auth>;
+    signin(createAuthInput: CreateAuthInput): Auth | Promise<Auth>;
+    createMenu(createMenuInput: CreateMenuInput): Menu | Promise<Menu>;
+    updateMenu(updateMenuInput: UpdateMenuInput): Menu | Promise<Menu>;
+    removeMenu(id: string): Nullable<Menu> | Promise<Nullable<Menu>>;
+    createOrgan(createOrganInput: CreateOrganInput): Organ | Promise<Organ>;
+    updateOrgan(updateOrganInput: UpdateOrganInput): Organ | Promise<Organ>;
+    removeOrgan(id: number): Nullable<Organ> | Promise<Nullable<Organ>>;
+    createPost(createPostInput: CreatePostInput): Post | Promise<Post>;
+    updatePost(updatePostInput: UpdatePostInput): Post | Promise<Post>;
+    removePost(id: number): Nullable<Post> | Promise<Nullable<Post>>;
+    createRole(createRoleInput: CreateRoleInput): Role | Promise<Role>;
+    updateRole(updateRoleInput: UpdateRoleInput): Role | Promise<Role>;
+    removeRole(id: number): Nullable<Role> | Promise<Nullable<Role>>;
+    createUser(createUserInput: CreateUserInput): User | Promise<User>;
+    updateUser(updateUserInput: UpdateUserInput): User | Promise<User>;
+    removeUser(id: string): Nullable<User> | Promise<Nullable<User>>;
+}
+
 export interface PageInfo {
     endCursor?: Nullable<string>;
     hasNextPage: boolean;
@@ -219,24 +267,6 @@ export interface IQuery {
     user(id: string): Nullable<User> | Promise<Nullable<User>>;
 }
 
-export interface IMutation {
-    createMenu(createMenuInput: CreateMenuInput): Menu | Promise<Menu>;
-    updateMenu(updateMenuInput: UpdateMenuInput): Menu | Promise<Menu>;
-    removeMenu(id: string): Nullable<Menu> | Promise<Nullable<Menu>>;
-    createOrgan(createOrganInput: CreateOrganInput): Organ | Promise<Organ>;
-    updateOrgan(updateOrganInput: UpdateOrganInput): Organ | Promise<Organ>;
-    removeOrgan(id: number): Nullable<Organ> | Promise<Nullable<Organ>>;
-    createPost(createPostInput: CreatePostInput): Post | Promise<Post>;
-    updatePost(updatePostInput: UpdatePostInput): Post | Promise<Post>;
-    removePost(id: number): Nullable<Post> | Promise<Nullable<Post>>;
-    createRole(createRoleInput: CreateRoleInput): Role | Promise<Role>;
-    updateRole(updateRoleInput: UpdateRoleInput): Role | Promise<Role>;
-    removeRole(id: number): Nullable<Role> | Promise<Nullable<Role>>;
-    createUser(createUserInput: CreateUserInput): User | Promise<User>;
-    updateUser(updateUserInput: UpdateUserInput): User | Promise<User>;
-    removeUser(id: string): Nullable<User> | Promise<Nullable<User>>;
-}
-
 export interface Organ {
     exampleField?: Nullable<number>;
 }
@@ -282,4 +312,5 @@ export interface UserEdge {
 }
 
 export type DateTime = any;
+export type JWT = any;
 type Nullable<T> = T | null;

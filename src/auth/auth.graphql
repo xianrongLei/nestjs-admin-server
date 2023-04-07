@@ -1,0 +1,32 @@
+type Auth {
+  user: User
+  access_token: JWT
+  refresh_token: JWT
+}
+
+input CreateAuthInput {
+  username: String
+  password: String
+  uniCode: String
+  answer: String
+}
+
+type Captcha {
+  time: Int
+  uniCode: String
+  svg: String
+}
+
+input CreateCaptchaInput {
+  background: String
+  ignoreChars: String
+  type: String
+  size: String
+  color: Boolean
+}
+
+type Mutation {
+  captcha(createCaptchaInput: CreateCaptchaInput!): Captcha!
+  signup(createAuthInput: CreateAuthInput!): Auth!
+  signin(createAuthInput: CreateAuthInput!): Auth!
+}
