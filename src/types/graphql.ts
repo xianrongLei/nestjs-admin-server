@@ -31,19 +31,18 @@ export enum OrderFild {
     state = "state"
 }
 
-export interface CreateAuthInput {
-    username?: Nullable<string>;
-    password?: Nullable<string>;
-    uniCode?: Nullable<string>;
-    answer?: Nullable<string>;
-}
-
 export interface CreateCaptchaInput {
     background?: Nullable<string>;
     ignoreChars?: Nullable<string>;
-    type?: Nullable<string>;
-    size?: Nullable<string>;
+    type?: Nullable<number>;
+    size?: Nullable<number>;
     color?: Nullable<boolean>;
+}
+
+export interface CreateAuthInput {
+    user?: Nullable<CreateUserInput>;
+    uniCode?: Nullable<string>;
+    answer?: Nullable<string>;
 }
 
 export interface CreateMenuInput {

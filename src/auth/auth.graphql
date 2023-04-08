@@ -4,13 +4,6 @@ type Auth {
   refresh_token: JWT
 }
 
-input CreateAuthInput {
-  username: String
-  password: String
-  uniCode: String
-  answer: String
-}
-
 type Captcha {
   time: Int
   uniCode: String
@@ -20,9 +13,15 @@ type Captcha {
 input CreateCaptchaInput {
   background: String
   ignoreChars: String
-  type: String
-  size: String
+  type: Int
+  size: Int
   color: Boolean
+}
+
+input CreateAuthInput {
+  user: CreateUserInput
+  uniCode: String
+  answer: String
 }
 
 type Mutation {
