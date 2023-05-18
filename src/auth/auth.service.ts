@@ -44,6 +44,8 @@ export class AuthService {
    */
   async captcha(createCaptchaInput: CreateCaptchaInput): Promise<Captcha> {
     let captcha: svgCaptcha.CaptchaObj;
+    const uniCode = `uni${new Date().getTime()}`;
+    const time = this.config.get("captcha.expriseIn");
     if (createCaptchaInput.type === 0) {
       captcha = svgCaptcha.create({
         background: createCaptchaInput.background,
@@ -58,9 +60,7 @@ export class AuthService {
         color: createCaptchaInput.color
       });
     }
-    const uniCode = `uni${new Date().getTime()}`;
-    const time = this.config.get("captcha.expriseIn");
-    await this.cacheManager.set(uniCode, captcha.text, time);
+    await this.cacheManager.set(uniCode, captcha.text.toLowerCase(), time);
     return {
       time,
       uniCode,
@@ -76,8 +76,8 @@ export class AuthService {
     // async signup(dto: AuthDto): Promise<Record<string, any>> {
     try {
       //验证码比对
-      const cacheAnswer = await this.cacheManager.get(createAuthInput.uniCode);
-      if (cacheAnswer !== createAuthInput.answer) {
+      const cacheAnswer = (await this.cacheManager.get(createAuthInput.uniCode)) as string;
+      if (cacheAnswer.toLowerCase() !== createAuthInput.answer) {
         this.cacheManager.del(createAuthInput.uniCode);
         throw new ForbiddenException("验证码错误");
       }
@@ -89,7 +89,7 @@ export class AuthService {
         }
       });
       const payload: Record<string, any> = {
-        sub: user.id,
+        id: user.id,
         username: user.username
       };
       const { access_token, refresh_token } = await this.generateTokens(payload);
@@ -116,8 +116,8 @@ export class AuthService {
   async signin(createAuthInput: CreateAuthInput): Promise<Auth> {
     const { uniCode, answer } = createAuthInput;
     //验证码比对
-    const cacheAnswer = await this.cacheManager.get(uniCode);
-    if (cacheAnswer !== answer) {
+    const cacheAnswer = (await this.cacheManager.get(uniCode)) as string;
+    if (cacheAnswer?.toLowerCase() !== answer) {
       this.cacheManager.del(uniCode);
       throw new ForbiddenException("验证码错误");
     } else {
@@ -135,7 +135,7 @@ export class AuthService {
     if (!pwMatches) throw new ForbiddenException("用户名不存在或密码错误");
     //生成token
     const payload: Record<string, any> = {
-      sub: user.id,
+      id: user.id,
       username: user.username
     };
     const { access_token, refresh_token } = await this.generateTokens(payload);

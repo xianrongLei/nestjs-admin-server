@@ -4,7 +4,10 @@ import { CreateMenuInput } from "./dto/create-menu.input";
 import { UpdateMenuInput } from "./dto/update-menu.input";
 import { PaginationArgs } from "@/common/pagination/pagination.args";
 import { MenuOrderBy, MenuQuery } from "@/types/graphql";
+import { JwtGuard } from "@/auth/guard";
+import { UseGuards } from "@nestjs/common";
 
+@UseGuards(JwtGuard)
 @Resolver("menu")
 export class MenusResolver {
   constructor(private readonly menusService: MenusService) {}

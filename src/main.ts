@@ -8,7 +8,6 @@ async function bootstrap(): Promise<void> {
   //创建服务
   const app = await NestFactory.create(AppModule, { cors: true });
   const appConfig: ConfigService = app.get(ConfigService);
-  app.setGlobalPrefix(appConfig.get("app.prefix") as string);
   // 设置跨域
   app.enableCors({
     credentials: true
