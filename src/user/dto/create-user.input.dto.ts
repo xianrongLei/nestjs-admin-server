@@ -79,7 +79,7 @@ export class CreateUserInput {
    */
   @Field(() => Int)
   @IsOptional()
-  age!: number;
+  age?: number;
   /**
    * 是否管理员 0否 1是
    */
@@ -101,9 +101,9 @@ export class CreateUserInput {
   /**
    * 用户岗位列表id
    */
-  @Field(() => [Int])
-  @IsOptional()
-  posts?: number;
+  // @Field(() => [Int])
+  // @IsOptional()
+  // posts?: number;
   /**
    * 用户角色列表id
    */

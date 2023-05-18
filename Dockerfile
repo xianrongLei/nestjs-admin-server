@@ -12,5 +12,9 @@ RUN if [ "$NODE_DEV" = "development" ]; \
 COPY . ./
 ENV APP_PORT 3000
 EXPOSE $APP_PORT
-CMD ["npm", "run" , "dev"] 
+# CMD if [ "$NODE_DEV" = "development" ]; 
+
+
+
+
 

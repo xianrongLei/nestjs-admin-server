@@ -3,6 +3,16 @@ services:
   nginx:
     ports:
       - 80:80
+  # app-studio:
+  #   build: .
+  #   ports:
+  #     - 5555:5555
+  #   depends_on:
+  #     - app-server
+  #   environment:
+  #     - NODE_DEV=development
+  #     - DATABASE_URL=postgresql://admin:admin@postgres:5432/nest
+  #   command: prisma studio --port 5555 --browser none
   app-server:
     build:
       context: .
@@ -22,5 +32,4 @@ services:
       - -c
       - |
         npm run prisma:dev
-        npm run prisma:generate
         npm run dev

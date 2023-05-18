@@ -8,7 +8,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-//组织
 model Organ {
   id           String       @id @default(cuid())
   createdAt    DateTime     @default(now())
@@ -19,17 +18,16 @@ model Organ {
   updater      String?
   name         String
   description  String?
-  users        User[]       @relation("OrganToUser")
-  posts        Post[]
-  roles        Role[]
+  dictionaryId String
   departments  Department[]
   Dictionary   Dictionary   @relation(fields: [dictionaryId], references: [id])
-  dictionaryId String
+  posts        Post[]
+  roles        Role[]
+  users        User[]       @relation("OrganToUser")
 
   @@map("organs")
 }
 
-// 部门
 model Department {
   id           String       @id @default(cuid())
   createdAt    DateTime     @default(now())
@@ -41,42 +39,40 @@ model Department {
   name         String
   description  String?
   departmentId String?
-  Organ        Organ?       @relation(fields: [organId], references: [id])
   organId      String?
-  parent       Department?  @relation("departments", fields: [parentId], references: [id])
   parentId     String?
+  Organ        Organ?       @relation(fields: [organId], references: [id])
+  parent       Department?  @relation("departments", fields: [parentId], references: [id])
   children     Department[] @relation("departments")
 
   @@map("departments")
 }
 
-//用户
 model User {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   creator   String?
   updater   String?
-  sort      Int      @default(0)
-  state     Int      @default(1)
   username  String   @unique
   password  String
   email     String?
   nickname  String?
+  phone     String?
   age       Int?
   sex       Int      @default(1)
   admin     Int      @default(0)
   avatar    String?
-  phone     String?
+  roleId    String
+  sort      Int      @default(0)
+  state     Int      @default(1)
+  Role      Role?    @relation("RoleToUser", fields: [roleId], references: [id])
   organs    Organ[]  @relation("OrganToUser")
   posts     Post[]   @relation("PostToUser")
-  Role      Role     @relation("RoleToUser", fields: [roleId], references: [id])
-  roleId    String
 
   @@map("users")
 }
 
-//菜单
 model Menu {
   id          String   @id @default(cuid())
   createdAt   DateTime @default(now())
@@ -92,15 +88,14 @@ model Menu {
   route       String?
   outside     Boolean  @default(false)
   title       String?
-  roles       Role[]   @relation("MenuToRole")
-  parent      Menu?    @relation("menus", fields: [parentId], references: [id])
   parentId    String?
+  parent      Menu?    @relation("menus", fields: [parentId], references: [id])
   children    Menu[]   @relation("menus")
+  roles       Role[]   @relation("MenuToRole")
 
   @@map("menus")
 }
 
-// 岗位
 model Post {
   id          String   @id @default(cuid())
   createdAt   DateTime @default(now())
@@ -111,14 +106,13 @@ model Post {
   state       Int      @default(1)
   name        String
   description String?
-  users       User[]   @relation("PostToUser")
-  Organ       Organ?   @relation(fields: [organId], references: [id])
   organId     String?
+  Organ       Organ?   @relation(fields: [organId], references: [id])
+  users       User[]   @relation("PostToUser")
 
   @@map("posts")
 }
 
-// 角色
 model Role {
   id          String   @id @default(cuid())
   createdAt   DateTime @default(now())
@@ -129,15 +123,14 @@ model Role {
   state       Int      @default(1)
   name        String
   description String?
-  menus       Menu[]   @relation("MenuToRole")
-  users       User[]   @relation("RoleToUser")
-  Organ       Organ?   @relation(fields: [organId], references: [id])
   organId     String?
+  Organ       Organ?   @relation(fields: [organId], references: [id])
+  users       User[]   @relation("RoleToUser")
+  menus       Menu[]   @relation("MenuToRole")
 
   @@map("roles")
 }
 
-//字典
 model Dictionary {
   id          String      @id @default(cuid())
   createdAt   DateTime    @default(now())
@@ -155,7 +148,6 @@ model Dictionary {
   @@map("dictionaries")
 }
 
-//词条
 model DictEntry {
   id           String     @id @default(cuid())
   createdAt    DateTime   @default(now())
@@ -166,8 +158,8 @@ model DictEntry {
   state        Int        @default(1)
   term         String
   definition   String
-  Dictionary   Dictionary @relation(fields: [dictionaryId], references: [id])
   dictionaryId String
+  Dictionary   Dictionary @relation(fields: [dictionaryId], references: [id])
 
   @@map("dict_entries")
 }

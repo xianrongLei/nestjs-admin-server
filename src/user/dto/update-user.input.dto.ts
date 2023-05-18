@@ -87,9 +87,9 @@ export class UpdateUserInput {
   /**
    * 用户岗位列表id
    */
-  @Field(() => [Int])
-  @IsOptional()
-  posts?: number;
+  // @Field(() => [Int])
+  // @IsOptional()
+  // posts?: number;
   /**
    * 用户角色列表id
    */
