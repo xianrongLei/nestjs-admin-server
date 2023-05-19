@@ -18,7 +18,7 @@
     "prisma:deploy": "npx prisma migrate deploy",
     "prisma:push": "npx prisma db push",
     "prisma:pull": "npx prisma db pull",
-    "prisma:studio": "npx prisma studio",
+    "prisma:studio": "npx prisma studio --browser none",
     "husky:init": "npx husky install",
     "dev": "nest start --watch",
     "build": "nest build",
