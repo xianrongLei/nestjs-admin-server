@@ -3,11 +3,25 @@ services:
   nginx:
     ports:
       - 80:80
+  prisma-studio:
+    build:
+      context: .
+      args:
+        NODE_DEV: development
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: postgres://admin:admin@postgres:5432/nest?schema=public
+    ports:
+      - 5555:5555
+    command: npm run prisma:studio
   app-server:
     build:
       context: .
       args:
         NODE_DEV: development
+    ports:
+      - 3000:3000
     volumes:
       - ./:/app
       - /app/node_modules
