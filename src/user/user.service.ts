@@ -1,6 +1,6 @@
 import { Prisma, User } from ".prisma/client";
 import { PrismaService } from "@/common/prisma/prisma.service";
-import { ForbiddenException, Injectable } from "@nestjs/common";
+import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import * as argon from "argon2";
 import { CreateUserInput } from "./dto/create-user.input.dto";
 import { UpdateUserInput } from "./dto/update-user.input.dto";
@@ -75,11 +75,17 @@ export class UsersService {
    * @returns
    */
   async findOne(id: string): Promise<User> {
-    return <User>await this.prisma.user.findFirst({
+    const user = await this.prisma.user.findFirst({
       where: {
         id
       }
     });
+    console.log(user);
+    if (!user) throw new NotFoundException(`User with ID ${id} not found`);
+    return {
+      ...user,
+      password: ""
+    };
   }
 
   /**
@@ -102,7 +108,7 @@ export class UsersService {
    * @param id
    * @returns
    */
-  async remove(id: string) {
+  async remove(id: string): Promise<User> {
     return await this.prisma.user.delete({
       where: {
         id

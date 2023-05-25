@@ -9,21 +9,21 @@ datasource db {
 }
 
 model Organ {
-  id           String       @id @default(cuid())
-  createdAt    DateTime     @default(now())
-  updatedAt    DateTime     @updatedAt
-  sort         Int          @default(0)
-  state        Int          @default(1)
-  creator      String?
-  updater      String?
-  name         String
-  description  String?
-  dictionaryId String
-  departments  Department[]
-  Dictionary   Dictionary   @relation(fields: [dictionaryId], references: [id])
-  posts        Post[]
-  roles        Role[]
-  users        User[]       @relation("OrganToUser")
+  id          String       @id @default(cuid())
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  sort        Int          @default(0)
+  state       Int          @default(1)
+  uniqueName  String       @unique
+  creator     String?
+  updater     String?
+  name        String
+  description String?
+  Dictionary  Dictionary[]
+  departments Department[]
+  posts       Post[]
+  roles       Role[]
+  users       User[]       @relation("OrganToUser")
 
   @@map("organs")
 }
@@ -149,17 +149,17 @@ model Dictionary {
 }
 
 model DictEntry {
-  id           String     @id @default(cuid())
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
+  id           String      @id @default(cuid())
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
   creator      String?
   updater      String?
-  sort         Int        @default(0)
-  state        Int        @default(1)
-  term         String
-  definition   String
-  dictionaryId String
-  Dictionary   Dictionary @relation(fields: [dictionaryId], references: [id])
+  sort         Int         @default(0)
+  state        Int         @default(1)
+  name         String
+  value        String
+  dictionaryId String?
+  Dictionary   Dictionary? @relation(fields: [dictionaryId], references: [id])
 
   @@map("dict_entries")
 }

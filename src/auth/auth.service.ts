@@ -27,7 +27,7 @@ export class AuthService {
    * @param payload
    * @returns
    */
-  async generateTokens(payload: Record<string, any>): Promise<Record<string, any>> {
+  async generateTokens(payload: Record<string, any>): Promise<Record<string, string>> {
     const accessToken = await this.jwt.signAsync(payload, {
       secret: this.config.get("jwt.secret")
     });
