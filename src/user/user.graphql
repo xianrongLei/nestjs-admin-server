@@ -4,6 +4,7 @@ type User {
   updatedAt: DateTime
   creator: ID
   updater: ID
+  state: Int
   username: String
   password: String
   nickname: String
@@ -16,7 +17,6 @@ type User {
   organId: ID
   posts: [Int]
   roles: [Int]
-  state: Int
 }
 
 input CreateUserInput {
@@ -110,16 +110,18 @@ input UserQuery {
   state: Int
 }
 
+input UserQueryUsersInput {
+  orderBy: UserOrderBy
+  after: String
+  before: String
+  first: Int
+  last: Int
+  query: UserQuery
+  skip: Int
+}
+
 type Query {
-  users(
-    orderBy: UserOrderBy
-    after: String
-    before: String
-    first: Int
-    last: Int
-    query: UserQuery
-    skip: Int
-  ): UserConnection!
+  users(userQueryUsersInput: UserQueryUsersInput): UserConnection!
   user(id: ID!): User
 }
 

@@ -14,15 +14,15 @@ model Organ {
   updatedAt   DateTime     @updatedAt
   sort        Int          @default(0)
   state       Int          @default(1)
-  uniqueName  String       @unique
   creator     String?
   updater     String?
   name        String
   description String?
-  Dictionary  Dictionary[]
+  uniqueName  String       @unique
   departments Department[]
   posts       Post[]
   roles       Role[]
+  Dictionary  Dictionary[] @relation("DictionaryToOrgan")
   users       User[]       @relation("OrganToUser")
 
   @@map("organs")
@@ -143,7 +143,7 @@ model Dictionary {
   name        String
   notes       String
   dictEntries DictEntry[]
-  Organ       Organ[]
+  Organ       Organ[]     @relation("DictionaryToOrgan")
 
   @@map("dictionaries")
 }
@@ -157,8 +157,8 @@ model DictEntry {
   sort         Int         @default(0)
   state        Int         @default(1)
   name         String
-  value        String
   dictionaryId String?
+  value        String
   Dictionary   Dictionary? @relation(fields: [dictionaryId], references: [id])
 
   @@map("dict_entries")

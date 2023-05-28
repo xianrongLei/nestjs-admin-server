@@ -39,7 +39,7 @@ export class UsersService {
   }
 
   /**
-   * 查询所有用户
+   * 分页查询用户
    * @param orderBy
    * @returns
    */
@@ -48,25 +48,29 @@ export class UsersService {
     { after, before, first, last }: PaginationArgs,
     query: UserQuery
   ): Promise<UserConnection> {
-    const where: Prisma.UserWhereInput = {};
-    for (const iterator in query) {
-      const value = query[iterator];
-      where[iterator] = { contains: value };
-    }
+    const where = Object.entries(query).reduce((acc, [key, value]) => {
+      if (value != null) {
+        acc[key] = { contains: value };
+      }
+      return acc;
+    }, {});
+
     const result = await findManyCursorConnection(
       args =>
         this.prisma.user.findMany({
-          where: where,
+          where,
           orderBy: (orderBy?.field && { [orderBy.field]: orderBy.direction }) ?? {},
           ...args
         }),
       () =>
         this.prisma.user.count({
-          where: where
+          where
         }),
       { first, last, before, after }
     );
+
     result.edges.forEach(user => (user.node.password = ""));
+
     return result;
   }
   /**
@@ -80,7 +84,6 @@ export class UsersService {
         id
       }
     });
-    console.log(user);
     if (!user) throw new NotFoundException(`User with ID ${id} not found`);
     return {
       ...user,

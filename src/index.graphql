@@ -1,11 +1,14 @@
 scalar DateTime
 scalar JWT
 
+enum OrderDirection {
+  asc
+  desc
+}
+
 type PageInfo {
   endCursor: String
   hasNextPage: Boolean!
   hasPreviousPage: Boolean!
   startCursor: String
 }
-
-

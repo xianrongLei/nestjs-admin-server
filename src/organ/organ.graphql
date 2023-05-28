@@ -1,24 +1,95 @@
 type Organ {
-  # Example field (placeholder)
-  exampleField: Int
+  id: ID
+  createdAt: DateTime
+  updatedAt: DateTime
+  creator: String
+  updater: String
+  sort: Int
+  state: Int
+  name: String
+  description: String
+  uniqueName: String
+  departments: [Department]
+  posts: [Post]
+  roles: [Role]
+  Dictionary: [Dictionary]
+  users: [User]
 }
 
 input CreateOrganInput {
-  # Example field (placeholder)
-  exampleField: Int
+  sort: Int
+  state: Int
+  name: String
+  description: String
+  uniqueName: String
+  departmentIds: [ID]
+  postIds: [ID]
+  roleIds: [ID]
+  DictionaryIds: [ID]
+  userIds: [ID]
 }
 
 input UpdateOrganInput {
-  id: Int
+  id: ID
+  sort: Int
+  state: Int
+  name: String
+  description: String
+  uniqueName: String
+  departmentIds: [ID]
+  postIds: [ID]
+  roleIds: [ID]
+  DictionaryIds: [ID]
+  userIds: [ID]
+}
+
+input OrganOrderby {
+  field: OrganOrderFelid
+  direction: OrderDirection
+}
+
+input QueryOrgansInput {
+  orderBy: OrganOrderby
+  after: String
+  before: String
+  first: Int
+  last: Int
+  query: UserQuery
+  skip: Int
+}
+
+enum OrganOrderFelid {
+  id
+  createdAt
+  updatedAt
+  creator
+  updater
+  sort
+  state
+  name
+  description
+  uniqueName
+}
+
+type OrganConnection {
+  edges: [OrganEdge!]
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type OrganEdge {
+  cursor: String!
+  node: Organ!
 }
 
 type Query {
-  organs: [Organ]!
-  organ(id: Int!): Organ
+  organs(queryOrgansInput: QueryOrgansInput): OrganConnection!
+  organsById(ids: [ID]): [Organ]
+  organ(id: ID!): Organ
 }
 
 type Mutation {
   createOrgan(createOrganInput: CreateOrganInput!): Organ!
   updateOrgan(updateOrganInput: UpdateOrganInput!): Organ!
-  removeOrgan(id: Int!): Organ
+  removeOrgan(id: ID!): Organ
 }

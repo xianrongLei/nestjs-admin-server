@@ -15,6 +15,8 @@ import { OrgansModule } from "./organ/organ.module";
 import { MenusModule } from "./menu/menu.module";
 import { RolesModule } from "./role/role.module";
 import { PostsModule } from "./post/post.module";
+import { DepartmentModule } from "./department/department.module";
+import { DictionaryModule } from "./dictionary/dictionary.module";
 
 @Module({
   imports: [
@@ -56,7 +58,9 @@ import { PostsModule } from "./post/post.module";
     OrgansModule,
     MenusModule,
     RolesModule,
-    PostsModule
+    PostsModule,
+    DepartmentModule,
+    DictionaryModule
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService]

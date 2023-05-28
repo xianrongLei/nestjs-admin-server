@@ -1,0 +1,24 @@
+type Dictionary {
+  # Example field (placeholder)
+  exampleField: Int
+}
+
+input CreateDictionaryInput {
+  # Example field (placeholder)
+  exampleField: Int
+}
+
+input UpdateDictionaryInput {
+  id: Int!
+}
+
+type Query {
+  dictionarys: [Dictionary]!
+  dictionary(id: Int!): Dictionary
+}
+
+type Mutation {
+  createDictionary(createDictionaryInput: CreateDictionaryInput!): Dictionary!
+  updateDictionary(updateDictionaryInput: UpdateDictionaryInput!): Dictionary!
+  removeDictionary(id: Int!): Dictionary
+}

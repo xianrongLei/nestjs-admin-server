@@ -7,7 +7,9 @@ import { PaginationArgs } from "@/common/pagination/pagination.args";
 
 @Resolver("user")
 export class UsersResolver {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService) {
+    this.usersService = usersService;
+  }
 
   @Mutation("createUser")
   create(@Args("createUserInput") createUserInput: CreateUserInput) {
