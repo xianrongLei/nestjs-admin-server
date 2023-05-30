@@ -13,7 +13,7 @@ export class DepartmentResolver {
     return this.departmentService.create(createDepartmentInput);
   }
 
-  @Query("department")
+  @Query("departments")
   findAll(qeruyDepartmentInput: QeruyDepartmentInput) {
     return this.departmentService.findAll(qeruyDepartmentInput);
   }

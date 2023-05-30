@@ -38,7 +38,7 @@ input UpdateDepartmentInput {
   parentId: ID
   Organ: ID
   parent: ID
-  children: [ID]
+  childrenIds: [ID]
 }
 
 enum DepartmentOrderFelid {
@@ -51,7 +51,9 @@ enum DepartmentOrderFelid {
   state
   name
   description
-  uniqueName
+  departmentId
+  organId
+  parentId
 }
 
 input DepartmentOderBy {
@@ -71,8 +73,6 @@ input DepartmentQuery {
   departmentId: ID
   organId: ID
   parentId: ID
-  Organ: ID
-  parent: ID
 }
 
 input QueryDepartmentInput {
@@ -87,7 +87,7 @@ input QueryDepartmentInput {
 
 type DepartmentEdge {
   cursor: String!
-  node: Organ!
+  node: Department!
 }
 
 type DepartmentConnection {

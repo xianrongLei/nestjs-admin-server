@@ -17,6 +17,7 @@ import { RolesModule } from "./role/role.module";
 import { PostsModule } from "./post/post.module";
 import { DepartmentModule } from "./department/department.module";
 import { DictionaryModule } from "./dictionary/dictionary.module";
+import { DictEntryModule } from "./dict-entry/dict-entry.module";
 
 @Module({
   imports: [
@@ -60,7 +61,8 @@ import { DictionaryModule } from "./dictionary/dictionary.module";
     RolesModule,
     PostsModule,
     DepartmentModule,
-    DictionaryModule
+    DictionaryModule,
+    DictEntryModule
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService]

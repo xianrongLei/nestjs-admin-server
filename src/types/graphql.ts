@@ -18,7 +18,36 @@ export enum DepartmentOrderFelid {
     state = "state",
     name = "name",
     description = "description",
-    uniqueName = "uniqueName"
+    departmentId = "departmentId",
+    organId = "organId",
+    parentId = "parentId"
+}
+
+export enum DictEntryOrderFelid {
+    id = "id",
+    createdAt = "createdAt",
+    updatedAt = "updatedAt",
+    creator = "creator",
+    updater = "updater",
+    sort = "sort",
+    state = "state",
+    name = "name",
+    value = "value",
+    dictionaryId = "dictionaryId",
+    notes = "notes"
+}
+
+export enum DictionaryOrderFelid {
+    id = "id",
+    createdAt = "createdAt",
+    updatedAt = "updatedAt",
+    creator = "creator",
+    updater = "updater",
+    sort = "sort",
+    state = "state",
+    dictName = "dictName",
+    name = "name",
+    notes = "notes"
 }
 
 export enum OrderDirection {
@@ -93,7 +122,7 @@ export interface UpdateDepartmentInput {
     parentId?: Nullable<string>;
     Organ?: Nullable<string>;
     parent?: Nullable<string>;
-    children?: Nullable<Nullable<string>[]>;
+    childrenIds?: Nullable<Nullable<string>[]>;
 }
 
 export interface DepartmentOderBy {
@@ -113,8 +142,6 @@ export interface DepartmentQuery {
     departmentId?: Nullable<string>;
     organId?: Nullable<string>;
     parentId?: Nullable<string>;
-    Organ?: Nullable<string>;
-    parent?: Nullable<string>;
 }
 
 export interface QueryDepartmentInput {
@@ -127,12 +154,100 @@ export interface QueryDepartmentInput {
     skip?: Nullable<number>;
 }
 
+export interface CreateDictEntryInput {
+    sort?: Nullable<number>;
+    state?: Nullable<number>;
+    name?: Nullable<string>;
+    value?: Nullable<string>;
+    notes?: Nullable<string>;
+    dictionaryId?: Nullable<string>;
+}
+
+export interface UpdateDictEntryInput {
+    id: number;
+    sort?: Nullable<number>;
+    state?: Nullable<number>;
+    name?: Nullable<string>;
+    value?: Nullable<string>;
+    notes?: Nullable<string>;
+    dictionaryId?: Nullable<string>;
+}
+
+export interface DictEntryOderBy {
+    field?: Nullable<DictEntryOrderFelid>;
+    direction?: Nullable<OrderDirection>;
+}
+
+export interface DictEntryQuery {
+    createdAt?: Nullable<DateTime>;
+    updatedAt?: Nullable<DateTime>;
+    creator?: Nullable<string>;
+    updater?: Nullable<string>;
+    sort?: Nullable<number>;
+    state?: Nullable<number>;
+    name?: Nullable<string>;
+    value?: Nullable<string>;
+    notes?: Nullable<string>;
+    dictionaryId?: Nullable<string>;
+}
+
+export interface QueryDictEntryInput {
+    orderBy?: Nullable<DictEntryOderBy>;
+    query?: Nullable<DictEntryQuery>;
+    after?: Nullable<string>;
+    before?: Nullable<string>;
+    first?: Nullable<number>;
+    last?: Nullable<number>;
+    skip?: Nullable<number>;
+}
+
 export interface CreateDictionaryInput {
-    exampleField?: Nullable<number>;
+    sort?: Nullable<number>;
+    state?: Nullable<number>;
+    dictName?: Nullable<string>;
+    name?: Nullable<string>;
+    notes?: Nullable<string>;
+    dictEntries?: Nullable<Nullable<string>[]>;
+    Organ?: Nullable<Nullable<string>[]>;
 }
 
 export interface UpdateDictionaryInput {
-    id: number;
+    id?: Nullable<string>;
+    sort?: Nullable<number>;
+    state?: Nullable<number>;
+    dictName?: Nullable<string>;
+    name?: Nullable<string>;
+    notes?: Nullable<string>;
+    dictEntries?: Nullable<Nullable<string>[]>;
+    Organ?: Nullable<Nullable<string>[]>;
+}
+
+export interface DictionaryOderBy {
+    field?: Nullable<OrganOrderFelid>;
+    direction?: Nullable<OrderDirection>;
+}
+
+export interface DictionaryQuery {
+    id?: Nullable<string>;
+    createdAt?: Nullable<DateTime>;
+    updatedAt?: Nullable<DateTime>;
+    creator?: Nullable<string>;
+    updater?: Nullable<string>;
+    sort?: Nullable<number>;
+    state?: Nullable<number>;
+    dictName?: Nullable<string>;
+    name?: Nullable<string>;
+    notes?: Nullable<string>;
+}
+
+export interface QueryDictionaryInput {
+    orderBy?: Nullable<DictionaryOderBy>;
+    query?: Nullable<DictionaryQuery>;
+    after?: Nullable<string>;
+    before?: Nullable<string>;
+    first?: Nullable<number>;
+    last?: Nullable<number>;
+    skip?: Nullable<number>;
 }
 
 export interface CreateMenuInput {
@@ -351,9 +466,12 @@ export interface IMutation {
     createDepartment(createDepartmentInput: CreateDepartmentInput): Department | Promise<Department>;
     updateDepartment(updateDepartmentInput: UpdateDepartmentInput): Department | Promise<Department>;
     removeDepartment(id: string): Nullable<Department> | Promise<Nullable<Department>>;
+    createDictEntry(createDictEntryInput: CreateDictEntryInput): DictEntry | Promise<DictEntry>;
+    updateDictEntry(updateDictEntryInput: UpdateDictEntryInput): DictEntry | Promise<DictEntry>;
+    removeDictEntry(id: number): Nullable<DictEntry> | Promise<Nullable<DictEntry>>;
     createDictionary(createDictionaryInput: CreateDictionaryInput): Dictionary | Promise<Dictionary>;
     updateDictionary(updateDictionaryInput: UpdateDictionaryInput): Dictionary | Promise<Dictionary>;
-    removeDictionary(id: number): Nullable<Dictionary> | Promise<Nullable<Dictionary>>;
+    removeDictionary(id: string): Nullable<Dictionary> | Promise<Nullable<Dictionary>>;
     createMenu(createMenuInput: CreateMenuInput): Menu | Promise<Menu>;
     updateMenu(updateMenuInput: UpdateMenuInput): Menu | Promise<Menu>;
     removeMenu(id: string): Nullable<Menu> | Promise<Nullable<Menu>>;
@@ -391,7 +509,7 @@ export interface Department {
 
 export interface DepartmentEdge {
     cursor: string;
-    node: Organ;
+    node: Department;
 }
 
 export interface DepartmentConnection {
@@ -404,8 +522,10 @@ export interface IQuery {
     departments(queryDepartmentInput: QueryDepartmentInput): Nullable<UserConnection[]> | Promise<Nullable<UserConnection[]>>;
     departmentsById(ids?: Nullable<Nullable<string>[]>): Nullable<Nullable<Department>[]> | Promise<Nullable<Nullable<Department>[]>>;
     department(id: string): Nullable<Department> | Promise<Nullable<Department>>;
-    dictionarys(): Nullable<Dictionary>[] | Promise<Nullable<Dictionary>[]>;
-    dictionary(id: number): Nullable<Dictionary> | Promise<Nullable<Dictionary>>;
+    dictEntrys(dictEntryConnection?: Nullable<DictEntryConnection>): Nullable<DictEntry>[] | Promise<Nullable<DictEntry>[]>;
+    dictEntry(id: number): Nullable<DictEntry> | Promise<Nullable<DictEntry>>;
+    dictionarys(queryDictionaryInput?: Nullable<QueryDictionaryInput>): Nullable<Nullable<Dictionary>[]> | Promise<Nullable<Nullable<Dictionary>[]>>;
+    dictionary(id: string): Nullable<Dictionary> | Promise<Nullable<Dictionary>>;
     menus(orderBy?: Nullable<UserOrderBy>, after?: Nullable<string>, before?: Nullable<string>, first?: Nullable<number>, last?: Nullable<number>, query?: Nullable<UserQuery>, skip?: Nullable<number>): MenuConnection | Promise<MenuConnection>;
     menu(id: string): Nullable<Menu> | Promise<Nullable<Menu>>;
     organs(queryOrgansInput?: Nullable<QueryOrgansInput>): OrganConnection | Promise<OrganConnection>;
@@ -419,8 +539,56 @@ export interface IQuery {
     user(id: string): Nullable<User> | Promise<Nullable<User>>;
 }
 
+export interface DictEntry {
+    id?: Nullable<string>;
+    createdAt?: Nullable<DateTime>;
+    updatedAt?: Nullable<DateTime>;
+    creator?: Nullable<string>;
+    updater?: Nullable<string>;
+    sort?: Nullable<number>;
+    state?: Nullable<number>;
+    name?: Nullable<string>;
+    value?: Nullable<string>;
+    dictionaryId?: Nullable<string>;
+    notes?: Nullable<string>;
+    Dictionary?: Nullable<Dictionary>;
+}
+
+export interface DictEntryEdge {
+    cursor: string;
+    node: DictEntry;
+}
+
+export interface DictEntryConnection {
+    edges?: Nullable<Nullable<DictEntryEdge>[]>;
+    pageInfo: PageInfo;
+    totalCount: number;
+}
+
 export interface Dictionary {
-    exampleField?: Nullable<number>;
+    id?: Nullable<string>;
+    createdAt?: Nullable<DateTime>;
+    updatedAt?: Nullable<DateTime>;
+    creator?: Nullable<string>;
+    updater?: Nullable<string>;
+    sort?: Nullable<number>;
+    state?: Nullable<number>;
+    dictName?: Nullable<string>;
+    name?: Nullable<string>;
+    notes?: Nullable<string>;
+    dictEntries?: Nullable<Nullable<DictEntry>[]>;
+    Organ?: Nullable<Nullable<Organ>[]>;
+}
+
+export interface DictionaryEdge {
+    cursor: string;
+    node: Dictionary;
+}
+
+export interface DictionaryConnection {
+    edges?: Nullable<Nullable<DictionaryEdge>[]>;
+    pageInfo: PageInfo;
+    totalCount: number;
 }
 
 export interface PageInfo {

@@ -1,0 +1,96 @@
+type DictEntry {
+  id: ID
+  createdAt: DateTime
+  updatedAt: DateTime
+  creator: String
+  updater: String
+  sort: Int
+  state: Int
+  name: String
+  value: String
+  dictionaryId: ID
+  notes: String
+  Dictionary: Dictionary
+}
+input CreateDictEntryInput {
+  sort: Int
+  state: Int
+  name: String
+  value: String
+  notes: String
+  dictionaryId: ID
+}
+
+input UpdateDictEntryInput {
+  id: Int!
+  sort: Int
+  state: Int
+  name: String
+  value: String
+  notes: String
+  dictionaryId: ID
+}
+
+enum DictEntryOrderFelid {
+  id
+  createdAt
+  updatedAt
+  creator
+  updater
+  sort
+  state
+  name
+  value
+  dictionaryId
+  notes
+}
+
+input DictEntryOderBy {
+  field: DictEntryOrderFelid
+  direction: OrderDirection
+}
+
+input DictEntryQuery {
+  createdAt: DateTime
+  updatedAt: DateTime
+  creator: String
+  updater: String
+  sort: Int
+  state: Int
+  name: String
+  value: String
+  notes: String
+  dictionaryId: ID
+}
+
+input QueryDictEntryInput {
+  orderBy: DictEntryOderBy
+  query: DictEntryQuery
+  after: String
+  before: String
+  first: Int
+  last: Int
+  skip: Int
+}
+
+type DictEntryEdge {
+  cursor: String!
+  node: DictEntry!
+}
+
+type DictEntryConnection {
+  edges: [DictEntryEdge]
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type Query {
+  dictEntrys(dictEntryConnection: DictEntryConnection): [DictEntry]!
+  dictEntry(id: Int!): DictEntry
+}
+
+type Mutation {
+  createDictEntry(createDictEntryInput: CreateDictEntryInput!): DictEntry!
+  updateDictEntry(updateDictEntryInput: UpdateDictEntryInput!): DictEntry!
+  removeDictEntry(id: Int!): DictEntry
+}

@@ -1,24 +1,97 @@
 type Dictionary {
-  # Example field (placeholder)
-  exampleField: Int
+  id: ID
+  createdAt: DateTime
+  updatedAt: DateTime
+  creator: String
+  updater: String
+  sort: Int
+  state: Int
+  dictName: String
+  name: String
+  notes: String
+  dictEntries: [DictEntry]
+  Organ: [Organ]
 }
 
 input CreateDictionaryInput {
-  # Example field (placeholder)
-  exampleField: Int
+  sort: Int
+  state: Int
+  dictName: String
+  name: String
+  notes: String
+  dictEntries: [ID]
+  Organ: [ID]
 }
 
 input UpdateDictionaryInput {
-  id: Int!
+  id: ID
+  sort: Int
+  state: Int
+  dictName: String
+  name: String
+  notes: String
+  dictEntries: [ID]
+  Organ: [ID]
 }
 
+enum DictionaryOrderFelid {
+  id
+  createdAt
+  updatedAt
+  creator
+  updater
+  sort
+  state
+  dictName
+  name
+  notes
+}
+
+input DictionaryOderBy {
+  field: OrganOrderFelid
+  direction: OrderDirection
+}
+
+input DictionaryQuery {
+  id: ID
+  createdAt: DateTime
+  updatedAt: DateTime
+  creator: String
+  updater: String
+  sort: Int
+  state: Int
+  dictName: String
+  name: String
+  notes: String
+}
+
+input QueryDictionaryInput {
+  orderBy: DictionaryOderBy
+  query: DictionaryQuery
+  after: String
+  before: String
+  first: Int
+  last: Int
+  skip: Int
+}
+
+type DictionaryEdge {
+  cursor: String!
+  node: Dictionary!
+}
+
+type DictionaryConnection {
+  edges: [DictionaryEdge]
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
 type Query {
-  dictionarys: [Dictionary]!
-  dictionary(id: Int!): Dictionary
+  dictionarys(queryDictionaryInput: QueryDictionaryInput): [Dictionary]
+  dictionary(id: ID!): Dictionary
 }
 
 type Mutation {
   createDictionary(createDictionaryInput: CreateDictionaryInput!): Dictionary!
   updateDictionary(updateDictionaryInput: UpdateDictionaryInput!): Dictionary!
-  removeDictionary(id: Int!): Dictionary
+  removeDictionary(id: ID!): Dictionary
 }

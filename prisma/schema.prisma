@@ -157,6 +157,7 @@ model DictEntry {
   sort         Int         @default(0)
   state        Int         @default(1)
   name         String
+  notes        String
   dictionaryId String?
   value        String
   Dictionary   Dictionary? @relation(fields: [dictionaryId], references: [id])

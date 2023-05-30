@@ -5,7 +5,9 @@ import { PartialType } from "@nestjs/mapped-types";
 
 @InputType()
 export class UpdateOrganInput extends PartialType(CreateOrganInput) {
-  /** 组织ID */
+  /**
+   * 组织ID
+   */
   @Field(() => ID, { nullable: false })
   @IsNotEmpty()
   id!: string;
