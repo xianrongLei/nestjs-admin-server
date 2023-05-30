@@ -3,7 +3,7 @@ import { IsOptional } from "class-validator";
 import { DepartmentOderBy, DepartmentQuery } from "@/types/graphql";
 import { PaginationArgs } from "@/common/pagination/pagination.args";
 
-export class QeruyDepartmentInput extends PaginationArgs {
+export class QueryDepartmentInput extends PaginationArgs {
   /**
    * 按照哪个字段排序
    */

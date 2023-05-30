@@ -8,7 +8,7 @@ type Dictionary {
   state: Int
   dictName: String
   name: String
-  notes: String
+  description: String
   dictEntries: [DictEntry]
   Organ: [Organ]
 }
@@ -18,7 +18,7 @@ input CreateDictionaryInput {
   state: Int
   dictName: String
   name: String
-  notes: String
+  description: String
   dictEntries: [ID]
   Organ: [ID]
 }
@@ -29,7 +29,7 @@ input UpdateDictionaryInput {
   state: Int
   dictName: String
   name: String
-  notes: String
+  description: String
   dictEntries: [ID]
   Organ: [ID]
 }
@@ -44,7 +44,7 @@ enum DictionaryOrderFelid {
   state
   dictName
   name
-  notes
+  description
 }
 
 input DictionaryOderBy {
@@ -62,7 +62,7 @@ input DictionaryQuery {
   state: Int
   dictName: String
   name: String
-  notes: String
+  description: String
 }
 
 input QueryDictionaryInput {

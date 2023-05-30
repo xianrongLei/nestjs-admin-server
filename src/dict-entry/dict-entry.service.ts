@@ -37,12 +37,12 @@ export class DictEntryService {
     }, {});
     const result = await findManyCursorConnection(
       args =>
-        this.prisma.department.findMany({
+        this.prisma.dictEntry.findMany({
           where,
           orderBy: orderBy?.field ? { [orderBy.field]: orderBy.direction } : undefined,
           ...args
         }),
-      () => this.prisma.department.count({ where }),
+      () => this.prisma.dictEntry.count({ where }),
       {
         ...pageInfo
       }
@@ -55,13 +55,13 @@ export class DictEntryService {
    * @returns
    */
   async findOne(id: string): Promise<DictEntry> {
-    const docitEnrty = await this.prisma.dictEntry.findFirst({
+    const dictEntry = await this.prisma.dictEntry.findFirst({
       where: {
         id
       }
     });
-    if (!docitEnrty) throw new NotFoundException("Not Found!");
-    return docitEnrty;
+    if (!dictEntry) throw new NotFoundException("Not Found!");
+    return dictEntry;
   }
   /**
    * 根据id更新实体

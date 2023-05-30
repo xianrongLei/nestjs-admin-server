@@ -2,7 +2,7 @@ import { Resolver, Query, Mutation, Args } from "@nestjs/graphql";
 import { DepartmentService } from "./department.service";
 import { CreateDepartmentInput } from "./dto/create-department.input";
 import { UpdateDepartmentInput } from "./dto/update-department.input";
-import { QeruyDepartmentInput } from "./dto/query-department.input";
+import { QueryDepartmentInput } from "./dto/query-department.input";
 
 @Resolver("Department")
 export class DepartmentResolver {
@@ -14,8 +14,8 @@ export class DepartmentResolver {
   }
 
   @Query("departments")
-  findAll(@Args("qeruyDepartmentInput") qeruyDepartmentInput: QeruyDepartmentInput) {
-    return this.departmentService.findAll(qeruyDepartmentInput);
+  findAll(@Args("queryDepartmentInput") queryDepartmentInput: QueryDepartmentInput) {
+    return this.departmentService.findAll(queryDepartmentInput);
   }
 
   @Query("department")

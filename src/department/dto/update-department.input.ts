@@ -5,7 +5,7 @@ import { IsNotEmpty } from "class-validator";
 
 export class UpdateDepartmentInput extends PartialType(CreateDepartmentInput) {
   /**
-   * 组织ID
+   * 部门ID
    */
   @Field(() => ID, { nullable: false })
   @IsNotEmpty()

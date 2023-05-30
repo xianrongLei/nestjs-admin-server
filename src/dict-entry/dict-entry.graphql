@@ -9,7 +9,7 @@ type DictEntry {
   name: String
   value: String
   dictionaryId: ID
-  notes: String
+  description: String
   Dictionary: Dictionary
 }
 input CreateDictEntryInput {
@@ -17,7 +17,7 @@ input CreateDictEntryInput {
   state: Int
   name: String
   value: String
-  notes: String
+  description: String
   dictionaryId: ID
 }
 
@@ -27,7 +27,7 @@ input UpdateDictEntryInput {
   state: Int
   name: String
   value: String
-  notes: String
+  description: String
   dictionaryId: ID
 }
 
@@ -42,7 +42,7 @@ enum DictEntryOrderFelid {
   name
   value
   dictionaryId
-  notes
+  description
 }
 
 input DictEntryOderBy {
@@ -59,7 +59,7 @@ input DictEntryQuery {
   state: Int
   name: String
   value: String
-  notes: String
+  description: String
   dictionaryId: ID
 }
 

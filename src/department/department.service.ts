@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { CreateDepartmentInput } from "./dto/create-department.input";
 import { UpdateDepartmentInput } from "./dto/update-department.input";
 import { PrismaService } from "@/common/prisma/prisma.service";
-import { QeruyDepartmentInput } from "./dto/query-department.input";
+import { QueryDepartmentInput } from "./dto/query-department.input";
 import { findManyCursorConnection } from "@devoxa/prisma-relay-cursor-connection";
 import { Department, DepartmentConnection } from "@/types/graphql";
 
@@ -20,7 +20,7 @@ export class DepartmentService {
     const [children, Organ, parent] = await Promise.all([
       this.prisma.department.findMany({ where: { id: { in: childrenIds } } }),
       this.prisma.organ.findFirst({ where: { id: organId } }),
-      this.prisma.organ.findFirst({ where: { id: parentId } })
+      this.prisma.department.findFirst({ where: { id: parentId } })
     ]);
     return await this.prisma.department.create({
       data: {
@@ -33,11 +33,11 @@ export class DepartmentService {
   }
   /**
    * 分页查询部门
-   * @param qeruyDepartmentInput
+   * @param queryDepartmentInput
    * @returns
    */
-  async findAll(qeruyDepartmentInput: QeruyDepartmentInput): Promise<DepartmentConnection> {
-    const { query, orderBy, ...pageInfo } = qeruyDepartmentInput;
+  async findAll(queryDepartmentInput: QueryDepartmentInput): Promise<DepartmentConnection> {
+    const { query, orderBy, ...pageInfo } = queryDepartmentInput;
 
     const where = Object.entries(query || {}).reduce((acc, [key, value]) => {
       if (value != null) {

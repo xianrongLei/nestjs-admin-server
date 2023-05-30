@@ -33,7 +33,7 @@ export enum DictEntryOrderFelid {
     name = "name",
     value = "value",
     dictionaryId = "dictionaryId",
-    notes = "notes"
+    description = "description"
 }
 
 export enum DictionaryOrderFelid {
@@ -46,7 +46,7 @@ export enum DictionaryOrderFelid {
     state = "state",
     dictName = "dictName",
     name = "name",
-    notes = "notes"
+    description = "description"
 }
 
 export enum OrderDirection {
@@ -155,7 +155,7 @@ export interface CreateDictEntryInput {
     state?: Nullable<number>;
     name?: Nullable<string>;
     value?: Nullable<string>;
-    notes?: Nullable<string>;
+    description?: Nullable<string>;
     dictionaryId?: Nullable<string>;
 }
 
@@ -165,7 +165,7 @@ export interface UpdateDictEntryInput {
     state?: Nullable<number>;
     name?: Nullable<string>;
     value?: Nullable<string>;
-    notes?: Nullable<string>;
+    description?: Nullable<string>;
     dictionaryId?: Nullable<string>;
 }
 
@@ -183,7 +183,7 @@ export interface DictEntryQuery {
     state?: Nullable<number>;
     name?: Nullable<string>;
     value?: Nullable<string>;
-    notes?: Nullable<string>;
+    description?: Nullable<string>;
     dictionaryId?: Nullable<string>;
 }
 
@@ -202,7 +202,7 @@ export interface CreateDictionaryInput {
     state?: Nullable<number>;
     dictName?: Nullable<string>;
     name?: Nullable<string>;
-    notes?: Nullable<string>;
+    description?: Nullable<string>;
     dictEntries?: Nullable<Nullable<string>[]>;
     Organ?: Nullable<Nullable<string>[]>;
 }
@@ -213,7 +213,7 @@ export interface UpdateDictionaryInput {
     state?: Nullable<number>;
     dictName?: Nullable<string>;
     name?: Nullable<string>;
-    notes?: Nullable<string>;
+    description?: Nullable<string>;
     dictEntries?: Nullable<Nullable<string>[]>;
     Organ?: Nullable<Nullable<string>[]>;
 }
@@ -233,7 +233,7 @@ export interface DictionaryQuery {
     state?: Nullable<number>;
     dictName?: Nullable<string>;
     name?: Nullable<string>;
-    notes?: Nullable<string>;
+    description?: Nullable<string>;
 }
 
 export interface QueryDictionaryInput {
@@ -517,9 +517,9 @@ export interface IQuery {
     departments(queryDepartmentInput: QueryDepartmentInput): Nullable<UserConnection[]> | Promise<Nullable<UserConnection[]>>;
     departmentsById(ids?: Nullable<Nullable<string>[]>): Nullable<Nullable<Department>[]> | Promise<Nullable<Nullable<Department>[]>>;
     department(id: string): Nullable<Department> | Promise<Nullable<Department>>;
-    dictEntrys(queryDictEntryInput?: Nullable<QueryDictEntryInput>): Nullable<DictEntry>[] | Promise<Nullable<DictEntry>[]>;
+    dictEntries(queryDictEntryInput?: Nullable<QueryDictEntryInput>): Nullable<DictEntry>[] | Promise<Nullable<DictEntry>[]>;
     dictEntry(id: number): Nullable<DictEntry> | Promise<Nullable<DictEntry>>;
-    dictionarys(queryDictionaryInput?: Nullable<QueryDictionaryInput>): Nullable<Nullable<Dictionary>[]> | Promise<Nullable<Nullable<Dictionary>[]>>;
+    dictionaries(queryDictionaryInput?: Nullable<QueryDictionaryInput>): Nullable<Nullable<Dictionary>[]> | Promise<Nullable<Nullable<Dictionary>[]>>;
     dictionary(id: string): Nullable<Dictionary> | Promise<Nullable<Dictionary>>;
     menus(orderBy?: Nullable<UserOrderBy>, after?: Nullable<string>, before?: Nullable<string>, first?: Nullable<number>, last?: Nullable<number>, query?: Nullable<UserQuery>, skip?: Nullable<number>): MenuConnection | Promise<MenuConnection>;
     menu(id: string): Nullable<Menu> | Promise<Nullable<Menu>>;
@@ -545,7 +545,7 @@ export interface DictEntry {
     name?: Nullable<string>;
     value?: Nullable<string>;
     dictionaryId?: Nullable<string>;
-    notes?: Nullable<string>;
+    description?: Nullable<string>;
     Dictionary?: Nullable<Dictionary>;
 }
 
@@ -570,7 +570,7 @@ export interface Dictionary {
     state?: Nullable<number>;
     dictName?: Nullable<string>;
     name?: Nullable<string>;
-    notes?: Nullable<string>;
+    description?: Nullable<string>;
     dictEntries?: Nullable<Nullable<DictEntry>[]>;
     Organ?: Nullable<Nullable<Organ>[]>;
 }
