@@ -43,21 +43,6 @@ input UpdateOrganInput {
   userIds: [ID]
 }
 
-input OrganOrderby {
-  field: OrganOrderFelid
-  direction: OrderDirection
-}
-
-input QueryOrgansInput {
-  orderBy: OrganOrderby
-  after: String
-  before: String
-  first: Int
-  last: Int
-  query: UserQuery
-  skip: Int
-}
-
 enum OrganOrderFelid {
   id
   createdAt
@@ -69,6 +54,36 @@ enum OrganOrderFelid {
   name
   description
   uniqueName
+}
+
+input OrganOrderby {
+  field: OrganOrderFelid
+  direction: OrderDirection
+}
+
+input OrgansQuery {
+  creator: ID
+  updater: ID
+  username: String
+  password: String
+  nickname: String
+  email: String
+  phone: String
+  sex: Int
+  age: Int
+  admin: Int
+  organId: ID
+  state: Int
+}
+
+input QueryOrgansInput {
+  orderBy: OrganOrderby
+  after: String
+  before: String
+  first: Int
+  last: Int
+  query: OrgansQuery
+  skip: Int
 }
 
 type OrganConnection {

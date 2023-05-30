@@ -1,9 +1,10 @@
 import { Field, ID, InputType } from "@nestjs/graphql";
 import { CreateOrganInput } from "./create-organ.input";
-import { IsNotEmpty, IsOptional } from "class-validator";
+import { IsNotEmpty } from "class-validator";
+import { PartialType } from "@nestjs/mapped-types";
 
 @InputType()
-export class UpdateOrganInput extends CreateOrganInput {
+export class UpdateOrganInput extends PartialType(CreateOrganInput) {
   /** 组织ID */
   @Field(() => ID, { nullable: false })
   @IsNotEmpty()

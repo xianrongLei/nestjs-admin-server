@@ -56,10 +56,6 @@ input UpdateUserInput {
   state: Int
 }
 
-enum OrderDirection {
-  asc
-  desc
-}
 
 enum OrderFild {
   id
@@ -110,7 +106,7 @@ input UserQuery {
   state: Int
 }
 
-input UserQueryUsersInput {
+input QueryUsersInput {
   orderBy: UserOrderBy
   after: String
   before: String
@@ -121,7 +117,7 @@ input UserQueryUsersInput {
 }
 
 type Query {
-  users(userQueryUsersInput: UserQueryUsersInput): UserConnection!
+  users(QueryUsersInput: QueryUsersInput): UserConnection!
   user(id: ID!): User
 }
 

@@ -5,6 +5,7 @@ services:
     volumes:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
+      - prisma-studio
       - app-server
   app-server:
     build: .

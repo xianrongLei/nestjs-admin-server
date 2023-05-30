@@ -8,6 +8,19 @@
 /* tslint:disable */
 /* eslint-disable */
 
+export enum DepartmentOrderFelid {
+    id = "id",
+    createdAt = "createdAt",
+    updatedAt = "updatedAt",
+    creator = "creator",
+    updater = "updater",
+    sort = "sort",
+    state = "state",
+    name = "name",
+    description = "description",
+    uniqueName = "uniqueName"
+}
+
 export enum OrderDirection {
     asc = "asc",
     desc = "desc"
@@ -59,11 +72,59 @@ export interface CreateAuthInput {
 }
 
 export interface CreateDepartmentInput {
-    id?: Nullable<string>;
+    sort?: Nullable<number>;
+    state?: Nullable<number>;
+    name?: Nullable<string>;
+    description?: Nullable<string>;
+    departmentId?: Nullable<string>;
+    organId?: Nullable<string>;
+    parentId?: Nullable<string>;
+    childrenIds?: Nullable<Nullable<string>[]>;
 }
 
 export interface UpdateDepartmentInput {
     id: number;
+    sort?: Nullable<number>;
+    state?: Nullable<number>;
+    name?: Nullable<string>;
+    description?: Nullable<string>;
+    departmentId?: Nullable<string>;
+    organId?: Nullable<string>;
+    parentId?: Nullable<string>;
+    Organ?: Nullable<string>;
+    parent?: Nullable<string>;
+    children?: Nullable<Nullable<string>[]>;
+}
+
+export interface DepartmentOderBy {
+    field?: Nullable<OrganOrderFelid>;
+    direction?: Nullable<OrderDirection>;
+}
+
+export interface DepartmentQuery {
+    createdAt?: Nullable<DateTime>;
+    updatedAt?: Nullable<DateTime>;
+    creator?: Nullable<string>;
+    updater?: Nullable<string>;
+    sort?: Nullable<number>;
+    state?: Nullable<number>;
+    name?: Nullable<string>;
+    description?: Nullable<string>;
+    departmentId?: Nullable<string>;
+    organId?: Nullable<string>;
+    parentId?: Nullable<string>;
+    Organ?: Nullable<string>;
+    parent?: Nullable<string>;
+}
+
+export interface QueryDepartmentInput {
+    orderBy?: Nullable<DepartmentOderBy>;
+    query?: Nullable<DepartmentQuery>;
+    after?: Nullable<string>;
+    before?: Nullable<string>;
+    first?: Nullable<number>;
+    last?: Nullable<number>;
+    skip?: Nullable<number>;
 }
 
 export interface CreateDictionaryInput {
@@ -163,13 +224,28 @@ export interface OrganOrderby {
     direction?: Nullable<OrderDirection>;
 }
 
+export interface OrgansQuery {
+    creator?: Nullable<string>;
+    updater?: Nullable<string>;
+    username?: Nullable<string>;
+    password?: Nullable<string>;
+    nickname?: Nullable<string>;
+    email?: Nullable<string>;
+    phone?: Nullable<string>;
+    sex?: Nullable<number>;
+    age?: Nullable<number>;
+    admin?: Nullable<number>;
+    organId?: Nullable<string>;
+    state?: Nullable<number>;
+}
+
 export interface QueryOrgansInput {
     orderBy?: Nullable<OrganOrderby>;
     after?: Nullable<string>;
     before?: Nullable<string>;
     first?: Nullable<number>;
     last?: Nullable<number>;
-    query?: Nullable<UserQuery>;
+    query?: Nullable<OrgansQuery>;
     skip?: Nullable<number>;
 }
 
@@ -246,7 +322,7 @@ export interface UserQuery {
     state?: Nullable<number>;
 }
 
-export interface UserQueryUsersInput {
+export interface QueryUsersInput {
     orderBy?: Nullable<UserOrderBy>;
     after?: Nullable<string>;
     before?: Nullable<string>;
@@ -274,7 +350,7 @@ export interface IMutation {
     signin(createAuthInput: CreateAuthInput): Auth | Promise<Auth>;
     createDepartment(createDepartmentInput: CreateDepartmentInput): Department | Promise<Department>;
     updateDepartment(updateDepartmentInput: UpdateDepartmentInput): Department | Promise<Department>;
-    removeDepartment(id: number): Nullable<Department> | Promise<Nullable<Department>>;
+    removeDepartment(id: string): Nullable<Department> | Promise<Nullable<Department>>;
     createDictionary(createDictionaryInput: CreateDictionaryInput): Dictionary | Promise<Dictionary>;
     updateDictionary(updateDictionaryInput: UpdateDictionaryInput): Dictionary | Promise<Dictionary>;
     removeDictionary(id: number): Nullable<Dictionary> | Promise<Nullable<Dictionary>>;
@@ -296,13 +372,38 @@ export interface IMutation {
 }
 
 export interface Department {
-    exampleField?: Nullable<number>;
+    id?: Nullable<string>;
+    createdAt?: Nullable<DateTime>;
+    updatedAt?: Nullable<DateTime>;
+    creator?: Nullable<string>;
+    updater?: Nullable<string>;
+    sort?: Nullable<number>;
+    state?: Nullable<number>;
+    name?: Nullable<string>;
+    description?: Nullable<string>;
+    departmentId?: Nullable<string>;
+    organId?: Nullable<string>;
+    parentId?: Nullable<string>;
+    Organ?: Nullable<Organ>;
+    parent?: Nullable<Department>;
+    children?: Nullable<Nullable<Department>[]>;
+}
+
+export interface DepartmentEdge {
+    cursor: string;
+    node: Organ;
+}
+
+export interface DepartmentConnection {
+    edges?: Nullable<Nullable<DepartmentEdge>[]>;
+    pageInfo: PageInfo;
+    totalCount: number;
 }
 
 export interface IQuery {
-    departments(): Nullable<Department[]> | Promise<Nullable<Department[]>>;
+    departments(queryDepartmentInput: QueryDepartmentInput): Nullable<UserConnection[]> | Promise<Nullable<UserConnection[]>>;
     departmentsById(ids?: Nullable<Nullable<string>[]>): Nullable<Nullable<Department>[]> | Promise<Nullable<Nullable<Department>[]>>;
-    department(id: number): Nullable<Department> | Promise<Nullable<Department>>;
+    department(id: string): Nullable<Department> | Promise<Nullable<Department>>;
     dictionarys(): Nullable<Dictionary>[] | Promise<Nullable<Dictionary>[]>;
     dictionary(id: number): Nullable<Dictionary> | Promise<Nullable<Dictionary>>;
     menus(orderBy?: Nullable<UserOrderBy>, after?: Nullable<string>, before?: Nullable<string>, first?: Nullable<number>, last?: Nullable<number>, query?: Nullable<UserQuery>, skip?: Nullable<number>): MenuConnection | Promise<MenuConnection>;
@@ -314,7 +415,7 @@ export interface IQuery {
     post(id: number): Nullable<Post> | Promise<Nullable<Post>>;
     roles(): Nullable<Role>[] | Promise<Nullable<Role>[]>;
     role(id: number): Nullable<Role> | Promise<Nullable<Role>>;
-    users(userQueryUsersInput?: Nullable<UserQueryUsersInput>): UserConnection | Promise<UserConnection>;
+    users(QueryUsersInput?: Nullable<QueryUsersInput>): UserConnection | Promise<UserConnection>;
     user(id: string): Nullable<User> | Promise<Nullable<User>>;
 }
 

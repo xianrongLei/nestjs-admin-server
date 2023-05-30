@@ -2,6 +2,7 @@ import { Resolver, Query, Mutation, Args } from "@nestjs/graphql";
 import { DepartmentService } from "./department.service";
 import { CreateDepartmentInput } from "./dto/create-department.input";
 import { UpdateDepartmentInput } from "./dto/update-department.input";
+import { QeruyDepartmentInput } from "./dto/query-department.input";
 
 @Resolver("Department")
 export class DepartmentResolver {
@@ -13,12 +14,12 @@ export class DepartmentResolver {
   }
 
   @Query("department")
-  findAll() {
-    return this.departmentService.findAll();
+  findAll(qeruyDepartmentInput: QeruyDepartmentInput) {
+    return this.departmentService.findAll(qeruyDepartmentInput);
   }
 
   @Query("department")
-  findOne(@Args("id") id: number) {
+  findOne(@Args("id") id: string) {
     return this.departmentService.findOne(id);
   }
 
@@ -28,7 +29,7 @@ export class DepartmentResolver {
   }
 
   @Mutation("removeDepartment")
-  remove(@Args("id") id: number) {
+  remove(@Args("id") id: string) {
     return this.departmentService.remove(id);
   }
 }

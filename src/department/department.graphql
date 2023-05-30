@@ -1,25 +1,109 @@
 type Department {
-  # Example field (placeholder)
-  exampleField: Int
+  id: String
+  createdAt: DateTime
+  updatedAt: DateTime
+  creator: String
+  updater: String
+  sort: Int
+  state: Int
+  name: String
+  description: String
+  departmentId: ID
+  organId: ID
+  parentId: ID
+  Organ: Organ
+  parent: Department
+  children: [Department]
 }
 
 input CreateDepartmentInput {
-  # Example field (placeholder)
-  id: String
+  sort: Int
+  state: Int
+  name: String
+  description: String
+  departmentId: ID
+  organId: ID
+  parentId: ID
+  childrenIds: [ID]
 }
 
 input UpdateDepartmentInput {
   id: Int!
+  sort: Int
+  state: Int
+  name: String
+  description: String
+  departmentId: ID
+  organId: ID
+  parentId: ID
+  Organ: ID
+  parent: ID
+  children: [ID]
+}
+
+enum DepartmentOrderFelid {
+  id
+  createdAt
+  updatedAt
+  creator
+  updater
+  sort
+  state
+  name
+  description
+  uniqueName
+}
+
+input DepartmentOderBy {
+  field: OrganOrderFelid
+  direction: OrderDirection
+}
+
+input DepartmentQuery {
+  createdAt: DateTime
+  updatedAt: DateTime
+  creator: String
+  updater: String
+  sort: Int
+  state: Int
+  name: String
+  description: String
+  departmentId: ID
+  organId: ID
+  parentId: ID
+  Organ: ID
+  parent: ID
+}
+
+input QueryDepartmentInput {
+  orderBy: DepartmentOderBy
+  query: DepartmentQuery
+  after: String
+  before: String
+  first: Int
+  last: Int
+  skip: Int
+}
+
+type DepartmentEdge {
+  cursor: String!
+  node: Organ!
+}
+
+type DepartmentConnection {
+  edges: [DepartmentEdge]
+  pageInfo: PageInfo!
+  totalCount: Int!
 }
 
 type Query {
-  departments: [Department!]
+  departments(queryDepartmentInput: QueryDepartmentInput!): [UserConnection!]
   departmentsById(ids: [ID]): [Department]
-  department(id: Int!): Department
+  department(id: ID!): Department
 }
 
 type Mutation {
   createDepartment(createDepartmentInput: CreateDepartmentInput!): Department!
   updateDepartment(updateDepartmentInput: UpdateDepartmentInput!): Department!
-  removeDepartment(id: Int!): Department
+  removeDepartment(id: ID!): Department
 }

@@ -1,5 +1,5 @@
-import { Field, InputType, Int } from "@nestjs/graphql";
-import { IsOptional } from "class-validator";
+import { Field, ID, InputType, Int } from "@nestjs/graphql";
+import { IsNotEmpty, IsOptional } from "class-validator";
 
 @InputType()
 export class CreateOrganInput {
@@ -19,13 +19,13 @@ export class CreateOrganInput {
    * 机构名称
    */
   @Field(() => String)
-  @IsOptional()
+  @IsNotEmpty()
   name!: string;
   /**
    * 机构唯一标识
    */
   @Field(() => String)
-  @IsOptional()
+  @IsNotEmpty()
   uniqueName!: string;
   /**
    * 机构描述
@@ -36,31 +36,31 @@ export class CreateOrganInput {
   /**
    * 机构内的部门ids
    */
-  @Field(() => String)
+  @Field(() => [ID])
   @IsOptional()
   departmentIds?: string[];
   /**
    * 机构内岗位ids
    */
-  @Field(() => String)
+  @Field(() => [ID])
   @IsOptional()
   postIds?: string[];
   /**
    * 机构内角色ids
    */
-  @Field(() => String)
+  @Field(() => [ID])
   @IsOptional()
   roleIds?: string[];
   /**
    * 机构内字典ids
    */
-  @Field(() => String)
+  @Field(() => [ID])
   @IsOptional()
   DictionaryIds?: string[];
   /**
    * 机构内用户ids
    */
-  @Field(() => String)
+  @Field(() => [ID])
   @IsOptional()
   userIds?: string[];
 }
