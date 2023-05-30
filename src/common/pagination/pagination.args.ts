@@ -1,22 +1,39 @@
-export interface PaginationArgs {
+import { Field, InputType, Int } from "@nestjs/graphql";
+import { IsOptional, IsNotEmpty } from "class-validator";
+
+@InputType()
+export class PaginationArgs {
   /**
-   * 要跳过的记录数
+   * 游标，用于查询结果的分页
    */
-  skip?: number;
-  /**
-   * 当前页
-   */
+  @Field({ nullable: true })
+  @IsOptional()
   after?: string;
+
   /**
-   * 表示要返回的记录应该在哪个游标之前
+   * 游标，用于查询结果的分页
    */
+  @Field({ nullable: true })
+  @IsOptional()
   before?: string;
+
   /**
-   * 每页数量
+   * 查询结果中要返回的第一个节点的数量
    */
-  first?: number;
+  @Field(() => Int, { nullable: true })
+  @IsNotEmpty()
+  first!: number;
+
   /**
-   * 表示要返回的记录数量
+   * 查询结果中要返回的第一个节点的数量
    */
+  @Field(() => Int, { nullable: true })
+  @IsOptional()
   last?: number;
+  /**
+   * 跳过前面的节点数量
+   */
+  @Field(() => Int, { nullable: true })
+  @IsOptional()
+  skip?: number;
 }

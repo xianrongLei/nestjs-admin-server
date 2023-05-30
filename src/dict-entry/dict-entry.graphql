@@ -85,7 +85,7 @@ type DictEntryConnection {
 }
 
 type Query {
-  dictEntrys(dictEntryConnection: DictEntryConnection): [DictEntry]!
+  dictEntrys(queryDictEntryInput: QueryDictEntryInput): [DictEntry]!
   dictEntry(id: Int!): DictEntry
 }
 

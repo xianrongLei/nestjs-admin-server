@@ -1,5 +1,5 @@
 import { Field, ID, InputType, Int } from "@nestjs/graphql";
-import { IsOptional } from "class-validator";
+import { IsNotEmpty, IsOptional } from "class-validator";
 
 @InputType()
 export class CreateDictEntryInput {
@@ -18,19 +18,19 @@ export class CreateDictEntryInput {
   /**
    *  名称
    */
-  @Field(() => Int)
-  @IsOptional()
+  @Field()
+  @IsNotEmpty()
   name!: string;
   /**
    *  值
    */
-  @Field(() => Int)
-  @IsOptional()
+  @Field()
+  @IsNotEmpty()
   value!: string;
   /**
    *  描述
    */
-  @Field(() => Int)
+  @Field()
   @IsOptional()
   notes?: string;
   /**

@@ -1,5 +1,5 @@
 import { Field, ID, InputType, Int } from "@nestjs/graphql";
-import { IsOptional } from "class-validator";
+import { IsNotEmpty, IsOptional } from "class-validator";
 
 @InputType()
 export class CreateDepartmentInput {
@@ -10,25 +10,25 @@ export class CreateDepartmentInput {
   @IsOptional()
   sort?: number;
   /**
-   * 排序
+   * 状态
    */
   @Field(() => Int)
   @IsOptional()
   state?: number;
   /**
-   * 排序
+   * 名称
    */
   @Field(() => Int)
-  @IsOptional()
+  @IsNotEmpty()
   name!: string;
   /**
-   * 排序
+   * 描述
    */
   @Field(() => String)
   @IsOptional()
   description?: string;
   /**
-   * 排序
+   *
    */
   @Field(() => ID)
   @IsOptional()

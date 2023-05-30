@@ -38,7 +38,6 @@ model Department {
   state        Int          @default(1)
   name         String
   description  String?
-  departmentId String?
   organId      String?
   parentId     String?
   Organ        Organ?       @relation(fields: [organId], references: [id])
@@ -157,9 +156,9 @@ model DictEntry {
   sort         Int         @default(0)
   state        Int         @default(1)
   name         String
-  notes        String
   dictionaryId String?
   value        String
+  notes        String?
   Dictionary   Dictionary? @relation(fields: [dictionaryId], references: [id])
 
   @@map("dict_entries")

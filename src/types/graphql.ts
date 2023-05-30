@@ -522,7 +522,7 @@ export interface IQuery {
     departments(queryDepartmentInput: QueryDepartmentInput): Nullable<UserConnection[]> | Promise<Nullable<UserConnection[]>>;
     departmentsById(ids?: Nullable<Nullable<string>[]>): Nullable<Nullable<Department>[]> | Promise<Nullable<Nullable<Department>[]>>;
     department(id: string): Nullable<Department> | Promise<Nullable<Department>>;
-    dictEntrys(dictEntryConnection?: Nullable<DictEntryConnection>): Nullable<DictEntry>[] | Promise<Nullable<DictEntry>[]>;
+    dictEntrys(queryDictEntryInput?: Nullable<QueryDictEntryInput>): Nullable<DictEntry>[] | Promise<Nullable<DictEntry>[]>;
     dictEntry(id: number): Nullable<DictEntry> | Promise<Nullable<DictEntry>>;
     dictionarys(queryDictionaryInput?: Nullable<QueryDictionaryInput>): Nullable<Nullable<Dictionary>[]> | Promise<Nullable<Nullable<Dictionary>[]>>;
     dictionary(id: string): Nullable<Dictionary> | Promise<Nullable<Dictionary>>;

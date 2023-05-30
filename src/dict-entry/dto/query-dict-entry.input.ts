@@ -2,7 +2,7 @@ import { Field, Int } from "@nestjs/graphql";
 import { IsOptional } from "class-validator";
 import { DictEntryOderBy, DictEntryQuery } from "@/types/graphql";
 
-export class CreateDictEntryInput {
+export class QueryDictEntryInput {
   /** 按照哪个字段排序 */
   @Field({ nullable: true })
   @IsOptional()

@@ -17,7 +17,7 @@ export class DictionaryResolver {
     return this.dictionaryService.findAll();
   }
 
-  @Query("dictionary")
+  @Query("dictionarys")
   findOne(@Args("id") id: number) {
     return this.dictionaryService.findOne(id);
   }

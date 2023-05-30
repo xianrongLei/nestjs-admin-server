@@ -2,7 +2,7 @@ import { Resolver, Query, Mutation, Args } from "@nestjs/graphql";
 import { DictEntryService } from "./dict-entry.service";
 import { CreateDictEntryInput } from "./dto/create-dict-entry.input";
 import { UpdateDictEntryInput } from "./dto/update-dict-entry.input";
-import { QueryDictEntryInput } from "@/types/graphql";
+import { QueryDictEntryInput } from "./dto/query-dict-entry.input";
 
 @Resolver("DictEntry")
 export class DictEntryResolver {
