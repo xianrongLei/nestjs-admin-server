@@ -32,7 +32,7 @@ export class CreateDictEntryInput {
    */
   @Field()
   @IsOptional()
-  notes?: string;
+  description?: string;
   /**
    *  所属字典id
    */

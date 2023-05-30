@@ -18,7 +18,6 @@ export enum DepartmentOrderFelid {
     state = "state",
     name = "name",
     description = "description",
-    departmentId = "departmentId",
     organId = "organId",
     parentId = "parentId"
 }
@@ -105,7 +104,6 @@ export interface CreateDepartmentInput {
     state?: Nullable<number>;
     name?: Nullable<string>;
     description?: Nullable<string>;
-    departmentId?: Nullable<string>;
     organId?: Nullable<string>;
     parentId?: Nullable<string>;
     childrenIds?: Nullable<Nullable<string>[]>;
@@ -117,7 +115,6 @@ export interface UpdateDepartmentInput {
     state?: Nullable<number>;
     name?: Nullable<string>;
     description?: Nullable<string>;
-    departmentId?: Nullable<string>;
     organId?: Nullable<string>;
     parentId?: Nullable<string>;
     Organ?: Nullable<string>;
@@ -139,7 +136,6 @@ export interface DepartmentQuery {
     state?: Nullable<number>;
     name?: Nullable<string>;
     description?: Nullable<string>;
-    departmentId?: Nullable<string>;
     organId?: Nullable<string>;
     parentId?: Nullable<string>;
 }
@@ -499,7 +495,6 @@ export interface Department {
     state?: Nullable<number>;
     name?: Nullable<string>;
     description?: Nullable<string>;
-    departmentId?: Nullable<string>;
     organId?: Nullable<string>;
     parentId?: Nullable<string>;
     Organ?: Nullable<Organ>;

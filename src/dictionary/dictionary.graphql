@@ -86,7 +86,7 @@ type DictionaryConnection {
   totalCount: Int!
 }
 type Query {
-  dictionarys(queryDictionaryInput: QueryDictionaryInput): [Dictionary]
+  dictionaries(queryDictionaryInput: QueryDictionaryInput): [Dictionary]
   dictionary(id: ID!): Dictionary
 }
 

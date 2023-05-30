@@ -16,32 +16,39 @@ export class CreateDictionaryInput {
   @IsOptional()
   state?: number;
   /**
-   *  名称
+   *  唯一标识
    */
-  @Field(() => Int)
+  @Field()
   @IsNotEmpty()
   dictName!: string;
   /**
+   *  名称
+   */
+  @Field()
+  @IsNotEmpty()
+  name!: string;
+  /**
    *  值
    */
-  @Field(() => Int)
+  @Field()
   @IsNotEmpty()
   value!: string;
   /**
-   *  描述
+   *  备注
    */
-  @Field(() => Int)
+  @Field()
   @IsOptional()
-  notes?: string;
+  description?: string;
   /**
-   *  所属字典id
+   *  实体
    */
   @Field(() => ID)
   @IsOptional()
-  dictionaryId?: string;
+  dictEntryIds?: string;
+  /**
+   *  组织id
+   */
+  @Field(() => ID)
+  @IsOptional()
+  organId?: string;
 }
-Int;
-Int;
-String;
-String;
-String[ID][ID];

@@ -13,8 +13,8 @@ export class DictEntryResolver {
     return this.dictEntryService.create(createDictEntryInput);
   }
 
-  @Query("dictEntrys")
-  findAll(queryDictEntryInput: QueryDictEntryInput) {
+  @Query("dictEntries")
+  findAll(@Args("queryDictEntryInput") queryDictEntryInput: QueryDictEntryInput) {
     return this.dictEntryService.findAll(queryDictEntryInput);
   }
 

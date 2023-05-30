@@ -14,7 +14,7 @@ export class DepartmentResolver {
   }
 
   @Query("departments")
-  findAll(qeruyDepartmentInput: QeruyDepartmentInput) {
+  findAll(@Args("qeruyDepartmentInput") qeruyDepartmentInput: QeruyDepartmentInput) {
     return this.departmentService.findAll(qeruyDepartmentInput);
   }
 

@@ -29,20 +29,20 @@ model Organ {
 }
 
 model Department {
-  id           String       @id @default(cuid())
-  createdAt    DateTime     @default(now())
-  updatedAt    DateTime     @updatedAt
-  creator      String?
-  updater      String?
-  sort         Int          @default(0)
-  state        Int          @default(1)
-  name         String
-  description  String?
-  organId      String?
-  parentId     String?
-  Organ        Organ?       @relation(fields: [organId], references: [id])
-  parent       Department?  @relation("departments", fields: [parentId], references: [id])
-  children     Department[] @relation("departments")
+  id          String       @id @default(cuid())
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  creator     String?
+  updater     String?
+  sort        Int          @default(0)
+  state       Int          @default(1)
+  name        String
+  description String?
+  organId     String?
+  parentId    String?
+  Organ       Organ?       @relation(fields: [organId], references: [id])
+  parent      Department?  @relation("departments", fields: [parentId], references: [id])
+  children    Department[] @relation("departments")
 
   @@map("departments")
 }
@@ -140,7 +140,7 @@ model Dictionary {
   state       Int         @default(1)
   dictName    String      @unique
   name        String
-  notes       String
+  description String?
   dictEntries DictEntry[]
   Organ       Organ[]     @relation("DictionaryToOrgan")
 
@@ -158,7 +158,7 @@ model DictEntry {
   name         String
   dictionaryId String?
   value        String
-  notes        String?
+  description  String?
   Dictionary   Dictionary? @relation(fields: [dictionaryId], references: [id])
 
   @@map("dict_entries")
