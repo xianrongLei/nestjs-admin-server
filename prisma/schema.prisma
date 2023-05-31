@@ -15,7 +15,9 @@ model Organ {
   sort        Int          @default(0)
   state       Int          @default(1)
   creator     String?
+  creatorName String?
   updater     String?
+  updaterName String?
   name        String
   description String?
   uniqueName  String       @unique
@@ -33,7 +35,9 @@ model Department {
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
   creator     String?
+  creatorName String?
   updater     String?
+  updaterName String?
   sort        Int          @default(0)
   state       Int          @default(1)
   name        String
@@ -48,26 +52,28 @@ model Department {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  creator   String?
-  updater   String?
-  username  String   @unique
-  password  String
-  email     String?
-  nickname  String?
-  phone     String?
-  age       Int?
-  sex       Int      @default(1)
-  admin     Int      @default(0)
-  avatar    String?
-  sort      Int      @default(0)
-  state     Int      @default(1)
-  roleId    String?
-  Role      Role?    @relation("RoleToUser", fields: [roleId], references: [id])
-  organs    Organ[]  @relation("OrganToUser")
-  posts     Post[]   @relation("PostToUser")
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  creator     String?
+  creatorName String?
+  updater     String?
+  updaterName String?
+  username    String   @unique
+  password    String
+  email       String?
+  nickname    String?
+  phone       String?
+  age         Int?
+  sex         Int      @default(1)
+  admin       Int      @default(0)
+  avatar      String?
+  sort        Int      @default(0)
+  state       Int      @default(1)
+  roleId      String?
+  Role        Role?    @relation("RoleToUser", fields: [roleId], references: [id])
+  organs      Organ[]  @relation("OrganToUser")
+  posts       Post[]   @relation("PostToUser")
 
   @@map("users")
 }
@@ -77,7 +83,9 @@ model Menu {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   creator     String?
+  creatorName String?
   updater     String?
+  updaterName String?
   sort        Int      @default(0)
   state       Int      @default(1)
   name        String
@@ -101,7 +109,9 @@ model Post {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   creator     String?
+  creatorName String?
   updater     String?
+  updaterName String?
   sort        Int      @default(0)
   state       Int      @default(1)
   name        String
@@ -118,7 +128,9 @@ model Role {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   creator     String?
+  creatorName String?
   updater     String?
+  updaterName String?
   sort        Int      @default(0)
   state       Int      @default(1)
   name        String
@@ -136,7 +148,9 @@ model Dictionary {
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
   creator     String?
+  creatorName String?
   updater     String?
+  updaterName String?
   sort        Int         @default(0)
   state       Int         @default(1)
   dictName    String      @unique
@@ -153,7 +167,9 @@ model DictEntry {
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
   creator      String?
+  creatorName  String?
   updater      String?
+  updaterName  String?
   sort         Int         @default(0)
   state        Int         @default(1)
   name         String

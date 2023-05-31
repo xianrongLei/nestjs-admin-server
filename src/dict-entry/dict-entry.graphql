@@ -2,8 +2,10 @@ type DictEntry {
   id: ID
   createdAt: DateTime
   updatedAt: DateTime
-  creator: String
-  updater: String
+  creator: ID
+  creatorName: String
+  updater: ID
+  updaterName: String
   sort: Int
   state: Int
   name: String
@@ -36,7 +38,9 @@ enum DictEntryOrderFelid {
   createdAt
   updatedAt
   creator
+  creatorName
   updater
+  updaterName
   sort
   state
   name
@@ -53,8 +57,10 @@ input DictEntryOrderBy {
 input DictEntryQuery {
   createdAt: DateTime
   updatedAt: DateTime
-  creator: String
-  updater: String
+  creator: ID
+  creatorName: String
+  updater: ID
+  updaterName: String
   sort: Int
   state: Int
   name: String

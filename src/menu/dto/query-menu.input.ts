@@ -1,6 +1,6 @@
 import { Field } from "@nestjs/graphql";
 import { IsOptional } from "class-validator";
-import { MenuOrderBy, DepartmentQuery } from "@/types/graphql";
+import { MenuOrderBy, MenuQuery } from "@/types/graphql";
 import { PaginationArgs } from "@/common/pagination/pagination.args";
 
 export class QueryMenuInput extends PaginationArgs {
@@ -12,5 +12,5 @@ export class QueryMenuInput extends PaginationArgs {
   /** 查询条件 */
   @Field({ nullable: true })
   @IsOptional()
-  query?: DepartmentQuery;
+  query?: MenuQuery;
 }

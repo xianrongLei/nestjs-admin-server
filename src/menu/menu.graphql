@@ -58,7 +58,9 @@ enum MenuOrderFelid {
   createdAt
   updatedAt
   creator
+  creatorName
   updater
+  updaterName
   sort
   state
   name

@@ -2,8 +2,10 @@ type Organ {
   id: ID
   createdAt: DateTime
   updatedAt: DateTime
-  creator: String
-  updater: String
+  creator: ID
+  creatorName: String
+  updater: ID
+  updaterName: String
   sort: Int
   state: Int
   name: String
@@ -48,7 +50,9 @@ enum OrganOrderFelid {
   createdAt
   updatedAt
   creator
+  creatorName
   updater
+  updaterName
   sort
   state
   name
@@ -56,12 +60,12 @@ enum OrganOrderFelid {
   uniqueName
 }
 
-input OrganOrderby {
+input OrganOrderBy {
   field: OrganOrderFelid
   direction: OrderDirection
 }
 
-input OrgansQuery {
+input OrganQuery {
   creator: ID
   updater: ID
   username: String
@@ -76,13 +80,13 @@ input OrgansQuery {
   state: Int
 }
 
-input QueryOrgansInput {
-  orderBy: OrganOrderby
+input QueryOrganInput {
+  orderBy: OrganOrderBy
   after: String
   before: String
   first: Int
   last: Int
-  query: OrgansQuery
+  query: OrganQuery
   skip: Int
 }
 
@@ -98,7 +102,7 @@ type OrganEdge {
 }
 
 type Query {
-  organs(queryOrgansInput: QueryOrgansInput): OrganConnection!
+  organs(queryOrganInput: QueryOrganInput): OrganConnection!
   organsById(ids: [ID]): [Organ]
   organ(id: ID!): Organ
 }

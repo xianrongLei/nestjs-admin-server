@@ -8,16 +8,19 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export enum DepartmentOrderFelid {
+export enum OrganOrderFelid {
     id = "id",
     createdAt = "createdAt",
     updatedAt = "updatedAt",
     creator = "creator",
+    creatorName = "creatorName",
     updater = "updater",
+    updaterName = "updaterName",
     sort = "sort",
     state = "state",
     name = "name",
     description = "description",
+    uniqueName = "uniqueName",
     organId = "organId",
     parentId = "parentId"
 }
@@ -27,7 +30,9 @@ export enum DictEntryOrderFelid {
     createdAt = "createdAt",
     updatedAt = "updatedAt",
     creator = "creator",
+    creatorName = "creatorName",
     updater = "updater",
+    updaterName = "updaterName",
     sort = "sort",
     state = "state",
     name = "name",
@@ -41,7 +46,9 @@ export enum DictionaryOrderFelid {
     createdAt = "createdAt",
     updatedAt = "updatedAt",
     creator = "creator",
+    creatorName = "creatorName",
     updater = "updater",
+    updaterName = "updaterName",
     sort = "sort",
     state = "state",
     dictName = "dictName",
@@ -59,7 +66,9 @@ export enum MenuOrderFelid {
     createdAt = "createdAt",
     updatedAt = "updatedAt",
     creator = "creator",
+    creatorName = "creatorName",
     updater = "updater",
+    updaterName = "updaterName",
     sort = "sort",
     state = "state",
     name = "name",
@@ -73,25 +82,14 @@ export enum MenuOrderFelid {
     parentId = "parentId"
 }
 
-export enum OrganOrderFelid {
+export enum UserOrderFelid {
     id = "id",
     createdAt = "createdAt",
     updatedAt = "updatedAt",
     creator = "creator",
+    creatorName = "creatorName",
     updater = "updater",
-    sort = "sort",
-    state = "state",
-    name = "name",
-    description = "description",
-    uniqueName = "uniqueName"
-}
-
-export enum OrderFild {
-    id = "id",
-    createdAt = "createdAt",
-    updatedAt = "updatedAt",
-    creator = "creator",
-    updater = "updater",
+    updaterName = "updaterName",
     username = "username",
     nickname = "nickname",
     email = "email",
@@ -150,7 +148,9 @@ export interface DepartmentQuery {
     createdAt?: Nullable<DateTime>;
     updatedAt?: Nullable<DateTime>;
     creator?: Nullable<string>;
+    creatorName?: Nullable<string>;
     updater?: Nullable<string>;
+    updaterName?: Nullable<string>;
     sort?: Nullable<number>;
     state?: Nullable<number>;
     name?: Nullable<string>;
@@ -197,7 +197,9 @@ export interface DictEntryQuery {
     createdAt?: Nullable<DateTime>;
     updatedAt?: Nullable<DateTime>;
     creator?: Nullable<string>;
+    creatorName?: Nullable<string>;
     updater?: Nullable<string>;
+    updaterName?: Nullable<string>;
     sort?: Nullable<number>;
     state?: Nullable<number>;
     name?: Nullable<string>;
@@ -247,7 +249,9 @@ export interface DictionaryQuery {
     createdAt?: Nullable<DateTime>;
     updatedAt?: Nullable<DateTime>;
     creator?: Nullable<string>;
+    creatorName?: Nullable<string>;
     updater?: Nullable<string>;
+    updaterName?: Nullable<string>;
     sort?: Nullable<number>;
     state?: Nullable<number>;
     dictName?: Nullable<string>;
@@ -368,12 +372,12 @@ export interface UpdateOrganInput {
     userIds?: Nullable<Nullable<string>[]>;
 }
 
-export interface OrganOrderby {
+export interface OrganOrderBy {
     field?: Nullable<OrganOrderFelid>;
     direction?: Nullable<OrderDirection>;
 }
 
-export interface OrgansQuery {
+export interface OrganQuery {
     creator?: Nullable<string>;
     updater?: Nullable<string>;
     username?: Nullable<string>;
@@ -388,18 +392,28 @@ export interface OrgansQuery {
     state?: Nullable<number>;
 }
 
-export interface QueryOrgansInput {
-    orderBy?: Nullable<OrganOrderby>;
+export interface QueryOrganInput {
+    orderBy?: Nullable<OrganOrderBy>;
     after?: Nullable<string>;
     before?: Nullable<string>;
     first?: Nullable<number>;
     last?: Nullable<number>;
-    query?: Nullable<OrgansQuery>;
+    query?: Nullable<OrganQuery>;
     skip?: Nullable<number>;
 }
 
 export interface CreatePostInput {
-    exampleField?: Nullable<number>;
+    creator?: Nullable<string>;
+    creatorName?: Nullable<string>;
+    updater?: Nullable<string>;
+    updaterName?: Nullable<string>;
+    sort?: Nullable<number>;
+    state?: Nullable<number>;
+    name?: Nullable<string>;
+    description?: Nullable<string>;
+    organId?: Nullable<string>;
+    Organ?: Nullable<string>;
+    users?: Nullable<Nullable<string>[]>;
 }
 
 export interface UpdatePostInput {
@@ -452,7 +466,7 @@ export interface UpdateUserInput {
 }
 
 export interface UserOrderBy {
-    field?: Nullable<OrderFild>;
+    field?: Nullable<UserOrderFelid>;
     direction?: Nullable<OrderDirection>;
 }
 
@@ -528,7 +542,9 @@ export interface Department {
     createdAt?: Nullable<DateTime>;
     updatedAt?: Nullable<DateTime>;
     creator?: Nullable<string>;
+    creatorName?: Nullable<string>;
     updater?: Nullable<string>;
+    updaterName?: Nullable<string>;
     sort?: Nullable<number>;
     state?: Nullable<number>;
     name?: Nullable<string>;
@@ -561,7 +577,7 @@ export interface IQuery {
     dictionary(id: string): Nullable<Dictionary> | Promise<Nullable<Dictionary>>;
     menus(queryMenuInput?: Nullable<QueryMenuInput>): MenuConnection | Promise<MenuConnection>;
     menu(id: string): Nullable<Menu> | Promise<Nullable<Menu>>;
-    organs(queryOrgansInput?: Nullable<QueryOrgansInput>): OrganConnection | Promise<OrganConnection>;
+    organs(queryOrganInput?: Nullable<QueryOrganInput>): OrganConnection | Promise<OrganConnection>;
     organsById(ids?: Nullable<Nullable<string>[]>): Nullable<Nullable<Organ>[]> | Promise<Nullable<Nullable<Organ>[]>>;
     organ(id: string): Nullable<Organ> | Promise<Nullable<Organ>>;
     posts(): Nullable<Post>[] | Promise<Nullable<Post>[]>;
@@ -577,7 +593,9 @@ export interface DictEntry {
     createdAt?: Nullable<DateTime>;
     updatedAt?: Nullable<DateTime>;
     creator?: Nullable<string>;
+    creatorName?: Nullable<string>;
     updater?: Nullable<string>;
+    updaterName?: Nullable<string>;
     sort?: Nullable<number>;
     state?: Nullable<number>;
     name?: Nullable<string>;
@@ -603,7 +621,9 @@ export interface Dictionary {
     createdAt?: Nullable<DateTime>;
     updatedAt?: Nullable<DateTime>;
     creator?: Nullable<string>;
+    creatorName?: Nullable<string>;
     updater?: Nullable<string>;
+    updaterName?: Nullable<string>;
     sort?: Nullable<number>;
     state?: Nullable<number>;
     dictName?: Nullable<string>;
@@ -669,7 +689,9 @@ export interface Organ {
     createdAt?: Nullable<DateTime>;
     updatedAt?: Nullable<DateTime>;
     creator?: Nullable<string>;
+    creatorName?: Nullable<string>;
     updater?: Nullable<string>;
+    updaterName?: Nullable<string>;
     sort?: Nullable<number>;
     state?: Nullable<number>;
     name?: Nullable<string>;
@@ -694,7 +716,20 @@ export interface OrganEdge {
 }
 
 export interface Post {
-    exampleField?: Nullable<number>;
+    id?: Nullable<string>;
+    createdAt?: Nullable<DateTime>;
+    updatedAt?: Nullable<DateTime>;
+    creator?: Nullable<string>;
+    creatorName?: Nullable<string>;
+    updater?: Nullable<string>;
+    updaterName?: Nullable<string>;
+    sort?: Nullable<number>;
+    state?: Nullable<number>;
+    name?: Nullable<string>;
+    description?: Nullable<string>;
+    organId?: Nullable<string>;
+    Organ?: Nullable<Organ>;
+    users?: Nullable<Nullable<User>[]>;
 }
 
 export interface Role {

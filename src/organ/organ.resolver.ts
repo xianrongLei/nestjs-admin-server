@@ -1,7 +1,7 @@
 import { Resolver, Query, Mutation, Args } from "@nestjs/graphql";
 import { OrgansService } from "./organ.service";
 import { CreateOrganInput } from "./dto/create-organ.input";
-import { QueryOrgansInput } from "./dto/query-organ.input";
+import { QueryOrganInput } from "./dto/query-organ.input";
 import { UpdateOrganInput } from "./dto/update-organ.input";
 
 @Resolver("Organ")
@@ -16,7 +16,7 @@ export class OrgansResolver {
   }
 
   @Query("organs")
-  findAll(@Args("queryOrgansInput") queryOrgansInput: QueryOrgansInput) {
+  findAll(@Args("queryOrgansInput") queryOrgansInput: QueryOrganInput) {
     return this.organsService.findAll(queryOrgansInput);
   }
 

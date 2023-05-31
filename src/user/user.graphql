@@ -56,13 +56,14 @@ input UpdateUserInput {
   state: Int
 }
 
-
-enum OrderFild {
+enum UserOrderFelid {
   id
   createdAt
   updatedAt
   creator
+  creatorName
   updater
+  updaterName
   username
   nickname
   email
@@ -76,7 +77,7 @@ enum OrderFild {
 }
 
 input UserOrderBy {
-  field: OrderFild
+  field: UserOrderFelid
   direction: OrderDirection
 }
 

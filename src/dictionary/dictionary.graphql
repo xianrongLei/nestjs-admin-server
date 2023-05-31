@@ -3,7 +3,9 @@ type Dictionary {
   createdAt: DateTime
   updatedAt: DateTime
   creator: String
+  creatorName: String
   updater: String
+  updaterName: String
   sort: Int
   state: Int
   dictName: String
@@ -39,7 +41,9 @@ enum DictionaryOrderFelid {
   createdAt
   updatedAt
   creator
+  creatorName
   updater
+  updaterName
   sort
   state
   dictName
@@ -57,7 +61,9 @@ input DictionaryQuery {
   createdAt: DateTime
   updatedAt: DateTime
   creator: String
+  creatorName: String
   updater: String
+  updaterName: String
   sort: Int
   state: Int
   dictName: String

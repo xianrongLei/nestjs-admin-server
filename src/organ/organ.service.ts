@@ -3,7 +3,7 @@ import { Organ, OrganConnection } from "@/types/graphql";
 import { PrismaService } from "@/common/prisma/prisma.service";
 import { CreateOrganInput } from "./dto/create-organ.input";
 import { findManyCursorConnection } from "@devoxa/prisma-relay-cursor-connection";
-import { QueryOrgansInput } from "./dto/query-organ.input";
+import { QueryOrganInput } from "./dto/query-organ.input";
 import { UpdateOrganInput } from "./dto/update-organ.input";
 
 @Injectable()
@@ -41,7 +41,7 @@ export class OrgansService {
    * @param queryOrgansInput
    * @returns
    */
-  async findAll(queryOrgansInput: QueryOrgansInput): Promise<OrganConnection> {
+  async findAll(queryOrgansInput: QueryOrganInput): Promise<OrganConnection> {
     const { orderBy, query, ...pageInfo } = queryOrgansInput;
     const where = Object.entries(query || {}).reduce((acc, [key, value]) => {
       if (value != null) {

@@ -6,10 +6,12 @@ import { JwtGuard } from "@/auth/guard";
 import { UseGuards } from "@nestjs/common";
 import { QueryMenuInput } from "./dto/query-menu.input";
 
-@UseGuards(JwtGuard)
+// @UseGuards(JwtGuard)
 @Resolver("menu")
 export class MenusResolver {
-  constructor(private readonly menusService: MenusService) {}
+  constructor(private readonly menusService: MenusService) {
+    this.menusService = menusService;
+  }
 
   @Mutation("createMenu")
   create(@Args("createMenuInput") createMenuInput: CreateMenuInput) {

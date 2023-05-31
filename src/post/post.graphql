@@ -1,11 +1,32 @@
 type Post {
-  # Example field (placeholder)
-  exampleField: Int
+  id: String
+  createdAt: DateTime
+  updatedAt: DateTime
+  creator: ID
+  creatorName: String
+  updater: ID
+  updaterName: String
+  sort: Int
+  state: Int
+  name: String
+  description: String
+  organId: ID
+  Organ: Organ
+  users: [User]
 }
 
 input CreatePostInput {
-  # Example field (placeholder)
-  exampleField: Int
+  creator: ID
+  creatorName: String
+  updater: ID
+  updaterName: String
+  sort: Int
+  state: Int
+  name: String
+  description: String
+  organId: ID
+  Organ: ID
+  users: [ID]
 }
 
 input UpdatePostInput {
