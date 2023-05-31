@@ -1,11 +1,10 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
+import { PrismaService } from "@/common/prisma/prisma.service";
+import { Menu, MenuConnection } from "@/types/graphql";
+import { findManyCursorConnection } from "@devoxa/prisma-relay-cursor-connection";
+import { QueryMenuInput } from "./dto/query-menu.input";
 import { CreateMenuInput } from "./dto/create-menu.input";
 import { UpdateMenuInput } from "./dto/update-menu.input";
-import { PrismaService } from "@/common/prisma/prisma.service";
-import { Menu, MenuConnection, MenuOrderBy, MenuQuery } from "@/types/graphql";
-import { PaginationArgs } from "@/common/pagination/pagination.args";
-import { Prisma } from ".prisma/client";
-import { findManyCursorConnection } from "@devoxa/prisma-relay-cursor-connection";
 @Injectable()
 export class MenusService {
   constructor(private readonly prisma: PrismaService) {
@@ -17,8 +16,20 @@ export class MenusService {
    * @returns
    */
   async create(createMenuInput: CreateMenuInput): Promise<Menu> {
+    const { rolesIds, childrenIds, parentId, ...dataArgs } = createMenuInput;
+
+    const [roles, children, parent] = await Promise.all([
+      this.prisma.role.findMany({ where: { id: { in: rolesIds } } }),
+      this.prisma.menu.findMany({ where: { id: { in: childrenIds } } }),
+      this.prisma.menu.findFirst({ where: { id: parentId } })
+    ]);
     return await this.prisma.menu.create({
-      data: createMenuInput
+      data: {
+        ...dataArgs,
+        roles: { connect: roles.map(role => ({ id: role.id })) },
+        children: { connect: children.map(child => ({ id: child.id })) },
+        parent: { connect: { id: parent?.id } }
+      }
     });
   }
   /**
@@ -28,41 +39,70 @@ export class MenusService {
    * @param query
    * @returns
    */
-  async findAll(
-    orderBy: MenuOrderBy,
-    { after, before, first, last }: PaginationArgs,
-    query: MenuQuery
-  ): Promise<MenuConnection> {
-    const where: Prisma.UserWhereInput = {};
-    for (const iterator in query) {
-      const value = query[iterator];
-      where[iterator] = { contains: value };
-    }
-    const result = await findManyCursorConnection(
+  async findAll(queryMenuInput: QueryMenuInput): Promise<MenuConnection> {
+    const { query, orderBy, ...pageInfo } = queryMenuInput;
+    const where = Object.entries(query || {}).reduce((acc, [key, value]) => {
+      if (value != null) {
+        acc[key] = { contains: value };
+      }
+      return acc;
+    }, {});
+
+    const result = findManyCursorConnection(
       args =>
-        this.prisma.user.findMany({
-          where: where,
-          orderBy: (orderBy?.field && { [orderBy.field]: orderBy.direction }) ?? {},
+        this.prisma.menu.findMany({
+          where,
+          orderBy: orderBy?.field ? { [orderBy.field]: orderBy.direction } : undefined,
           ...args
         }),
       () =>
-        this.prisma.user.count({
-          where: where
+        this.prisma.menu.count({
+          where
         }),
-      { first, last, before, after }
+      pageInfo
     );
     return result;
   }
-
-  findOne(id: number) {
-    return `This action returns a #${id} menu`;
+  /**
+   * 查询单个菜单信息
+   * @param id
+   * @returns
+   */
+  async findOne(id: string): Promise<Menu> {
+    const menu = await this.prisma.menu.findFirst({
+      where: {
+        id
+      }
+    });
+    if (!menu) throw new NotFoundException("Not Found!");
+    return menu;
   }
-
-  update(id: number, updateMenuInput: UpdateMenuInput) {
-    return `This action updates a #${id} menu`;
+  /**
+   * 更新菜单
+   * @param id
+   * @returns
+   */
+  async update(updateMenuInput: UpdateMenuInput): Promise<Menu> {
+    const { id, ...dataArgs } = updateMenuInput;
+    return this.prisma.menu.update({
+      where: {
+        id
+      },
+      data: {
+        ...dataArgs
+      }
+    });
   }
-
-  remove(id: number) {
-    return `This action removes a #${id} menu`;
+  /**
+   * 删除菜单
+   * @param id
+   * @returns
+   */
+  async remove(id: string): Promise<Menu> {
+    return this.prisma.menu.delete({
+      where: {
+        id
+      }
+    });
   }
 }

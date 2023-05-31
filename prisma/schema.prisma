@@ -88,6 +88,7 @@ model Menu {
   outside     Boolean  @default(false)
   title       String?
   parentId    String?
+  component   String?
   parent      Menu?    @relation("menus", fields: [parentId], references: [id])
   children    Menu[]   @relation("menus")
   roles       Role[]   @relation("MenuToRole")

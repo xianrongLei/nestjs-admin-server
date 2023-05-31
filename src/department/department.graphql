@@ -52,7 +52,7 @@ enum DepartmentOrderFelid {
   parentId
 }
 
-input DepartmentOderBy {
+input DepartmentOrderBy {
   field: OrganOrderFelid
   direction: OrderDirection
 }
@@ -71,7 +71,7 @@ input DepartmentQuery {
 }
 
 input QueryDepartmentInput {
-  orderBy: DepartmentOderBy
+  orderBy: DepartmentOrderBy
   query: DepartmentQuery
   after: String
   before: String

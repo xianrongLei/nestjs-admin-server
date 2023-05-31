@@ -45,7 +45,7 @@ enum DictEntryOrderFelid {
   description
 }
 
-input DictEntryOderBy {
+input DictEntryOrderBy {
   field: DictEntryOrderFelid
   direction: OrderDirection
 }
@@ -64,7 +64,7 @@ input DictEntryQuery {
 }
 
 input QueryDictEntryInput {
-  orderBy: DictEntryOderBy
+  orderBy: DictEntryOrderBy
   query: DictEntryQuery
   after: String
   before: String

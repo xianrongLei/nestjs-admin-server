@@ -4,93 +4,117 @@ type Menu {
   updatedAt: DateTime
   creator: ID
   updater: ID
-  name: String
-  route: String
-  description: String
-  icon: String
-  title: String
   sort: Int
   state: Int
+  name: String
+  description: String
+  route: String
+  icon: String
+  title: String
   type: Int
+  componentUrl: String
   outside: Boolean
-  authNames: [String]
   parentId: ID
+  parent: Menu
+  children: [Menu]
+  roles: [Role]
 }
 
 input CreateMenuInput {
-  createdAt: DateTime
-  updatedAt: DateTime
-  creator: ID
-  updater: ID
-  name: String
-  route: String
-  description: String
-  icon: String
-  title: String
   sort: Int
   state: Int
+  name: String
+  description: String
+  route: String
+  icon: String
+  title: String
   type: Int
+  componentUrl: String
   outside: Boolean
-  authNames: [String]
   parentId: ID
+  childrenIds: [ID]
+  rolesIds: [ID]
 }
 
 input UpdateMenuInput {
   id: ID
-  createdAt: DateTime
-  updatedAt: DateTime
-  creator: ID
-  updater: ID
-  name: String
-  route: String
-  description: String
-  icon: String
-  title: String
   sort: Int
   state: Int
+  name: String
+  description: String
+  route: String
+  icon: String
+  title: String
   type: Int
+  componentUrl: String
   outside: Boolean
-  authNames: [String]
   parentId: ID
+  childrenIds: [ID]
+  rolesIds: [ID]
 }
 
-enum OrderDirection {
-  asc
-  desc
-}
-
-enum OrderFild {
+enum MenuOrderFelid {
   id
   createdAt
   updatedAt
   creator
   updater
-  username
-  nickname
-  email
-  phone
-  sex
-  age
-  admin
-  avatar
-  organId
+  sort
   state
+  name
+  description
+  route
+  icon
+  title
+  type
+  componentUrl
+  outside
+  parentId
 }
 
 input MenuOrderBy {
-  field: OrderFild
+  field: MenuOrderFelid
   direction: OrderDirection
 }
 
-type MenuConnection {
-  edges: [MenuEdge!]
-  pageInfo: PageInfo!
-  totalCount: Int!
+input MenuQuery {
+  id: ID
+  createdAt: DateTime
+  updatedAt: DateTime
+  creator: ID
+  updater: ID
+  sort: Int
+  state: Int
+  name: String
+  description: String
+  route: String
+  icon: String
+  title: String
+  type: Int
+  componentUrl: String
+  outside: Boolean
+  parentId: ID
+}
+
+input QueryMenuInput {
+  orderBy: MenuOrderBy
+  query: MenuQuery
+  after: String
+  before: String
+  first: Int
+  last: Int
+  skip: Int
 }
 
 type MenuEdge {
   cursor: String!
   node: Menu!
+}
+
+type MenuConnection {
+  edges: [MenuEdge]
+  pageInfo: PageInfo!
+  totalCount: Int!
 }
 
 input MenuQuery {
@@ -109,15 +133,7 @@ input MenuQuery {
 }
 
 type Query {
-  menus(
-    orderBy: UserOrderBy
-    after: String
-    before: String
-    first: Int
-    last: Int
-    query: UserQuery
-    skip: Int
-  ): MenuConnection!
+  menus(queryMenuInput: QueryMenuInput): MenuConnection!
   menu(id: ID!): Menu
 }
 

@@ -54,6 +54,38 @@ export enum OrderDirection {
     desc = "desc"
 }
 
+export enum MenuOrderFelid {
+    id = "id",
+    createdAt = "createdAt",
+    updatedAt = "updatedAt",
+    creator = "creator",
+    updater = "updater",
+    sort = "sort",
+    state = "state",
+    name = "name",
+    description = "description",
+    route = "route",
+    icon = "icon",
+    title = "title",
+    type = "type",
+    componentUrl = "componentUrl",
+    outside = "outside",
+    parentId = "parentId"
+}
+
+export enum OrganOrderFelid {
+    id = "id",
+    createdAt = "createdAt",
+    updatedAt = "updatedAt",
+    creator = "creator",
+    updater = "updater",
+    sort = "sort",
+    state = "state",
+    name = "name",
+    description = "description",
+    uniqueName = "uniqueName"
+}
+
 export enum OrderFild {
     id = "id",
     createdAt = "createdAt",
@@ -70,19 +102,6 @@ export enum OrderFild {
     avatar = "avatar",
     organId = "organId",
     state = "state"
-}
-
-export enum OrganOrderFelid {
-    id = "id",
-    createdAt = "createdAt",
-    updatedAt = "updatedAt",
-    creator = "creator",
-    updater = "updater",
-    sort = "sort",
-    state = "state",
-    name = "name",
-    description = "description",
-    uniqueName = "uniqueName"
 }
 
 export interface CreateCaptchaInput {
@@ -122,7 +141,7 @@ export interface UpdateDepartmentInput {
     childrenIds?: Nullable<Nullable<string>[]>;
 }
 
-export interface DepartmentOderBy {
+export interface DepartmentOrderBy {
     field?: Nullable<OrganOrderFelid>;
     direction?: Nullable<OrderDirection>;
 }
@@ -141,7 +160,7 @@ export interface DepartmentQuery {
 }
 
 export interface QueryDepartmentInput {
-    orderBy?: Nullable<DepartmentOderBy>;
+    orderBy?: Nullable<DepartmentOrderBy>;
     query?: Nullable<DepartmentQuery>;
     after?: Nullable<string>;
     before?: Nullable<string>;
@@ -169,7 +188,7 @@ export interface UpdateDictEntryInput {
     dictionaryId?: Nullable<string>;
 }
 
-export interface DictEntryOderBy {
+export interface DictEntryOrderBy {
     field?: Nullable<DictEntryOrderFelid>;
     direction?: Nullable<OrderDirection>;
 }
@@ -188,7 +207,7 @@ export interface DictEntryQuery {
 }
 
 export interface QueryDictEntryInput {
-    orderBy?: Nullable<DictEntryOderBy>;
+    orderBy?: Nullable<DictEntryOrderBy>;
     query?: Nullable<DictEntryQuery>;
     after?: Nullable<string>;
     before?: Nullable<string>;
@@ -218,8 +237,8 @@ export interface UpdateDictionaryInput {
     Organ?: Nullable<Nullable<string>[]>;
 }
 
-export interface DictionaryOderBy {
-    field?: Nullable<OrganOrderFelid>;
+export interface DictionaryOrderBy {
+    field?: Nullable<DictionaryOrderFelid>;
     direction?: Nullable<OrderDirection>;
 }
 
@@ -237,7 +256,7 @@ export interface DictionaryQuery {
 }
 
 export interface QueryDictionaryInput {
-    orderBy?: Nullable<DictionaryOderBy>;
+    orderBy?: Nullable<DictionaryOrderBy>;
     query?: Nullable<DictionaryQuery>;
     after?: Nullable<string>;
     before?: Nullable<string>;
@@ -247,50 +266,60 @@ export interface QueryDictionaryInput {
 }
 
 export interface CreateMenuInput {
-    createdAt?: Nullable<DateTime>;
-    updatedAt?: Nullable<DateTime>;
-    creator?: Nullable<string>;
-    updater?: Nullable<string>;
-    name?: Nullable<string>;
-    route?: Nullable<string>;
-    description?: Nullable<string>;
-    icon?: Nullable<string>;
-    title?: Nullable<string>;
     sort?: Nullable<number>;
     state?: Nullable<number>;
+    name?: Nullable<string>;
+    description?: Nullable<string>;
+    route?: Nullable<string>;
+    icon?: Nullable<string>;
+    title?: Nullable<string>;
     type?: Nullable<number>;
+    componentUrl?: Nullable<string>;
     outside?: Nullable<boolean>;
-    authNames?: Nullable<Nullable<string>[]>;
     parentId?: Nullable<string>;
+    childrenIds?: Nullable<Nullable<string>[]>;
+    rolesIds?: Nullable<Nullable<string>[]>;
 }
 
 export interface UpdateMenuInput {
+    id?: Nullable<string>;
+    sort?: Nullable<number>;
+    state?: Nullable<number>;
+    name?: Nullable<string>;
+    description?: Nullable<string>;
+    route?: Nullable<string>;
+    icon?: Nullable<string>;
+    title?: Nullable<string>;
+    type?: Nullable<number>;
+    componentUrl?: Nullable<string>;
+    outside?: Nullable<boolean>;
+    parentId?: Nullable<string>;
+    childrenIds?: Nullable<Nullable<string>[]>;
+    rolesIds?: Nullable<Nullable<string>[]>;
+}
+
+export interface MenuOrderBy {
+    field?: Nullable<MenuOrderFelid>;
+    direction?: Nullable<OrderDirection>;
+}
+
+export interface MenuQuery {
     id?: Nullable<string>;
     createdAt?: Nullable<DateTime>;
     updatedAt?: Nullable<DateTime>;
     creator?: Nullable<string>;
     updater?: Nullable<string>;
-    name?: Nullable<string>;
-    route?: Nullable<string>;
-    description?: Nullable<string>;
-    icon?: Nullable<string>;
-    title?: Nullable<string>;
     sort?: Nullable<number>;
     state?: Nullable<number>;
+    name?: Nullable<string>;
+    description?: Nullable<string>;
+    route?: Nullable<string>;
+    icon?: Nullable<string>;
+    title?: Nullable<string>;
     type?: Nullable<number>;
+    componentUrl?: Nullable<string>;
     outside?: Nullable<boolean>;
-    authNames?: Nullable<Nullable<string>[]>;
     parentId?: Nullable<string>;
-}
-
-export interface MenuOrderBy {
-    field?: Nullable<OrderFild>;
-    direction?: Nullable<OrderDirection>;
-}
-
-export interface MenuQuery {
-    creator?: Nullable<string>;
-    updater?: Nullable<string>;
     username?: Nullable<string>;
     password?: Nullable<string>;
     nickname?: Nullable<string>;
@@ -300,7 +329,16 @@ export interface MenuQuery {
     age?: Nullable<number>;
     admin?: Nullable<number>;
     organId?: Nullable<string>;
-    state?: Nullable<number>;
+}
+
+export interface QueryMenuInput {
+    orderBy?: Nullable<MenuOrderBy>;
+    query?: Nullable<MenuQuery>;
+    after?: Nullable<string>;
+    before?: Nullable<string>;
+    first?: Nullable<number>;
+    last?: Nullable<number>;
+    skip?: Nullable<number>;
 }
 
 export interface CreateOrganInput {
@@ -521,7 +559,7 @@ export interface IQuery {
     dictEntry(id: number): Nullable<DictEntry> | Promise<Nullable<DictEntry>>;
     dictionaries(queryDictionaryInput?: Nullable<QueryDictionaryInput>): Nullable<Nullable<Dictionary>[]> | Promise<Nullable<Nullable<Dictionary>[]>>;
     dictionary(id: string): Nullable<Dictionary> | Promise<Nullable<Dictionary>>;
-    menus(orderBy?: Nullable<UserOrderBy>, after?: Nullable<string>, before?: Nullable<string>, first?: Nullable<number>, last?: Nullable<number>, query?: Nullable<UserQuery>, skip?: Nullable<number>): MenuConnection | Promise<MenuConnection>;
+    menus(queryMenuInput?: Nullable<QueryMenuInput>): MenuConnection | Promise<MenuConnection>;
     menu(id: string): Nullable<Menu> | Promise<Nullable<Menu>>;
     organs(queryOrgansInput?: Nullable<QueryOrgansInput>): OrganConnection | Promise<OrganConnection>;
     organsById(ids?: Nullable<Nullable<string>[]>): Nullable<Nullable<Organ>[]> | Promise<Nullable<Nullable<Organ>[]>>;
@@ -599,28 +637,31 @@ export interface Menu {
     updatedAt?: Nullable<DateTime>;
     creator?: Nullable<string>;
     updater?: Nullable<string>;
-    name?: Nullable<string>;
-    route?: Nullable<string>;
-    description?: Nullable<string>;
-    icon?: Nullable<string>;
-    title?: Nullable<string>;
     sort?: Nullable<number>;
     state?: Nullable<number>;
+    name?: Nullable<string>;
+    description?: Nullable<string>;
+    route?: Nullable<string>;
+    icon?: Nullable<string>;
+    title?: Nullable<string>;
     type?: Nullable<number>;
+    componentUrl?: Nullable<string>;
     outside?: Nullable<boolean>;
-    authNames?: Nullable<Nullable<string>[]>;
     parentId?: Nullable<string>;
-}
-
-export interface MenuConnection {
-    edges?: Nullable<MenuEdge[]>;
-    pageInfo: PageInfo;
-    totalCount: number;
+    parent?: Nullable<Menu>;
+    children?: Nullable<Nullable<Menu>[]>;
+    roles?: Nullable<Nullable<Role>[]>;
 }
 
 export interface MenuEdge {
     cursor: string;
     node: Menu;
+}
+
+export interface MenuConnection {
+    edges?: Nullable<Nullable<MenuEdge>[]>;
+    pageInfo: PageInfo;
+    totalCount: number;
 }
 
 export interface Organ {
