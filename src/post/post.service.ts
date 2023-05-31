@@ -1,26 +1,114 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { CreatePostInput } from "./dto/create-post.input";
 import { UpdatePostInput } from "./dto/update-post.input";
+import { QueryPostInput } from "./dto/query-post.input";
+import { PrismaService } from "@/common/prisma/prisma.service";
+import { findManyCursorConnection } from "@devoxa/prisma-relay-cursor-connection";
+import { Post, PostConnection } from "@/types/graphql";
 
 @Injectable()
 export class PostsService {
-  create(createPostInput: CreatePostInput) {
-    return "This action adds a new post";
+  constructor(private readonly prisma: PrismaService) {
+    this.prisma = prisma;
+  }
+  /**
+   * 新建
+   * @param createPostInput
+   * @returns
+   */
+  async create(createPostInput: CreatePostInput): Promise<Post> {
+    const { organId, usersIds, ...dataArgs } = createPostInput;
+
+    const [Organ, users] = await Promise.all([
+      this.prisma.organ.findFirst({ where: { id: organId } }),
+      this.prisma.user.findMany({ where: { id: { in: usersIds } } })
+    ]);
+    return this.prisma.post.create({
+      data: {
+        ...dataArgs,
+        Organ: { connect: { id: Organ?.id } },
+        users: { connect: users.map(user => ({ id: user.id })) }
+      }
+    });
   }
 
-  findAll() {
-    return `This action returns all posts`;
+  /**
+   * 分页
+   * @param createPostInput
+   * @returns
+   */
+  async findAll(queryPostInput: QueryPostInput): Promise<PostConnection> {
+    const { query, orderBy, ...pageInfo } = queryPostInput;
+    const where = Object.entries(query || {}).reduce((acc, [key, value]) => {
+      if (key !== null) {
+        acc[key] = value;
+      }
+      return acc;
+    }, {});
+
+    return await findManyCursorConnection(
+      args =>
+        this.prisma.post.findMany({
+          where,
+          orderBy: orderBy?.field ? { [orderBy.field]: orderBy.direction } : undefined,
+          ...args
+        }),
+      () =>
+        this.prisma.post.count({
+          where
+        }),
+      pageInfo
+    );
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} post`;
+  /**
+   * id查询
+   * @param createPostInput
+   * @returns
+   */
+  async findOne(id: string): Promise<Post> {
+    const post = await this.prisma.post.findFirst({
+      where: {
+        id
+      }
+    });
+    if (!post) throw new NotFoundException("Not Found!");
+    return post;
   }
 
-  update(id: number, updatePostInput: UpdatePostInput) {
-    return `This action updates a #${id} post`;
+  /**
+   * 更新
+   * @param createPostInput
+   * @returns
+   */
+  async update(updatePostInput: UpdatePostInput): Promise<Post> {
+    const { id, organId, usersIds, ...dataArgs } = updatePostInput;
+    const [Organ, users] = await Promise.all([
+      this.prisma.organ.findFirst({ where: { id: organId } }),
+      this.prisma.user.findMany({ where: { id: { in: usersIds } } })
+    ]);
+    return this.prisma.post.update({
+      where: {
+        id
+      },
+      data: {
+        Organ: { connect: { id: Organ?.id } },
+        users: { connect: users.map(user => ({ id: user.id })) },
+        ...dataArgs
+      }
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} post`;
+  /**
+   * 删除
+   * @param createPostInput
+   * @returns
+   */
+  async remove(id: string): Promise<Post> {
+    return this.prisma.post.delete({
+      where: {
+        id
+      }
+    });
   }
 }

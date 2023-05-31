@@ -15,12 +15,12 @@ model Organ {
   sort        Int          @default(0)
   state       Int          @default(1)
   creator     String?
-  creatorName String?
   updater     String?
-  updaterName String?
   name        String
   description String?
   uniqueName  String       @unique
+  creatorName String?
+  updaterName String?
   departments Department[]
   posts       Post[]
   roles       Role[]
@@ -35,15 +35,15 @@ model Department {
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
   creator     String?
-  creatorName String?
   updater     String?
-  updaterName String?
   sort        Int          @default(0)
   state       Int          @default(1)
   name        String
   description String?
   organId     String?
   parentId    String?
+  creatorName String?
+  updaterName String?
   Organ       Organ?       @relation(fields: [organId], references: [id])
   parent      Department?  @relation("departments", fields: [parentId], references: [id])
   children    Department[] @relation("departments")
@@ -56,9 +56,7 @@ model User {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   creator     String?
-  creatorName String?
   updater     String?
-  updaterName String?
   username    String   @unique
   password    String
   email       String?
@@ -71,6 +69,8 @@ model User {
   sort        Int      @default(0)
   state       Int      @default(1)
   roleId      String?
+  creatorName String?
+  updaterName String?
   Role        Role?    @relation("RoleToUser", fields: [roleId], references: [id])
   organs      Organ[]  @relation("OrganToUser")
   posts       Post[]   @relation("PostToUser")
@@ -83,9 +83,7 @@ model Menu {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   creator     String?
-  creatorName String?
   updater     String?
-  updaterName String?
   sort        Int      @default(0)
   state       Int      @default(1)
   name        String
@@ -97,6 +95,8 @@ model Menu {
   title       String?
   parentId    String?
   component   String?
+  creatorName String?
+  updaterName String?
   parent      Menu?    @relation("menus", fields: [parentId], references: [id])
   children    Menu[]   @relation("menus")
   roles       Role[]   @relation("MenuToRole")
@@ -109,14 +109,14 @@ model Post {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   creator     String?
-  creatorName String?
   updater     String?
-  updaterName String?
   sort        Int      @default(0)
   state       Int      @default(1)
   name        String
   description String?
   organId     String?
+  creatorName String?
+  updaterName String?
   Organ       Organ?   @relation(fields: [organId], references: [id])
   users       User[]   @relation("PostToUser")
 
@@ -128,14 +128,14 @@ model Role {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   creator     String?
-  creatorName String?
   updater     String?
-  updaterName String?
   sort        Int      @default(0)
   state       Int      @default(1)
   name        String
   description String?
   organId     String?
+  creatorName String?
+  updaterName String?
   Organ       Organ?   @relation(fields: [organId], references: [id])
   users       User[]   @relation("RoleToUser")
   menus       Menu[]   @relation("MenuToRole")
@@ -148,14 +148,14 @@ model Dictionary {
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
   creator     String?
-  creatorName String?
   updater     String?
-  updaterName String?
   sort        Int         @default(0)
   state       Int         @default(1)
   dictName    String      @unique
   name        String
   description String?
+  creatorName String?
+  updaterName String?
   dictEntries DictEntry[]
   Organ       Organ[]     @relation("DictionaryToOrgan")
 
@@ -167,15 +167,15 @@ model DictEntry {
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
   creator      String?
-  creatorName  String?
   updater      String?
-  updaterName  String?
   sort         Int         @default(0)
   state        Int         @default(1)
   name         String
   dictionaryId String?
   value        String
   description  String?
+  creatorName  String?
+  updaterName  String?
   Dictionary   Dictionary? @relation(fields: [dictionaryId], references: [id])
 
   @@map("dict_entries")

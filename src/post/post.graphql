@@ -2,44 +2,101 @@ type Post {
   id: String
   createdAt: DateTime
   updatedAt: DateTime
-  creator: ID
-  creatorName: String
-  updater: ID
-  updaterName: String
+  creator: String
+  updater: String
   sort: Int
   state: Int
   name: String
   description: String
-  organId: ID
+  organId: String
+  creatorName: String
+  updaterName: String
   Organ: Organ
   users: [User]
 }
 
 input CreatePostInput {
-  creator: ID
-  creatorName: String
-  updater: ID
-  updaterName: String
   sort: Int
   state: Int
   name: String
   description: String
   organId: ID
-  Organ: ID
   users: [ID]
 }
 
 input UpdatePostInput {
-  id: Int
+  id: ID
+  sort: Int
+  state: Int
+  name: String
+  description: String
+  organId: ID
+  users: [ID]
+}
+
+enum PostOrderFelid {
+  id
+  createdAt
+  updatedAt
+  creator
+  updater
+  sort
+  state
+  name
+  description
+  organId
+  creatorName
+  updaterName
+}
+
+input PostOrderBy {
+  field: PostOrderFelid
+  direction: OrderDirection
+}
+
+input PostQuery {
+  createdAt: DateTime
+  updatedAt: DateTime
+  creator: String
+  updater: String
+  sort: Int
+  state: Int
+  name: String
+  description: String
+  organId: String
+  creatorName: String
+  updaterName: String
+}
+
+input QueryPostInput {
+  orderBy: PostOrderBy
+  after: String
+  before: String
+  first: Int
+  last: Int
+  query: PostQuery
+  skip: Int
+}
+
+type PostConnection {
+  edges: [PostEdge!]
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type PostEdge {
+  cursor: String!
+  node: Post!
 }
 
 type Query {
-  posts: [Post]!
-  post(id: Int!): Post
+  posts(queryPostInput: QueryPostInput): PostConnection!
+  postsById(ids: [ID]): [Post]
+  post(id: ID!): Post
 }
 
 type Mutation {
   createPost(createPostInput: CreatePostInput!): Post!
   updatePost(updatePostInput: UpdatePostInput!): Post!
-  removePost(id: Int!): Post
+  removePost(id: ID!): Post
 }

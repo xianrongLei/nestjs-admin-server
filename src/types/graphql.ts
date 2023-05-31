@@ -82,6 +82,21 @@ export enum MenuOrderFelid {
     parentId = "parentId"
 }
 
+export enum PostOrderFelid {
+    id = "id",
+    createdAt = "createdAt",
+    updatedAt = "updatedAt",
+    creator = "creator",
+    updater = "updater",
+    sort = "sort",
+    state = "state",
+    name = "name",
+    description = "description",
+    organId = "organId",
+    creatorName = "creatorName",
+    updaterName = "updaterName"
+}
+
 export enum UserOrderFelid {
     id = "id",
     createdAt = "createdAt",
@@ -403,21 +418,51 @@ export interface QueryOrganInput {
 }
 
 export interface CreatePostInput {
-    creator?: Nullable<string>;
-    creatorName?: Nullable<string>;
-    updater?: Nullable<string>;
-    updaterName?: Nullable<string>;
     sort?: Nullable<number>;
     state?: Nullable<number>;
     name?: Nullable<string>;
     description?: Nullable<string>;
     organId?: Nullable<string>;
-    Organ?: Nullable<string>;
     users?: Nullable<Nullable<string>[]>;
 }
 
 export interface UpdatePostInput {
-    id?: Nullable<number>;
+    id?: Nullable<string>;
+    sort?: Nullable<number>;
+    state?: Nullable<number>;
+    name?: Nullable<string>;
+    description?: Nullable<string>;
+    organId?: Nullable<string>;
+    users?: Nullable<Nullable<string>[]>;
+}
+
+export interface PostOrderBy {
+    field?: Nullable<PostOrderFelid>;
+    direction?: Nullable<OrderDirection>;
+}
+
+export interface PostQuery {
+    createdAt?: Nullable<DateTime>;
+    updatedAt?: Nullable<DateTime>;
+    creator?: Nullable<string>;
+    updater?: Nullable<string>;
+    sort?: Nullable<number>;
+    state?: Nullable<number>;
+    name?: Nullable<string>;
+    description?: Nullable<string>;
+    organId?: Nullable<string>;
+    creatorName?: Nullable<string>;
+    updaterName?: Nullable<string>;
+}
+
+export interface QueryPostInput {
+    orderBy?: Nullable<PostOrderBy>;
+    after?: Nullable<string>;
+    before?: Nullable<string>;
+    first?: Nullable<number>;
+    last?: Nullable<number>;
+    query?: Nullable<PostQuery>;
+    skip?: Nullable<number>;
 }
 
 export interface CreateRoleInput {
@@ -528,7 +573,7 @@ export interface IMutation {
     removeOrgan(id: string): Nullable<Organ> | Promise<Nullable<Organ>>;
     createPost(createPostInput: CreatePostInput): Post | Promise<Post>;
     updatePost(updatePostInput: UpdatePostInput): Post | Promise<Post>;
-    removePost(id: number): Nullable<Post> | Promise<Nullable<Post>>;
+    removePost(id: string): Nullable<Post> | Promise<Nullable<Post>>;
     createRole(createRoleInput: CreateRoleInput): Role | Promise<Role>;
     updateRole(updateRoleInput: UpdateRoleInput): Role | Promise<Role>;
     removeRole(id: number): Nullable<Role> | Promise<Nullable<Role>>;
@@ -580,8 +625,9 @@ export interface IQuery {
     organs(queryOrganInput?: Nullable<QueryOrganInput>): OrganConnection | Promise<OrganConnection>;
     organsById(ids?: Nullable<Nullable<string>[]>): Nullable<Nullable<Organ>[]> | Promise<Nullable<Nullable<Organ>[]>>;
     organ(id: string): Nullable<Organ> | Promise<Nullable<Organ>>;
-    posts(): Nullable<Post>[] | Promise<Nullable<Post>[]>;
-    post(id: number): Nullable<Post> | Promise<Nullable<Post>>;
+    posts(queryPostInput?: Nullable<QueryPostInput>): PostConnection | Promise<PostConnection>;
+    postsById(ids?: Nullable<Nullable<string>[]>): Nullable<Nullable<Post>[]> | Promise<Nullable<Nullable<Post>[]>>;
+    post(id: string): Nullable<Post> | Promise<Nullable<Post>>;
     roles(): Nullable<Role>[] | Promise<Nullable<Role>[]>;
     role(id: number): Nullable<Role> | Promise<Nullable<Role>>;
     users(QueryUsersInput?: Nullable<QueryUsersInput>): UserConnection | Promise<UserConnection>;
@@ -720,16 +766,27 @@ export interface Post {
     createdAt?: Nullable<DateTime>;
     updatedAt?: Nullable<DateTime>;
     creator?: Nullable<string>;
-    creatorName?: Nullable<string>;
     updater?: Nullable<string>;
-    updaterName?: Nullable<string>;
     sort?: Nullable<number>;
     state?: Nullable<number>;
     name?: Nullable<string>;
     description?: Nullable<string>;
     organId?: Nullable<string>;
+    creatorName?: Nullable<string>;
+    updaterName?: Nullable<string>;
     Organ?: Nullable<Organ>;
     users?: Nullable<Nullable<User>[]>;
+}
+
+export interface PostConnection {
+    edges?: Nullable<PostEdge[]>;
+    pageInfo: PageInfo;
+    totalCount: number;
+}
+
+export interface PostEdge {
+    cursor: string;
+    node: Post;
 }
 
 export interface Role {

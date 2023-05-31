@@ -2,6 +2,7 @@ import { Resolver, Query, Mutation, Args } from "@nestjs/graphql";
 import { PostsService } from "./post.service";
 import { CreatePostInput } from "./dto/create-post.input";
 import { UpdatePostInput } from "./dto/update-post.input";
+import { QueryPostInput } from "./dto/query-post.input";
 
 @Resolver("Post")
 export class PostsResolver {
@@ -13,22 +14,22 @@ export class PostsResolver {
   }
 
   @Query("posts")
-  findAll() {
-    return this.postsService.findAll();
+  findAll(@Args("queryPostInput") queryPostInput: QueryPostInput) {
+    return this.postsService.findAll(queryPostInput);
   }
 
   @Query("post")
-  findOne(@Args("id") id: number) {
+  findOne(@Args("id") id: string) {
     return this.postsService.findOne(id);
   }
 
   @Mutation("updatePost")
   update(@Args("updatePostInput") updatePostInput: UpdatePostInput) {
-    return this.postsService.update(updatePostInput.id, updatePostInput);
+    return this.postsService.update(updatePostInput);
   }
 
   @Mutation("removePost")
-  remove(@Args("id") id: number) {
+  remove(@Args("id") id: string) {
     return this.postsService.remove(id);
   }
 }
