@@ -83,6 +83,8 @@ input MenuQuery {
   id: ID
   createdAt: DateTime
   updatedAt: DateTime
+  creatorName: String
+  updaterName: String
   creator: ID
   updater: ID
   sort: Int

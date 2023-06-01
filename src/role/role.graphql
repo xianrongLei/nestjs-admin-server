@@ -1,24 +1,105 @@
 type Role {
-  # Example field (placeholder)
-  exampleField: Int
+  id: String
+  createdAt: DateTime
+  updatedAt: DateTime
+  creatorName: String
+  updaterName: String
+  creator: ID
+  updater: ID
+  sort: Int
+  state: Int
+  name: String
+  description: String
+  organId: ID
+  Organ: Organ
+  users: [User]
+  menus: [Menu]
 }
 
 input CreateRoleInput {
-  # Example field (placeholder)
-  exampleField: Int
+  sort: Int
+  state: Int
+  name: String
+  description: String
+  organId: ID
+  usersIds: [ID]
+  menusIds: [ID]
 }
 
 input UpdateRoleInput {
-  id: Int
+  id: ID
+  sort: Int
+  state: Int
+  name: String
+  description: String
+  organId: ID
+  usersIds: [ID]
+  menusIds: [ID]
+}
+
+enum RoleOrderFelid {
+  id
+  createdAt
+  updatedAt
+  creatorName
+  updaterName
+  creator
+  updater
+  sort
+  state
+  name
+  description
+  organId
+}
+
+input RoleOrderBy {
+  field: RoleOrderFelid
+  direction: OrderDirection
+}
+
+input RoleQuery {
+  createdAt: DateTime
+  updatedAt: DateTime
+  creator: ID
+  updater: ID
+  sort: Int
+  state: Int
+  name: String
+  description: String
+  organId: ID
+  creatorName: String
+  updaterName: String
+}
+
+input QueryRoleInput {
+  orderBy: RoleOrderBy
+  after: String
+  before: String
+  first: Int
+  last: Int
+  query: RoleQuery
+  skip: Int
+}
+
+type RoleConnection {
+  edges: [RoleEdge!]
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type RoleEdge {
+  cursor: String!
+  node: Role!
 }
 
 type Query {
-  roles: [Role]!
-  role(id: Int!): Role
+  roles(queryRoleInput: QueryRoleInput): RoleConnection!
+  rolesById(ids: [ID]): [Role]
+  role(id: ID!): Role
 }
 
 type Mutation {
   createRole(createRoleInput: CreateRoleInput!): Role!
   updateRole(updateRoleInput: UpdateRoleInput!): Role!
-  removeRole(id: Int!): Role
+  removeRole(id: ID!): Role
 }

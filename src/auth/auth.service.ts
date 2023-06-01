@@ -45,7 +45,7 @@ export class AuthService {
   async captcha(createCaptchaInput: CreateCaptchaInput): Promise<Captcha> {
     let captcha: svgCaptcha.CaptchaObj;
     const uniCode = `uni${new Date().getTime()}`;
-    const time = this.config.get("captcha.expriseIn");
+    const time = this.config.getOrThrow("captcha.expiresIn");
     if (createCaptchaInput.type === 0) {
       captcha = svgCaptcha.create({
         background: createCaptchaInput.background,

@@ -97,6 +97,21 @@ export enum PostOrderFelid {
     updaterName = "updaterName"
 }
 
+export enum RoleOrderFelid {
+    id = "id",
+    createdAt = "createdAt",
+    updatedAt = "updatedAt",
+    creatorName = "creatorName",
+    updaterName = "updaterName",
+    creator = "creator",
+    updater = "updater",
+    sort = "sort",
+    state = "state",
+    name = "name",
+    description = "description",
+    organId = "organId"
+}
+
 export enum UserOrderFelid {
     id = "id",
     createdAt = "createdAt",
@@ -326,6 +341,8 @@ export interface MenuQuery {
     id?: Nullable<string>;
     createdAt?: Nullable<DateTime>;
     updatedAt?: Nullable<DateTime>;
+    creatorName?: Nullable<string>;
+    updaterName?: Nullable<string>;
     creator?: Nullable<string>;
     updater?: Nullable<string>;
     sort?: Nullable<number>;
@@ -395,6 +412,8 @@ export interface OrganOrderBy {
 export interface OrganQuery {
     creator?: Nullable<string>;
     updater?: Nullable<string>;
+    creatorName?: Nullable<string>;
+    updaterName?: Nullable<string>;
     username?: Nullable<string>;
     password?: Nullable<string>;
     nickname?: Nullable<string>;
@@ -466,11 +485,53 @@ export interface QueryPostInput {
 }
 
 export interface CreateRoleInput {
-    exampleField?: Nullable<number>;
+    sort?: Nullable<number>;
+    state?: Nullable<number>;
+    name?: Nullable<string>;
+    description?: Nullable<string>;
+    organId?: Nullable<string>;
+    usersIds?: Nullable<Nullable<string>[]>;
+    menusIds?: Nullable<Nullable<string>[]>;
 }
 
 export interface UpdateRoleInput {
-    id?: Nullable<number>;
+    id?: Nullable<string>;
+    sort?: Nullable<number>;
+    state?: Nullable<number>;
+    name?: Nullable<string>;
+    description?: Nullable<string>;
+    organId?: Nullable<string>;
+    usersIds?: Nullable<Nullable<string>[]>;
+    menusIds?: Nullable<Nullable<string>[]>;
+}
+
+export interface RoleOrderBy {
+    field?: Nullable<RoleOrderFelid>;
+    direction?: Nullable<OrderDirection>;
+}
+
+export interface RoleQuery {
+    createdAt?: Nullable<DateTime>;
+    updatedAt?: Nullable<DateTime>;
+    creator?: Nullable<string>;
+    updater?: Nullable<string>;
+    sort?: Nullable<number>;
+    state?: Nullable<number>;
+    name?: Nullable<string>;
+    description?: Nullable<string>;
+    organId?: Nullable<string>;
+    creatorName?: Nullable<string>;
+    updaterName?: Nullable<string>;
+}
+
+export interface QueryRoleInput {
+    orderBy?: Nullable<RoleOrderBy>;
+    after?: Nullable<string>;
+    before?: Nullable<string>;
+    first?: Nullable<number>;
+    last?: Nullable<number>;
+    query?: Nullable<RoleQuery>;
+    skip?: Nullable<number>;
 }
 
 export interface CreateUserInput {
@@ -576,7 +637,7 @@ export interface IMutation {
     removePost(id: string): Nullable<Post> | Promise<Nullable<Post>>;
     createRole(createRoleInput: CreateRoleInput): Role | Promise<Role>;
     updateRole(updateRoleInput: UpdateRoleInput): Role | Promise<Role>;
-    removeRole(id: number): Nullable<Role> | Promise<Nullable<Role>>;
+    removeRole(id: string): Nullable<Role> | Promise<Nullable<Role>>;
     createUser(createUserInput: CreateUserInput): User | Promise<User>;
     updateUser(updateUserInput: UpdateUserInput): User | Promise<User>;
     removeUser(id: string): Nullable<User> | Promise<Nullable<User>>;
@@ -628,8 +689,9 @@ export interface IQuery {
     posts(queryPostInput?: Nullable<QueryPostInput>): PostConnection | Promise<PostConnection>;
     postsById(ids?: Nullable<Nullable<string>[]>): Nullable<Nullable<Post>[]> | Promise<Nullable<Nullable<Post>[]>>;
     post(id: string): Nullable<Post> | Promise<Nullable<Post>>;
-    roles(): Nullable<Role>[] | Promise<Nullable<Role>[]>;
-    role(id: number): Nullable<Role> | Promise<Nullable<Role>>;
+    roles(queryRoleInput?: Nullable<QueryRoleInput>): RoleConnection | Promise<RoleConnection>;
+    rolesById(ids?: Nullable<Nullable<string>[]>): Nullable<Nullable<Role>[]> | Promise<Nullable<Nullable<Role>[]>>;
+    role(id: string): Nullable<Role> | Promise<Nullable<Role>>;
     users(QueryUsersInput?: Nullable<QueryUsersInput>): UserConnection | Promise<UserConnection>;
     user(id: string): Nullable<User> | Promise<Nullable<User>>;
 }
@@ -790,7 +852,32 @@ export interface PostEdge {
 }
 
 export interface Role {
-    exampleField?: Nullable<number>;
+    id?: Nullable<string>;
+    createdAt?: Nullable<DateTime>;
+    updatedAt?: Nullable<DateTime>;
+    creatorName?: Nullable<string>;
+    updaterName?: Nullable<string>;
+    creator?: Nullable<string>;
+    updater?: Nullable<string>;
+    sort?: Nullable<number>;
+    state?: Nullable<number>;
+    name?: Nullable<string>;
+    description?: Nullable<string>;
+    organId?: Nullable<string>;
+    Organ?: Nullable<Organ>;
+    users?: Nullable<Nullable<User>[]>;
+    menus?: Nullable<Nullable<Menu>[]>;
+}
+
+export interface RoleConnection {
+    edges?: Nullable<RoleEdge[]>;
+    pageInfo: PageInfo;
+    totalCount: number;
+}
+
+export interface RoleEdge {
+    cursor: string;
+    node: Role;
 }
 
 export interface User {

@@ -68,6 +68,8 @@ input OrganOrderBy {
 input OrganQuery {
   creator: ID
   updater: ID
+  creatorName: String
+  updaterName: String
   username: String
   password: String
   nickname: String

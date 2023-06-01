@@ -40,8 +40,8 @@ export class PostsService {
   async findAll(queryPostInput: QueryPostInput): Promise<PostConnection> {
     const { query, orderBy, ...pageInfo } = queryPostInput;
     const where = Object.entries(query || {}).reduce((acc, [key, value]) => {
-      if (key !== null) {
-        acc[key] = value;
+      if (value !== null) {
+        acc[key] = { contains: value };
       }
       return acc;
     }, {});

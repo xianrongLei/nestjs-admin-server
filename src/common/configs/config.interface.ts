@@ -2,7 +2,7 @@ import { JwtSignOptions } from "@nestjs/jwt";
 
 export type Jwt = {
   defaultSecret: string;
-  defaultDignOptions: JwtSignOptions;
+  defaultSignOptions: JwtSignOptions;
   secret: string;
   signOptions: JwtSignOptions;
   refExpiresIn: String;
@@ -17,7 +17,7 @@ export type Swagger = {
   description: string;
   path: string;
 };
-export type Reids = {
+export type Redis = {
   ip: string;
   port: number;
 };
@@ -33,14 +33,14 @@ export type Graphql = {
 };
 
 export type captcha = {
-  expriseIn: number;
+  expiresIn: number;
 };
 export interface Config {
   jwt: Jwt;
   app: App;
   swagger: Swagger;
   databaseURL: string;
-  redis: Reids;
+  redis: Redis;
   graphql: Graphql;
   captcha: captcha;
 }

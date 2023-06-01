@@ -1,14 +1,14 @@
 type Post {
-  id: String
+  id: ID
   createdAt: DateTime
   updatedAt: DateTime
-  creator: String
-  updater: String
+  creator: ID
+  updater: ID
   sort: Int
   state: Int
-  name: String
+  name: ID
   description: String
-  organId: String
+  organId: ID
   creatorName: String
   updaterName: String
   Organ: Organ
@@ -57,8 +57,8 @@ input PostOrderBy {
 input PostQuery {
   createdAt: DateTime
   updatedAt: DateTime
-  creator: String
-  updater: String
+  creator: ID
+  updater: ID
   sort: Int
   state: Int
   name: String
