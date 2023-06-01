@@ -117,19 +117,21 @@ export enum UserOrderFelid {
     createdAt = "createdAt",
     updatedAt = "updatedAt",
     creator = "creator",
-    creatorName = "creatorName",
     updater = "updater",
-    updaterName = "updaterName",
     username = "username",
-    nickname = "nickname",
+    password = "password",
     email = "email",
+    nickname = "nickname",
     phone = "phone",
-    sex = "sex",
     age = "age",
+    sex = "sex",
     admin = "admin",
     avatar = "avatar",
-    organId = "organId",
-    state = "state"
+    sort = "sort",
+    state = "state",
+    roleId = "roleId",
+    creatorName = "creatorName",
+    updaterName = "updaterName"
 }
 
 export interface CreateCaptchaInput {
@@ -535,40 +537,42 @@ export interface QueryRoleInput {
 }
 
 export interface CreateUserInput {
-    creator?: Nullable<string>;
-    updater?: Nullable<string>;
     username?: Nullable<string>;
     password?: Nullable<string>;
-    nickname?: Nullable<string>;
     email?: Nullable<string>;
+    nickname?: Nullable<string>;
     phone?: Nullable<string>;
-    sex?: Nullable<number>;
     age?: Nullable<number>;
+    sex?: Nullable<number>;
     admin?: Nullable<number>;
     avatar?: Nullable<string>;
-    organId?: Nullable<string>;
-    posts?: Nullable<Nullable<number>[]>;
-    roles?: Nullable<Nullable<number>[]>;
+    sort?: Nullable<number>;
     state?: Nullable<number>;
+    roleId?: Nullable<string>;
+    creatorName?: Nullable<string>;
+    updaterName?: Nullable<string>;
+    organsIds?: Nullable<Nullable<string>[]>;
+    postsIds?: Nullable<Nullable<string>[]>;
 }
 
 export interface UpdateUserInput {
     id?: Nullable<string>;
-    creator?: Nullable<string>;
-    updater?: Nullable<string>;
     username?: Nullable<string>;
     password?: Nullable<string>;
-    nickname?: Nullable<string>;
     email?: Nullable<string>;
+    nickname?: Nullable<string>;
     phone?: Nullable<string>;
-    sex?: Nullable<number>;
     age?: Nullable<number>;
+    sex?: Nullable<number>;
     admin?: Nullable<number>;
     avatar?: Nullable<string>;
-    organId?: Nullable<string>;
-    posts?: Nullable<Nullable<number>[]>;
-    roles?: Nullable<Nullable<number>[]>;
+    sort?: Nullable<number>;
     state?: Nullable<number>;
+    roleId?: Nullable<string>;
+    creatorName?: Nullable<string>;
+    updaterName?: Nullable<string>;
+    organsIds?: Nullable<Nullable<string>[]>;
+    postsIds?: Nullable<Nullable<string>[]>;
 }
 
 export interface UserOrderBy {
@@ -886,19 +890,23 @@ export interface User {
     updatedAt?: Nullable<DateTime>;
     creator?: Nullable<string>;
     updater?: Nullable<string>;
-    state?: Nullable<number>;
     username?: Nullable<string>;
     password?: Nullable<string>;
-    nickname?: Nullable<string>;
     email?: Nullable<string>;
+    nickname?: Nullable<string>;
     phone?: Nullable<string>;
-    sex?: Nullable<number>;
     age?: Nullable<number>;
+    sex?: Nullable<number>;
     admin?: Nullable<number>;
     avatar?: Nullable<string>;
-    organId?: Nullable<string>;
-    posts?: Nullable<Nullable<number>[]>;
-    roles?: Nullable<Nullable<number>[]>;
+    sort?: Nullable<number>;
+    state?: Nullable<number>;
+    roleId?: Nullable<string>;
+    creatorName?: Nullable<string>;
+    updaterName?: Nullable<string>;
+    Role?: Nullable<Role>;
+    organs?: Nullable<Nullable<Organ>[]>;
+    posts?: Nullable<Nullable<Post>[]>;
 }
 
 export interface UserConnection {

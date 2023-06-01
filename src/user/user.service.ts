@@ -1,12 +1,12 @@
-import { Prisma, User } from ".prisma/client";
 import { PrismaService } from "@/common/prisma/prisma.service";
+import { Prisma } from ".prisma/client";
 import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import * as argon from "argon2";
-import { CreateUserInput } from "./dto/create-user.input.dto";
-import { UpdateUserInput } from "./dto/update-user.input.dto";
-import { UserOrderBy, UserConnection, UserQuery } from "@/types/graphql";
-import { PaginationArgs } from "@/common/pagination/pagination.args";
+import { CreateUserInput } from "./dto/create-user.input";
+import { UpdateUserInput } from "./dto/update-user.input";
+import { User, UserConnection } from "@/types/graphql";
 import { findManyCursorConnection } from "@devoxa/prisma-relay-cursor-connection";
+import { QueryUserInput } from "./dto/query-user-input";
 
 @Injectable()
 export class UsersService {
@@ -19,12 +19,21 @@ export class UsersService {
    * @returns
    */
   async create(createUserInput: CreateUserInput): Promise<User> {
+    const { postsIds, organsIds, roleId, ...dataArgs } = createUserInput;
+    const [posts, organs, Role] = await Promise.all([
+      this.prisma.post.findMany({ where: { id: { in: postsIds } } }),
+      this.prisma.organ.findMany({ where: { id: { in: organsIds } } }),
+      this.prisma.role.findFirst({ where: { id: roleId } })
+    ]);
     try {
-      const password: string = await argon.hash(createUserInput.password);
+      const password: string = await argon.hash(dataArgs.password);
       const user = await this.prisma.user.create({
         data: {
-          ...createUserInput,
-          password
+          ...dataArgs,
+          password,
+          posts: { connect: posts.map(post => ({ id: post.id })) },
+          organs: { connect: organs.map(post => ({ id: post.id })) },
+          Role: { connect: { id: Role?.id } }
         }
       });
       return { ...user, password: "" };
@@ -43,19 +52,16 @@ export class UsersService {
    * @param orderBy
    * @returns
    */
-  async findAll(
-    orderBy: UserOrderBy,
-    { after, before, first, last }: PaginationArgs,
-    query: UserQuery
-  ): Promise<UserConnection> {
-    const where = Object.entries(query).reduce((acc, [key, value]) => {
+  async findAll(queryUserInput: QueryUserInput): Promise<UserConnection> {
+    const { query, orderBy, ...pageInfo } = queryUserInput;
+    const where = Object.entries(query || {}).reduce((acc, [key, value]) => {
       if (value != null) {
         acc[key] = { contains: value };
       }
       return acc;
     }, {});
 
-    const result = await findManyCursorConnection(
+    return await findManyCursorConnection(
       args =>
         this.prisma.user.findMany({
           where,
@@ -66,12 +72,8 @@ export class UsersService {
         this.prisma.user.count({
           where
         }),
-      { first, last, before, after }
+      pageInfo
     );
-
-    result.edges.forEach(user => (user.node.password = ""));
-
-    return result;
   }
   /**
    * 查询单个用户信息
@@ -97,12 +99,23 @@ export class UsersService {
    * @param updateUserInput
    * @returns
    */
-  async update(id: string, updateUserInput: UpdateUserInput): Promise<User> {
+  async update(updateUserInput: UpdateUserInput): Promise<User> {
+    const { id, roleId, postsIds, organsIds, ...dataArgs } = updateUserInput;
+    const [posts, organs, Role] = await Promise.all([
+      this.prisma.post.findMany({ where: { id: { in: postsIds } } }),
+      this.prisma.organ.findMany({ where: { id: { in: organsIds } } }),
+      this.prisma.role.findFirst({ where: { id: roleId } })
+    ]);
     return await this.prisma.user.update({
       where: {
         id
       },
-      data: updateUserInput
+      data: {
+        ...dataArgs,
+        posts: { connect: posts.map(post => ({ id: post.id })) },
+        organs: { connect: organs.map(post => ({ id: post.id })) },
+        Role: { connect: { id: Role?.id } }
+      }
     });
   }
 

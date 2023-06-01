@@ -1,9 +1,8 @@
 import { Resolver, Query, Mutation, Args } from "@nestjs/graphql";
 import { UsersService } from "./user.service";
-import { CreateUserInput } from "./dto/create-user.input.dto";
-import { UpdateUserInput } from "./dto/update-user.input.dto";
-import { UserOrderBy, UserQuery } from "@/types/graphql";
-import { PaginationArgs } from "@/common/pagination/pagination.args";
+import { CreateUserInput } from "./dto/create-user.input";
+import { UpdateUserInput } from "./dto/update-user.input";
+import { QueryUserInput } from "./dto/query-user-input";
 
 @Resolver("user")
 export class UsersResolver {
@@ -17,12 +16,8 @@ export class UsersResolver {
   }
 
   @Query("users")
-  findAll(
-    @Args("orderBy") orderBy: UserOrderBy,
-    @Args() paginationArgs: PaginationArgs,
-    @Args("query") query: UserQuery
-  ) {
-    return this.usersService.findAll(orderBy, paginationArgs, query);
+  findAll(@Args("queryUserInput") queryUserInput: QueryUserInput) {
+    return this.usersService.findAll(queryUserInput);
   }
 
   @Query("user")
@@ -32,7 +27,7 @@ export class UsersResolver {
 
   @Mutation("updateUser")
   update(@Args("updateUserInput") updateUserInput: UpdateUserInput) {
-    return this.usersService.update(updateUserInput.id, updateUserInput);
+    return this.usersService.update(updateUserInput);
   }
 
   @Mutation("removeUser")

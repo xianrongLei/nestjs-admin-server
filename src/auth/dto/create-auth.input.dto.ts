@@ -1,4 +1,4 @@
-import { CreateUserInput } from "@/user/dto/create-user.input.dto";
+import { CreateUserInput } from "@/user/dto/create-user.input";
 import { Field, InputType } from "@nestjs/graphql";
 import { IsNotEmpty } from "class-validator";
 
