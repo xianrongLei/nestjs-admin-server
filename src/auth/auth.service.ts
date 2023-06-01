@@ -6,17 +6,18 @@ import { ConfigService } from "@nestjs/config";
 import { User, Prisma } from ".prisma/client";
 import svgCaptcha from "svg-captcha";
 import { Cache } from "cache-manager";
-import { Auth, Captcha } from "@/types/graphql";
-import { CreateCaptchaInput } from "./dto/create-captcha.input.dto";
-import { CreateAuthInput } from "./dto/create-auth.input.dto";
+import { Auth, Captcha, Token } from "@/types/graphql";
+import { CreateCaptchaInput } from "./dto/create-captcha.input";
+import { SignInInput } from "./dto/sign-in.input";
+import { SignUpInput } from "./dto/sign-up.input";
 
 @Injectable()
 export class AuthService {
   constructor(
     @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
-    private prisma: PrismaService,
-    private jwt: JwtService,
-    private config: ConfigService
+    private readonly prisma: PrismaService,
+    private readonly jwt: JwtService,
+    private readonly config: ConfigService
   ) {
     this.prisma = prisma;
     this.config = config;
@@ -27,11 +28,11 @@ export class AuthService {
    * @param payload
    * @returns
    */
-  async generateTokens(payload: Record<string, any>): Promise<Record<string, string>> {
+  async generateTokens(payload: Record<string, any>): Promise<Token> {
     const accessToken = await this.jwt.signAsync(payload, {
-      secret: this.config.get("jwt.secret")
+      secret: this.config.getOrThrow("jwt.secret")
     });
-    const refreshToken = await this.jwt.signAsync(payload, { secret: this.config.get("jwt.secret") });
+    const refreshToken = await this.jwt.signAsync(payload, { secret: this.config.getOrThrow("jwt.secret") });
     return {
       access_token: accessToken,
       refresh_token: refreshToken
@@ -72,19 +73,19 @@ export class AuthService {
    * @param param0
    * @returns
    */
-  async signup(createAuthInput: CreateAuthInput): Promise<Auth> {
-    // async signup(dto: AuthDto): Promise<Record<string, any>> {
+  async signUp(signUpInput: SignUpInput): Promise<Auth> {
+    const { uniCode, answer } = signUpInput;
     try {
       //验证码比对
-      const cacheAnswer = (await this.cacheManager.get(createAuthInput.uniCode)) as string;
-      if (cacheAnswer.toLowerCase() !== createAuthInput.answer) {
-        this.cacheManager.del(createAuthInput.uniCode);
+      const cacheAnswer = (await this.cacheManager.get(uniCode)) as string;
+      if (cacheAnswer.toLowerCase() !== answer) {
+        this.cacheManager.del(uniCode);
         throw new ForbiddenException("验证码错误");
       }
-      const password: string = await argon.hash(createAuthInput.user.password);
+      const password: string = await argon.hash(signUpInput.user.password);
       const user: User = await this.prisma.user.create({
         data: {
-          username: createAuthInput.user.username,
+          username: signUpInput.user.username,
           password: password
         }
       });
@@ -113,8 +114,8 @@ export class AuthService {
    * @param param0
    * @returns
    */
-  async signin(createAuthInput: CreateAuthInput): Promise<Auth> {
-    const { uniCode, answer } = createAuthInput;
+  async signIn(signInInput: SignInInput): Promise<Auth> {
+    const { uniCode, answer } = signInInput;
     //验证码比对
     const cacheAnswer = (await this.cacheManager.get(uniCode)) as string;
     if (cacheAnswer?.toLowerCase() !== answer) {
@@ -126,12 +127,12 @@ export class AuthService {
     //用户是否存在
     const user: User | null = await this.prisma.user.findFirst({
       where: {
-        username: createAuthInput.user.username
+        username: signInInput.username
       }
     });
     if (!user) throw new ForbiddenException("用户名不存在或密码错误");
     //密码是否正确
-    const pwMatches = await argon.verify(user.password, createAuthInput.user.password);
+    const pwMatches = await argon.verify(user.password, signInInput.password);
     if (!pwMatches) throw new ForbiddenException("用户名不存在或密码错误");
     //生成token
     const payload: Record<string, any> = {

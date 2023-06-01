@@ -3,7 +3,7 @@ import { Field, InputType } from "@nestjs/graphql";
 import { IsNotEmpty } from "class-validator";
 
 @InputType()
-export class CreateAuthInput {
+export class SignUpInput {
   /**
    * 用户信息
    */

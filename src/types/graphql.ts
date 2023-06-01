@@ -142,8 +142,15 @@ export interface CreateCaptchaInput {
     color?: Nullable<boolean>;
 }
 
-export interface CreateAuthInput {
+export interface SignUpInput {
     user?: Nullable<CreateUserInput>;
+    uniCode?: Nullable<string>;
+    answer?: Nullable<string>;
+}
+
+export interface SignInInput {
+    username?: Nullable<string>;
+    password?: Nullable<string>;
     uniCode?: Nullable<string>;
     answer?: Nullable<string>;
 }
@@ -605,8 +612,7 @@ export interface QueryUsersInput {
     skip?: Nullable<number>;
 }
 
-export interface Auth {
-    user?: Nullable<User>;
+export interface Token {
     access_token?: Nullable<JWT>;
     refresh_token?: Nullable<JWT>;
 }
@@ -617,10 +623,16 @@ export interface Captcha {
     svg?: Nullable<string>;
 }
 
+export interface Auth extends Token {
+    access_token?: Nullable<JWT>;
+    refresh_token?: Nullable<JWT>;
+    user?: Nullable<User>;
+}
+
 export interface IMutation {
     captcha(createCaptchaInput: CreateCaptchaInput): Captcha | Promise<Captcha>;
-    signup(createAuthInput: CreateAuthInput): Auth | Promise<Auth>;
-    signin(createAuthInput: CreateAuthInput): Auth | Promise<Auth>;
+    signUp(signUpInput: SignUpInput): Auth | Promise<Auth>;
+    signIn(signInInput: SignInInput): Auth | Promise<Auth>;
     createDepartment(createDepartmentInput: CreateDepartmentInput): Department | Promise<Department>;
     updateDepartment(updateDepartmentInput: UpdateDepartmentInput): Department | Promise<Department>;
     removeDepartment(id: string): Nullable<Department> | Promise<Nullable<Department>>;

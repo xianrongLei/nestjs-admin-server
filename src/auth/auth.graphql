@@ -1,9 +1,4 @@
-type Auth {
-  user: User
-  access_token: JWT
-  refresh_token: JWT
-}
-
+# 验证码
 type Captcha {
   time: Int
   uniCode: String
@@ -17,15 +12,33 @@ input CreateCaptchaInput {
   size: Int
   color: Boolean
 }
+# 鉴权
+interface Token {
+  access_token: JWT
+  refresh_token: JWT
+}
 
-input CreateAuthInput {
+type Auth implements Token {
+  access_token: JWT
+  refresh_token: JWT
+  user: User
+}
+
+input SignUpInput {
   user: CreateUserInput
+  uniCode: String
+  answer: String
+}
+
+input SignInInput {
+  username: String
+  password: String
   uniCode: String
   answer: String
 }
 
 type Mutation {
   captcha(createCaptchaInput: CreateCaptchaInput!): Captcha!
-  signup(createAuthInput: CreateAuthInput!): Auth!
-  signin(createAuthInput: CreateAuthInput!): Auth!
+  signUp(signUpInput: SignUpInput!): Auth!
+  signIn(signInInput: SignInInput!): Auth!
 }

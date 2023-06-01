@@ -1,7 +1,8 @@
 import { Args, Mutation, Resolver } from "@nestjs/graphql";
 import { AuthService } from "./auth.service";
-import { CreateCaptchaInput } from "./dto/create-captcha.input.dto";
-import { CreateAuthInput } from "./dto/create-auth.input.dto";
+import { CreateCaptchaInput } from "./dto/create-captcha.input";
+import { SignInInput } from "./dto/sign-in.input";
+import { SignUpInput } from "./dto/sign-up.input";
 
 @Resolver("auth")
 export class AuthResolver {
@@ -13,13 +14,13 @@ export class AuthResolver {
     return this.authService.captcha(createCaptchaInput);
   }
 
-  @Mutation("signup")
-  signup(@Args("createAuthInput") createAuthInput: CreateAuthInput) {
-    return this.authService.signup(createAuthInput);
+  @Mutation("signUp")
+  signUp(@Args("signUpInput") signUpInput: SignUpInput) {
+    return this.authService.signUp(signUpInput);
   }
 
-  @Mutation("signin")
-  signin(@Args("createAuthInput") createAuthInput: CreateAuthInput) {
-    return this.authService.signin(createAuthInput);
+  @Mutation("signIn")
+  signIn(@Args("signInInput") signInInput: SignInInput) {
+    return this.authService.signIn(signInInput);
   }
 }
