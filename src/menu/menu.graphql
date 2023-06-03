@@ -138,6 +138,7 @@ input MenuQuery {
 
 type Query {
   menus(queryMenuInput: QueryMenuInput): MenuConnection!
+  menusByUserId(userId: ID!): [Menu]
   menu(id: ID!): Menu
 }
 

@@ -39,7 +39,7 @@ export class MenusService {
    * @param query
    * @returns
    */
-  async findAll(queryMenuInput: QueryMenuInput): Promise<MenuConnection> {
+  async findPage(queryMenuInput: QueryMenuInput): Promise<MenuConnection> {
     const { query, orderBy, ...pageInfo } = queryMenuInput;
     const where = Object.entries(query || {}).reduce((acc, [key, value]) => {
       if (value != null) {
@@ -62,6 +62,33 @@ export class MenusService {
       pageInfo
     );
     return result;
+  }
+  /**
+   * 根据用户id查询用户菜单
+   * @param userId
+   * @returns
+   */
+  async findAll(userId: string): Promise<Menu[]> {
+    const user = await this.prisma.user.findFirst({
+      where: {
+        id: userId
+      }
+    });
+    if (!user?.roleId) throw new NotFoundException("RoleId is not Found!");
+    const role = await this.prisma.role.findFirst({
+      where: {
+        id: user.roleId
+      },
+      include: {
+        menus: true
+      }
+    });
+    if (role?.menus) {
+      // const tree = this.getTree(role?.menus, null);
+      return role.menus;
+    } else {
+      throw new NotFoundException("Menus is not Found!");
+    }
   }
   /**
    * 查询单个菜单信息
@@ -104,5 +131,22 @@ export class MenusService {
         id
       }
     });
+  }
+  /**
+   * 生成菜单树
+   * @param menus
+   * @param parentId
+   * @returns
+   */
+  getTree(_children: Menu[], parentId: string | null) {
+    const result = [];
+    for (const child of _children.filter(_child => _child.parentId === parentId)) {
+      const children = this.getTree(_children, child.id as string | null);
+      if (children.length > 0) {
+        child.children = children;
+      }
+      result.push(child as never);
+    }
+    return result;
   }
 }

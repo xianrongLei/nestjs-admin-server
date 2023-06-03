@@ -19,8 +19,13 @@ export class MenusResolver {
   }
 
   @Query("menus")
-  findAll(@Args("queryMenuInput") queryMenuInput: QueryMenuInput) {
-    return this.menusService.findAll(queryMenuInput);
+  findPage(@Args("queryMenuInput") queryMenuInput: QueryMenuInput) {
+    return this.menusService.findPage(queryMenuInput);
+  }
+
+  @Query("menusByUserId")
+  findAll(@Args("userId") userId: string) {
+    return this.menusService.findAll(userId);
   }
 
   @Query("menu")

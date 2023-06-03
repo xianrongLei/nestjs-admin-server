@@ -698,6 +698,7 @@ export interface IQuery {
     dictionaries(queryDictionaryInput?: Nullable<QueryDictionaryInput>): Nullable<Nullable<Dictionary>[]> | Promise<Nullable<Nullable<Dictionary>[]>>;
     dictionary(id: string): Nullable<Dictionary> | Promise<Nullable<Dictionary>>;
     menus(queryMenuInput?: Nullable<QueryMenuInput>): MenuConnection | Promise<MenuConnection>;
+    menusByUserId(userId: string): Nullable<Nullable<Menu>[]> | Promise<Nullable<Nullable<Menu>[]>>;
     menu(id: string): Nullable<Menu> | Promise<Nullable<Menu>>;
     organs(queryOrganInput?: Nullable<QueryOrganInput>): OrganConnection | Promise<OrganConnection>;
     organsById(ids?: Nullable<Nullable<string>[]>): Nullable<Nullable<Organ>[]> | Promise<Nullable<Nullable<Organ>[]>>;
