@@ -3,6 +3,12 @@ import { IsNotEmpty, IsOptional } from "class-validator";
 @ObjectType()
 export class CreateMenuInput {
   /**
+   * 是否缓存
+   */
+  @Field(() => Boolean)
+  @IsOptional()
+  isCache?: boolean;
+  /**
    * 排序
    */
   @Field(() => Int)
@@ -55,7 +61,7 @@ export class CreateMenuInput {
    */
   @Field(() => String)
   @IsOptional()
-  componentUrl?: string;
+  component?: string;
   /**
    * 是否外部打开 true是
    */

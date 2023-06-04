@@ -12,7 +12,7 @@ type Menu {
   icon: String
   title: String
   type: Int
-  componentUrl: String
+  component: String
   outside: Boolean
   isCache: Boolean
   parentId: ID
@@ -30,7 +30,7 @@ input CreateMenuInput {
   icon: String
   title: String
   type: Int
-  componentUrl: String
+  component: String
   outside: Boolean
   isCache: Boolean
   parentId: ID
@@ -48,7 +48,7 @@ input UpdateMenuInput {
   icon: String
   title: String
   type: Int
-  componentUrl: String
+  component: String
   outside: Boolean
   isCache: Boolean
   parentId: ID
@@ -72,7 +72,7 @@ enum MenuOrderFelid {
   icon
   title
   type
-  componentUrl
+  component
   outside
   parentId
 }
@@ -98,7 +98,7 @@ input MenuQuery {
   icon: String
   title: String
   type: Int
-  componentUrl: String
+  component: String
   outside: Boolean
   isCache: Boolean
   parentId: ID

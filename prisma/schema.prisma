@@ -86,18 +86,18 @@ model Menu {
   updater     String?
   sort        Int      @default(0)
   state       Int      @default(1)
-  name        String
+  name        String   @unique
   description String?
   icon        String?
   type        Int      @default(0)
   route       String?
   outside     Boolean  @default(false)
-  isCache     Boolean? @default(true)
   title       String?
   parentId    String?
   component   String?
   creatorName String?
   updaterName String?
+  isCache     Boolean? @default(true)
   parent      Menu?    @relation("menus", fields: [parentId], references: [id])
   children    Menu[]   @relation("menus")
   roles       Role[]   @relation("MenuToRole")

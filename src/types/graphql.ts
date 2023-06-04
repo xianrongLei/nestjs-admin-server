@@ -77,7 +77,7 @@ export enum MenuOrderFelid {
     icon = "icon",
     title = "title",
     type = "type",
-    componentUrl = "componentUrl",
+    component = "component",
     outside = "outside",
     parentId = "parentId"
 }
@@ -317,8 +317,9 @@ export interface CreateMenuInput {
     icon?: Nullable<string>;
     title?: Nullable<string>;
     type?: Nullable<number>;
-    componentUrl?: Nullable<string>;
+    component?: Nullable<string>;
     outside?: Nullable<boolean>;
+    isCache?: Nullable<boolean>;
     parentId?: Nullable<string>;
     childrenIds?: Nullable<Nullable<string>[]>;
     rolesIds?: Nullable<Nullable<string>[]>;
@@ -334,8 +335,9 @@ export interface UpdateMenuInput {
     icon?: Nullable<string>;
     title?: Nullable<string>;
     type?: Nullable<number>;
-    componentUrl?: Nullable<string>;
+    component?: Nullable<string>;
     outside?: Nullable<boolean>;
+    isCache?: Nullable<boolean>;
     parentId?: Nullable<string>;
     childrenIds?: Nullable<Nullable<string>[]>;
     rolesIds?: Nullable<Nullable<string>[]>;
@@ -362,18 +364,10 @@ export interface MenuQuery {
     icon?: Nullable<string>;
     title?: Nullable<string>;
     type?: Nullable<number>;
-    componentUrl?: Nullable<string>;
+    component?: Nullable<string>;
     outside?: Nullable<boolean>;
+    isCache?: Nullable<boolean>;
     parentId?: Nullable<string>;
-    username?: Nullable<string>;
-    password?: Nullable<string>;
-    nickname?: Nullable<string>;
-    email?: Nullable<string>;
-    phone?: Nullable<string>;
-    sex?: Nullable<number>;
-    age?: Nullable<number>;
-    admin?: Nullable<number>;
-    organId?: Nullable<string>;
 }
 
 export interface QueryMenuInput {
@@ -790,8 +784,9 @@ export interface Menu {
     icon?: Nullable<string>;
     title?: Nullable<string>;
     type?: Nullable<number>;
-    componentUrl?: Nullable<string>;
+    component?: Nullable<string>;
     outside?: Nullable<boolean>;
+    isCache?: Nullable<boolean>;
     parentId?: Nullable<string>;
     parent?: Nullable<Menu>;
     children?: Nullable<Nullable<Menu>[]>;
