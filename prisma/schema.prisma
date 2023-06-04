@@ -92,6 +92,7 @@ model Menu {
   type        Int      @default(0)
   route       String?
   outside     Boolean  @default(false)
+  isCache     Boolean? @default(true)
   title       String?
   parentId    String?
   component   String?

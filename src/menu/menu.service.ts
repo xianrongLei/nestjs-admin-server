@@ -132,21 +132,4 @@ export class MenusService {
       }
     });
   }
-  /**
-   * 生成菜单树
-   * @param menus
-   * @param parentId
-   * @returns
-   */
-  getTree(_children: Menu[], parentId: string | null) {
-    const result = [];
-    for (const child of _children.filter(_child => _child.parentId === parentId)) {
-      const children = this.getTree(_children, child.id as string | null);
-      if (children.length > 0) {
-        child.children = children;
-      }
-      result.push(child as never);
-    }
-    return result;
-  }
 }
