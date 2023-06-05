@@ -91,12 +91,13 @@ model Menu {
   icon        String?
   type        Int      @default(0)
   route       String?
-  outside     Boolean  @default(false)
   title       String?
   parentId    String?
   component   String?
   creatorName String?
   updaterName String?
+  outside     Boolean  @default(false)
+  isHidden    Boolean? @default(false)
   isCache     Boolean? @default(true)
   parent      Menu?    @relation("menus", fields: [parentId], references: [id])
   children    Menu[]   @relation("menus")

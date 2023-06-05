@@ -9,6 +9,12 @@ export class CreateMenuInput {
   @IsOptional()
   isCache?: boolean;
   /**
+   * 是否隐藏
+   */
+  @Field(() => Boolean)
+  @IsOptional()
+  isHidden?: boolean;
+  /**
    * 排序
    */
   @Field(() => Int)

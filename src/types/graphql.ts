@@ -79,6 +79,7 @@ export enum MenuOrderFelid {
     type = "type",
     component = "component",
     outside = "outside",
+    isHidden = "isHidden",
     parentId = "parentId"
 }
 
@@ -319,6 +320,7 @@ export interface CreateMenuInput {
     type?: Nullable<number>;
     component?: Nullable<string>;
     outside?: Nullable<boolean>;
+    isHidden?: Nullable<boolean>;
     isCache?: Nullable<boolean>;
     parentId?: Nullable<string>;
     childrenIds?: Nullable<Nullable<string>[]>;
@@ -337,6 +339,7 @@ export interface UpdateMenuInput {
     type?: Nullable<number>;
     component?: Nullable<string>;
     outside?: Nullable<boolean>;
+    isHidden?: Nullable<boolean>;
     isCache?: Nullable<boolean>;
     parentId?: Nullable<string>;
     childrenIds?: Nullable<Nullable<string>[]>;
@@ -366,6 +369,7 @@ export interface MenuQuery {
     type?: Nullable<number>;
     component?: Nullable<string>;
     outside?: Nullable<boolean>;
+    isHidden?: Nullable<boolean>;
     isCache?: Nullable<boolean>;
     parentId?: Nullable<string>;
 }
@@ -786,6 +790,7 @@ export interface Menu {
     type?: Nullable<number>;
     component?: Nullable<string>;
     outside?: Nullable<boolean>;
+    isHidden?: Nullable<boolean>;
     isCache?: Nullable<boolean>;
     parentId?: Nullable<string>;
     parent?: Nullable<Menu>;
