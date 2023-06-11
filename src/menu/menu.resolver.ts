@@ -5,6 +5,7 @@ import { UpdateMenuInput } from "./dto/update-menu.input";
 import { JwtGuard } from "@/auth/guard";
 import { UseGuards } from "@nestjs/common";
 import { QueryMenuInput } from "./dto/query-menu.input";
+import { QueryMenusByUserIdInput } from "@/types/graphql";
 
 // @UseGuards(JwtGuard)
 @Resolver("menu")
@@ -24,8 +25,8 @@ export class MenusResolver {
   }
 
   @Query("menusByUserId")
-  findAll(@Args("userId") userId: string) {
-    return this.menusService.findAll(userId);
+  findAll(@Args("queryMenusByUserIdInput") queryMenusByUserIdInput: QueryMenusByUserIdInput) {
+    return this.menusService.findAll(queryMenusByUserIdInput);
   }
 
   @Query("menu")

@@ -25,6 +25,6 @@
     "sourceMap": false, //生成 *.js.map ?
     "types": ["jest"]
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "types/**/*.d.ts", "types/**/*.ts", "test", ".eslintrc.cjs"],
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "types/**/*.d.ts", "types/**/*.ts", "test", ".eslintrc.cjs" ,".prettier.cjs"],
   "exclude": ["node_modules", "dist", "**/*.js"]
 }

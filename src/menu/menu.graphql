@@ -130,9 +130,14 @@ type MenuConnection {
   totalCount: Int!
 }
 
+input QueryMenusByUserIdInput {
+  userId: ID!
+  orderBy: [MenuOrderBy]
+}
+
 type Query {
   menus(queryMenuInput: QueryMenuInput): MenuConnection!
-  menusByUserId(userId: ID!): [Menu]
+  menusByUserId(queryMenusByUserIdInput: QueryMenusByUserIdInput): [Menu]
   menu(id: ID!): Menu
 }
 

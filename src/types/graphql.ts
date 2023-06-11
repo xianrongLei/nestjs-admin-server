@@ -384,6 +384,11 @@ export interface QueryMenuInput {
     skip?: Nullable<number>;
 }
 
+export interface QueryMenusByUserIdInput {
+    userId: string;
+    orderBy?: Nullable<Nullable<MenuOrderBy>[]>;
+}
+
 export interface CreateOrganInput {
     sort?: Nullable<number>;
     state?: Nullable<number>;
@@ -696,7 +701,7 @@ export interface IQuery {
     dictionaries(queryDictionaryInput?: Nullable<QueryDictionaryInput>): Nullable<Nullable<Dictionary>[]> | Promise<Nullable<Nullable<Dictionary>[]>>;
     dictionary(id: string): Nullable<Dictionary> | Promise<Nullable<Dictionary>>;
     menus(queryMenuInput?: Nullable<QueryMenuInput>): MenuConnection | Promise<MenuConnection>;
-    menusByUserId(userId: string): Nullable<Nullable<Menu>[]> | Promise<Nullable<Nullable<Menu>[]>>;
+    menusByUserId(queryMenusByUserIdInput?: Nullable<QueryMenusByUserIdInput>): Nullable<Nullable<Menu>[]> | Promise<Nullable<Nullable<Menu>[]>>;
     menu(id: string): Nullable<Menu> | Promise<Nullable<Menu>>;
     organs(queryOrganInput?: Nullable<QueryOrganInput>): OrganConnection | Promise<OrganConnection>;
     organsById(ids?: Nullable<Nullable<string>[]>): Nullable<Nullable<Organ>[]> | Promise<Nullable<Nullable<Organ>[]>>;

@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { PrismaService } from "@/common/prisma/prisma.service";
-import { Menu, MenuConnection } from "@/types/graphql";
+import { Menu, MenuConnection, QueryMenusByUserIdInput } from "@/types/graphql";
 import { findManyCursorConnection } from "@devoxa/prisma-relay-cursor-connection";
 import { QueryMenuInput } from "./dto/query-menu.input";
 import { CreateMenuInput } from "./dto/create-menu.input";
@@ -33,7 +33,7 @@ export class MenusService {
     });
   }
   /**
-   * 查询所有菜单
+   * 分页查询菜单
    * @param orderBy
    * @param param1
    * @param query
@@ -68,7 +68,9 @@ export class MenusService {
    * @param userId
    * @returns
    */
-  async findAll(userId: string): Promise<Menu[]> {
+  async findAll(queryMenusByUserIdInput: QueryMenusByUserIdInput): Promise<Menu[]> {
+    const { userId, orderBy } = queryMenusByUserIdInput;
+
     const user = await this.prisma.user.findFirst({
       where: {
         id: userId
@@ -80,7 +82,20 @@ export class MenusService {
         id: user.roleId
       },
       include: {
-        menus: true
+        menus: {
+          orderBy: orderBy?.map(e => {
+            if (!e || !e.field) {
+              throw new Error("Invalid orderBy input");
+            }
+            const direction = e.direction?.toLowerCase();
+            if (direction !== "asc" && direction !== "desc") {
+              throw new Error("Invalid orderBy direction");
+            }
+            return {
+              [e.field]: direction || "asc"
+            };
+          })
+        }
       }
     });
     if (role?.menus) {
