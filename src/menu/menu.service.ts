@@ -5,6 +5,7 @@ import { findManyCursorConnection } from "@devoxa/prisma-relay-cursor-connection
 import { QueryMenuInput } from "./dto/query-menu.input";
 import { CreateMenuInput } from "./dto/create-menu.input";
 import { UpdateMenuInput } from "./dto/update-menu.input";
+import { generateInclude } from "@/common/utils/helpers";
 @Injectable()
 export class MenusService {
   constructor(private readonly prisma: PrismaService) {
@@ -69,8 +70,18 @@ export class MenusService {
    * @returns
    */
   async findAll(queryMenusByUserIdInput: QueryMenusByUserIdInput): Promise<Menu[]> {
-    const { userId, orderBy } = queryMenusByUserIdInput;
+    const { userId, orderBy, query } = queryMenusByUserIdInput;
 
+    const where = Object.entries(query || {}).reduce((acc, [key, value]) => {
+      if (typeof value != "undefined") {
+        if (value === null) {
+          acc[key] = null;
+        } else {
+          acc[key] = { contains: value };
+        }
+      }
+      return acc;
+    }, {});
     const user = await this.prisma.user.findFirst({
       where: {
         id: userId
@@ -83,6 +94,7 @@ export class MenusService {
       },
       include: {
         menus: {
+          where,
           orderBy: orderBy?.map(e => {
             if (!e || !e.field) {
               throw new Error("Invalid orderBy input");
@@ -94,12 +106,13 @@ export class MenusService {
             return {
               [e.field]: direction || "asc"
             };
-          })
+          }),
+          include: generateInclude(6).include
         }
       }
     });
     if (role?.menus) {
-      // const tree = this.getTree(role?.menus, null);
+      // const tree = this.getTree(role?.menus, null)
       return role.menus;
     } else {
       throw new NotFoundException("Menus is not Found!");

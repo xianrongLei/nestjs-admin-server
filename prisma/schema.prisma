@@ -90,7 +90,7 @@ model Menu {
   description String?
   icon        String?
   type        Int      @default(0)
-  route       String?
+  route       String?  @unique
   outside     Boolean  @default(false)
   title       String?
   parentId    String?

@@ -132,12 +132,13 @@ type MenuConnection {
 
 input QueryMenusByUserIdInput {
   userId: ID!
+  query: MenuQuery
   orderBy: [MenuOrderBy]
 }
 
 type Query {
   menus(queryMenuInput: QueryMenuInput): MenuConnection!
-  menusByUserId(queryMenusByUserIdInput: QueryMenusByUserIdInput): [Menu]
+  menusByUserId(queryMenusByUserIdInput: QueryMenusByUserIdInput): [Menu]!
   menu(id: ID!): Menu
 }
 
