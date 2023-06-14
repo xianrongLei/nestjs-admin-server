@@ -43,8 +43,8 @@ export class MenusService {
   async findPage(queryMenuInput: QueryMenuInput): Promise<MenuConnection> {
     const { query, orderBy, ...pageInfo } = queryMenuInput;
     const where = Object.entries(query || {}).reduce((acc, [key, value]) => {
-      if (value != null) {
-        acc[key] = { contains: value };
+      if (typeof value !== "undefined") {
+        acc[key] = { equals: value };
       }
       return acc;
     }, {});
@@ -54,6 +54,7 @@ export class MenusService {
         this.prisma.menu.findMany({
           where,
           orderBy: orderBy?.field ? { [orderBy.field]: orderBy.direction } : undefined,
+          include: generateInclude(6).include,
           ...args
         }),
       () =>
@@ -71,23 +72,19 @@ export class MenusService {
    */
   async findAll(queryMenusByUserIdInput: QueryMenusByUserIdInput): Promise<Menu[]> {
     const { userId, orderBy, query } = queryMenusByUserIdInput;
-
-    const where = Object.entries(query || {}).reduce((acc, [key, value]) => {
-      if (typeof value != "undefined") {
-        if (value === null) {
-          acc[key] = null;
-        } else {
-          acc[key] = { contains: value };
-        }
-      }
-      return acc;
-    }, {});
     const user = await this.prisma.user.findFirst({
       where: {
         id: userId
       }
     });
     if (!user?.roleId) throw new NotFoundException("RoleId is not Found!");
+
+    const where = Object.entries(query || {}).reduce((acc, [key, value]) => {
+      if (typeof value !== "undefined") {
+        acc[key] = { equals: value };
+      }
+      return acc;
+    }, {});
     const role = await this.prisma.role.findFirst({
       where: {
         id: user.roleId
@@ -111,8 +108,8 @@ export class MenusService {
         }
       }
     });
+
     if (role?.menus) {
-      // const tree = this.getTree(role?.menus, null)
       return role.menus;
     } else {
       throw new NotFoundException("Menus is not Found!");

@@ -19,6 +19,7 @@ export class AuthService {
     private readonly jwt: JwtService,
     private readonly config: ConfigService
   ) {
+    this.cacheManager = cacheManager;
     this.prisma = prisma;
     this.config = config;
     this.jwt = jwt;
@@ -32,7 +33,10 @@ export class AuthService {
     const accessToken = await this.jwt.signAsync(payload, {
       secret: this.config.getOrThrow("jwt.secret")
     });
-    const refreshToken = await this.jwt.signAsync(payload, { secret: this.config.getOrThrow("jwt.secret") });
+    const refreshToken = await this.jwt.signAsync(payload, {
+      secret: this.config.getOrThrow("jwt.secret"),
+      expiresIn: "30d"
+    });
     return {
       access_token: accessToken,
       refresh_token: refreshToken

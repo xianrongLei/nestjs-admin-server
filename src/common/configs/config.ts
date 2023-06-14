@@ -20,7 +20,7 @@ export default function (): Config {
       typePaths: ["./**/*.graphql"]
     },
     app: {
-      port: 3000,
+      port: 3030,
       prefix: "v1"
     },
     swagger: {
