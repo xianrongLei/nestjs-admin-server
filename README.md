@@ -1,5 +1,5 @@
 # 项目介绍
-  - a nestjs admin starter
+  - a nestJs admin starter
 # 项目依赖
   - docker         版本 >= 1.13.1
   - docker-compose 版本 >= 1.26.2

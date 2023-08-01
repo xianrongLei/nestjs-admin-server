@@ -13,7 +13,7 @@ import { AuthResolver } from "./auth.resolver";
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         secret: configService.get("jwt.defaultSecret"),
-        signOptions: configService.get("jwt.defaultDignOptions")
+        signOptions: configService.get("jwt.defaultSignOptions")
       })
     })
   ],

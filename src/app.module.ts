@@ -1,4 +1,5 @@
-import { CacheModule, CacheStore, Module } from "@nestjs/common";
+import type { CacheStore } from "@nestjs/common";
+import { CacheModule, Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { AuthModule } from "./auth/auth.module";
 import { PrismaModule } from "./common/prisma/prisma.module";
@@ -9,7 +10,8 @@ import { AppService } from "./app.service";
 import { UsersModule } from "./user/user.module";
 import config from "./common/configs/config";
 import { GraphQLModule } from "@nestjs/graphql";
-import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
+import type { ApolloDriverConfig } from "@nestjs/apollo";
+import { ApolloDriver } from "@nestjs/apollo";
 import { ApolloServerPluginLandingPageLocalDefault } from "@apollo/server/plugin/landingPage/default";
 import { OrgansModule } from "./organ/organ.module";
 import { MenusModule } from "./menu/menu.module";

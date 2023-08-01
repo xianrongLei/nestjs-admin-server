@@ -3,7 +3,7 @@ import { AppModule } from "./app.module";
 import { SwaggerModule, DocumentBuilder } from "@nestjs/swagger";
 import { ValidationPipe } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { App } from "./common/configs/config.interface";
+import type { App } from "./common/configs/config.interface";
 
 async function bootstrap(): Promise<void> {
   //创建服务

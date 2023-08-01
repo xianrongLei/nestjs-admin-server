@@ -1,10 +1,10 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-import { Organ, OrganConnection } from "@/types/graphql";
+import type { Organ, OrganConnection } from "@/types/graphql";
 import { PrismaService } from "@/common/prisma/prisma.service";
-import { CreateOrganInput } from "./dto/create-organ.input";
+import type { CreateOrganInput } from "./dto/create-organ.input";
 import { findManyCursorConnection } from "@devoxa/prisma-relay-cursor-connection";
-import { QueryOrganInput } from "./dto/query-organ.input";
-import { UpdateOrganInput } from "./dto/update-organ.input";
+import type { QueryOrganInput } from "./dto/query-organ.input";
+import type { UpdateOrganInput } from "./dto/update-organ.input";
 
 @Injectable()
 export class OrgansService {

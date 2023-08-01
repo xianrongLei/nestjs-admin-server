@@ -1,10 +1,10 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { PrismaService } from "@/common/prisma/prisma.service";
-import { Menu, MenuConnection, QueryMenusByUserIdInput } from "@/types/graphql";
+import type { Menu, MenuConnection, QueryMenusByUserIdInput } from "@/types/graphql";
 import { findManyCursorConnection } from "@devoxa/prisma-relay-cursor-connection";
-import { QueryMenuInput } from "./dto/query-menu.input";
-import { CreateMenuInput } from "./dto/create-menu.input";
-import { UpdateMenuInput } from "./dto/update-menu.input";
+import type { QueryMenuInput } from "./dto/query-menu.input";
+import type { CreateMenuInput } from "./dto/create-menu.input";
+import type { UpdateMenuInput } from "./dto/update-menu.input";
 import { generateInclude } from "@/common/utils/helpers";
 @Injectable()
 export class MenusService {

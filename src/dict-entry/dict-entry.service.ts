@@ -1,9 +1,9 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-import { CreateDictEntryInput } from "./dto/create-dict-entry.input";
-import { UpdateDictEntryInput } from "./dto/update-dict-entry.input";
-import { QueryDictEntryInput } from "./dto/query-dict-entry.input";
+import type { CreateDictEntryInput } from "./dto/create-dict-entry.input";
+import type { UpdateDictEntryInput } from "./dto/update-dict-entry.input";
+import type { QueryDictEntryInput } from "./dto/query-dict-entry.input";
 import { PrismaService } from "@/common/prisma/prisma.service";
-import { DictEntry, DictEntryConnection } from "@/types/graphql";
+import type { DictEntry, DictEntryConnection } from "@/types/graphql";
 import { findManyCursorConnection } from "@devoxa/prisma-relay-cursor-connection";
 
 @Injectable()

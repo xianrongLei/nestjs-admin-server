@@ -1,4 +1,4 @@
-import { JwtSignOptions } from "@nestjs/jwt";
+import type { JwtSignOptions } from "@nestjs/jwt";
 
 export type Jwt = {
   defaultSecret: string;

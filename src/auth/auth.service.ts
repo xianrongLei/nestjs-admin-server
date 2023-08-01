@@ -3,13 +3,14 @@ import { PrismaService } from "../common/prisma/prisma.service";
 import * as argon from "argon2";
 import { JwtService } from "@nestjs/jwt";
 import { ConfigService } from "@nestjs/config";
-import { User, Prisma } from ".prisma/client";
+import type { User } from ".prisma/client";
+import { Prisma } from ".prisma/client";
 import svgCaptcha from "svg-captcha";
 import { Cache } from "cache-manager";
-import { Auth, Captcha, Token } from "@/types/graphql";
-import { CreateCaptchaInput } from "./dto/create-captcha.input";
-import { SignInInput } from "./dto/sign-in.input";
-import { SignUpInput } from "./dto/sign-up.input";
+import type { Auth, Captcha, Token } from "@/types/graphql";
+import type { CreateCaptchaInput } from "./dto/create-captcha.input";
+import type { SignInInput } from "./dto/sign-in.input";
+import type { SignUpInput } from "./dto/sign-up.input";
 
 @Injectable()
 export class AuthService {

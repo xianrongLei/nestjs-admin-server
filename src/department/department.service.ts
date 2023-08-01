@@ -1,10 +1,10 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-import { CreateDepartmentInput } from "./dto/create-department.input";
-import { UpdateDepartmentInput } from "./dto/update-department.input";
+import type { CreateDepartmentInput } from "./dto/create-department.input";
+import type { UpdateDepartmentInput } from "./dto/update-department.input";
 import { PrismaService } from "@/common/prisma/prisma.service";
-import { QueryDepartmentInput } from "./dto/query-department.input";
+import type { QueryDepartmentInput } from "./dto/query-department.input";
 import { findManyCursorConnection } from "@devoxa/prisma-relay-cursor-connection";
-import { Department, DepartmentConnection } from "@/types/graphql";
+import type { Department, DepartmentConnection } from "@/types/graphql";
 
 @Injectable()
 export class DepartmentService {

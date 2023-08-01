@@ -2,11 +2,11 @@ import { PrismaService } from "@/common/prisma/prisma.service";
 import { Prisma } from ".prisma/client";
 import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import * as argon from "argon2";
-import { CreateUserInput } from "./dto/create-user.input";
-import { UpdateUserInput } from "./dto/update-user.input";
-import { User, UserConnection } from "@/types/graphql";
+import type { CreateUserInput } from "./dto/create-user.input";
+import type { UpdateUserInput } from "./dto/update-user.input";
+import type { User, UserConnection } from "@/types/graphql";
 import { findManyCursorConnection } from "@devoxa/prisma-relay-cursor-connection";
-import { QueryUserInput } from "./dto/query-user-input";
+import type { QueryUserInput } from "./dto/query-user-input";
 
 @Injectable()
 export class UsersService {

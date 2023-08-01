@@ -1,9 +1,9 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-import { CreateRoleInput } from "./dto/create-role.input";
-import { UpdateRoleInput } from "./dto/update-role.input";
-import { QueryRoleInput } from "./dto/query-role.input";
+import type { CreateRoleInput } from "./dto/create-role.input";
+import type { UpdateRoleInput } from "./dto/update-role.input";
+import type { QueryRoleInput } from "./dto/query-role.input";
 import { PrismaService } from "@/common/prisma/prisma.service";
-import { Role, RoleConnection } from "@/types/graphql";
+import type { Role, RoleConnection } from "@/types/graphql";
 import { findManyCursorConnection } from "@devoxa/prisma-relay-cursor-connection";
 
 @Injectable()

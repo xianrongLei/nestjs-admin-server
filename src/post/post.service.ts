@@ -1,10 +1,10 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-import { CreatePostInput } from "./dto/create-post.input";
-import { UpdatePostInput } from "./dto/update-post.input";
-import { QueryPostInput } from "./dto/query-post.input";
+import type { CreatePostInput } from "./dto/create-post.input";
+import type { UpdatePostInput } from "./dto/update-post.input";
+import type { QueryPostInput } from "./dto/query-post.input";
 import { PrismaService } from "@/common/prisma/prisma.service";
 import { findManyCursorConnection } from "@devoxa/prisma-relay-cursor-connection";
-import { Post, PostConnection } from "@/types/graphql";
+import type { Post, PostConnection } from "@/types/graphql";
 
 @Injectable()
 export class PostsService {
