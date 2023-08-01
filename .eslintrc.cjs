@@ -38,7 +38,7 @@ module.exports = {
     "import/extensions": 0,
     "import/no-absolute-path": 0,
     // 导入导出类型时必须使用 type 关键字
-    "@typescript-eslint/consistent-type-imports": 0,
-    "@typescript-eslint/consistent-type-exports": 0
+    "@typescript-eslint/consistent-type-imports": "error",
+    "@typescript-eslint/consistent-type-exports": "error"
   }
 };
